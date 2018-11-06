@@ -6,8 +6,8 @@ DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS trip;
 DROP TABLE IF EXISTS suggestion;
 
--- IMMUTABLE BASE TABLE FOR USER(S) (ONE-)
-CREATE TABLE user (
+-- IMMUTABLE BASE TABLE FOR customer(S) (ONE-)
+CREATE TABLE customer (
 id serial,
 fname TEXT varchar(50) NOT NULL,
 email VARCHAR(50) NOT NULL UNIQUE,
@@ -22,7 +22,7 @@ origin VARCHAR(50) NOT NULL,
 destination VARCHAR(50) NOT NULL,
 trip_owner_id INT NOT NULL,
 PRIMARY KEY (id),
-FOREIGN KEY (trip_owner_id) REFERENCES user (id)
+FOREIGN KEY (trip_owner_id) REFERENCES customer (id)
 );
 
 -- DYNAMIC MAPPING TABLE FOR SUGGESTION(S) (MANY-)
@@ -34,5 +34,5 @@ trip_id INT NOT NULL,
 suggester_id INT NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (trip_id) REFERENCES trip (id),
-FOREIGN KEY (suggester_id) REFERENCES user (id)
+FOREIGN KEY (suggester_id) REFERENCES customer (id)
 );
