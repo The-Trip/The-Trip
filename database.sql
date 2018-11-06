@@ -50,7 +50,7 @@ FOREIGN KEY (trip_owner_id) REFERENCES customer (id)
 CREATE TABLE suggestion (
 id serial,
 place VARCHAR(50) NOT NULL,
-place_commment TEXT NOT NULL,
+place_comment TEXT NOT NULL,
 trip_id INT NOT NULL,
 suggester_id INT NOT NULL,
 PRIMARY KEY (id),
