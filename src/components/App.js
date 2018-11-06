@@ -1,8 +1,6 @@
 import React from 'react'
 import TripCreationContainer from '../containers/TripCreationContainer';
-
-
-
+import FlightWrapper from '../containers/FlightWrapper'
 class App extends React.Component {
     constructor(){
         super();
@@ -12,8 +10,8 @@ class App extends React.Component {
     render() {
         return (
             <React.Fragment>
-                {/* <p> Hello! </p>   */}
                 <TripCreationContainer/>
+                <FlightWrapper/>
             </React.Fragment>
 
             
