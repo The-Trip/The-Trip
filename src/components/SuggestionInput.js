@@ -1,15 +1,38 @@
 import React from 'react';
 
-function SuggestionInput() {
+function SuggestionInput({handleChange,handleSubmit}) {
 
     return (
       <div>
           <p>Suggestion Input</p>
-          <form>
-              <input name="suggestion" />
-              <input name="comment" />
-              <button />
-          </form>
+
+            <form className="suggestion"
+            onSubmit={event => {
+                handleSubmit(event);
+                }}
+            >
+            <input
+                id="place"
+                type="text"
+                name="place"
+                className="suggestion__place"
+                // defaultValue="Trip Name"
+                onChange={event => handleChange(event)}
+            />
+            <input
+                id="comment"
+                type="textArea"
+                name="comment"
+                className="suggestion__comment"
+                // defaultValue="Destination"
+                onChange={event => handleChange(event)}
+            />
+            <button
+                type="submit"
+                >Submit</button>
+            </form>
+
+
       </div>
     )
   }

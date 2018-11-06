@@ -20,7 +20,6 @@ class TripCreation extends React.Component {
         className="trip-creation__name"
         // defaultValue="Trip Name"
         onChange={event => this.props.handleChange(event)}
-     
       />
      <input
         id="destination"
