@@ -1,3 +1,10 @@
+export function receiveSuggestions(suggestions) {
+    return {
+        type: 'RECEIVE_SUGGESTIONS',
+        suggestions: suggestions
+    }
+}
+
 export function fetchQuestions(){
     return function(dispatch){
         return fetch('https://opentdb.com/api.php?amount=50&difficulty=easy&type=multiple')
@@ -14,16 +21,3 @@ export function receiveQuestions(APIResult) {
         fullQuestionList: APIResult.results
     }
 }
-
-<<<<<<< Updated upstream
-
-
-
-
-
-
-
-
-
-=======
->>>>>>> Stashed changes
