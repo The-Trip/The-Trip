@@ -19,7 +19,7 @@ ALTER SEQUENCE suggestion_id_seq RESTART WITH 6 INCREMENT BY 1;
 
 -- ORIGIN TABLE (to amend use drop as below)
 
---CREATE DATABASE thetrip_db
+--CREATE DATABASE thetrip
 
 DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS trip;
