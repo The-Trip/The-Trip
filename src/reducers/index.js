@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import setAPIFetchResults from './setAPIFetchResults'
+import setFlightsAPIResults from './setFlightsAPIResults'
 
 
 export default combineReducers({
-    APIResults: setAPIFetchResults,
+    flightAPIResults: setFlightsAPIResults
 });
