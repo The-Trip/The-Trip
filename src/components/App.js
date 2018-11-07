@@ -11,6 +11,7 @@ function App() {
     
     return (
         <div>
+          HELLO
         {/* {appStatus === 'menu' && (
           <MenuContainer />
         )
@@ -19,6 +20,7 @@ function App() {
           <React.Fragment>
             <SuggestionsContainer />
             <TripCreationContainer />
+
             {/* <UserInviteContainer />
             <TripContainer /> */}
           </React.Fragment> 
@@ -26,6 +28,6 @@ function App() {
         } */}
         </div>
     )
-}
+      }
 
 export default App;
