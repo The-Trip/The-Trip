@@ -1,25 +1,33 @@
 import React from 'react'
 import TripCreationContainer from '../containers/TripCreationContainer';
+import SuggestionsContainer from '../containers/SuggestionsContainer';
+
 import '../styles/base/base.scss';
 import '../styles/base/forms.scss';
-import FlightWrapper from '../containers/FlightWrapper'
-class App extends React.Component {
-    constructor(){
-        super();
-    }
+
+
+function App() {
 
     
-    render() {
-        return (
-            <React.Fragment>
-                <TripCreationContainer/>
-                <FlightWrapper/>
-            </React.Fragment>
-
-            
+    return (
+        <div>
+          HELLO
+        {/* {appStatus === 'menu' && (
+          <MenuContainer />
         )
+        } */}
+        {/* {appStatus === 'suggestions' && ( */}
+          <React.Fragment>
+            <SuggestionsContainer />
+            <TripCreationContainer />
 
-    }
-}
+            {/* <UserInviteContainer />
+            <TripContainer /> */}
+          </React.Fragment> 
+        {/* )
+        } */}
+        </div>
+    )
+      }
 
 export default App;

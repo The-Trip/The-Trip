@@ -14,13 +14,3 @@ export function receiveQuestions(APIResult) {
         fullQuestionList: APIResult.results
     }
 }
-
-
-
-
-
-
-
-
-
-
