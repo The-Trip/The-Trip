@@ -12,7 +12,7 @@ export function addNewTrip(){
     return function(dispatch, getState){
     return fetch("/api/trip", {
             method: "post",
-            body: JSON.stringify(getState().tripForm),
+            body: JSON.stringify({trip:getState().tripForm,user:getState().user}),
             headers: {
               "Content-Type": "application/json"
             }
