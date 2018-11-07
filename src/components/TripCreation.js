@@ -16,9 +16,17 @@ class TripCreation extends React.Component {
      <input
         id="trip-name"
         type="text"
-        name="tripName"
+        name="name"
         className="trip-creation__name"
         // defaultValue="Trip Name"
+        onChange={event => this.props.handleChange(event)}
+      />
+      <input
+        id="origin"
+        type="text"
+        name="origin"
+        className="trip-creation__origin"
+        // defaultValue="Destination"
         onChange={event => this.props.handleChange(event)}
       />
      <input

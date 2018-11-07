@@ -1,4 +1,4 @@
-function trip(state = {id:42,place:'New York',description:'Girls hit the town in NYC'}, action){
+function trip(state = {id:2,place:'New York',description:'Girls hit the town in NYC'}, action){
     switch (action.type) {
         case 'RECEIVE_TRIP':
             return action.suggestions;
