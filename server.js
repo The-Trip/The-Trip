@@ -18,11 +18,9 @@ const tripWordsArray = ['trip','holiday','vacation','break','rest','recess',
 
 app.use(bodyParser.json());
 app.use('/static', express.static('static'));
-app.set('view engine', 'hbs');
+app.use('/dist', express.static('dist'));
 
-app.get('/', function(req, res){
-   return res.render('index');
-});
+app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
 
 app.post("/api/login", (req, res) => {
     db.one(
@@ -44,7 +42,7 @@ app.post("/api/trip", (req,res) =>{
     db.one(
         `INSERT INTO trip (trip_url, trip_name, origin, destination, trip_owner_id)
             VALUES($1,$2,$3,$4,$5) RETURNING id`,
-            [randomURLString, req.body.tripName, req.body.origin, destinationJoin, req.body.ownerId])
+            [randomURLString, req.body.tripName, req.body.origin, req.body.destination, req.body.ownerId])
         .then(trip => {
             const response = {id: trip.id, fname: req.body.fname, destination: req.body.destination};
             return res.json(response)
