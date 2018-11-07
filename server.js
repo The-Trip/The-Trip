@@ -57,12 +57,16 @@ app.post("/api/trip", (req,res) =>{
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
 app.post("/api/suggestion", (req, res) => {
+    console.log(req.body)
     db.one(`INSERT INTO suggestion (place, place_comment, trip_id, suggester_id)
                 VALUES ($1, $2, $3, $4) RETURNING id`, [req.body.suggestion.place, req.body.suggestion.comment, req.body.trip, req.body.user])
         .then(suggestion => {
             return res.json({suggestionID: suggestion.id})
         })
-        .catch(error => res.json({error: error.message}))
+        .catch(error => {
+            console.log(error.stack)
+            res.json({error: error.message})
+        })
 }); // allows a suggestion to be made (will error if not logged in as needs id)
 
 app.post("/api/customer", (req, res) => {
