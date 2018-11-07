@@ -35,24 +35,30 @@ app.post("/api/trip", (req,res) =>{
     console.log(req.body);
     const randomNum = Math.floor(Math.random()*tripWordsArray.length);
     const randomArrayValue = tripWordsArray[randomNum];
-    const destinationSplit = req.body.destination.split(" ");
+    const destinationSplit = req.body.trip.destination.split(" ");
     const destinationJoin = destinationSplit.join("-");
-    const randomURLString = `${req.body.fname}-${destinationJoin}-${randomArrayValue}`;
+    const randomURLString = `${req.body.user.name}-${destinationJoin}-${randomArrayValue}`;
     
+    console.log(`${randomURLString} ${req.body.trip.name} ${req.body.trip.origin} ${req.body.trip.destination} ${req.body.user.id}`)
+
     db.one(
         `INSERT INTO trip (trip_url, trip_name, origin, destination, trip_owner_id)
             VALUES($1,$2,$3,$4,$5) RETURNING id`,
-            [randomURLString, req.body.tripName, req.body.origin, req.body.destination, req.body.ownerId])
+            [randomURLString, req.body.trip.name, req.body.trip.origin, req.body.trip.destination, req.body.user.id])
         .then(trip => {
+            console.log('db insert done')
             const response = {id: trip.id, fname: req.body.fname, destination: req.body.destination};
             return res.json(response)
         })
-        .catch(error => res.json({error: error.message}))
+        .catch(error => {
+            console.log(error.stack)
+            res.json({error: error.message})
+        })
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
 app.post("/api/suggestion", (req, res) => {
     db.one(`INSERT INTO suggestion (place, place_comment, trip_id, suggester_id)
-                VALUES ($1, $2, $3, $4) RETURNING id`, [req.body.place, req.body.placeComment, req.body.tripID, req.body.id])
+                VALUES ($1, $2, $3, $4) RETURNING id`, [req.body.suggestion.place, req.body.suggestion.comment, req.body.trip, req.body.user])
         .then(suggestion => {
             return res.json({suggestionID: suggestion.id})
         })
