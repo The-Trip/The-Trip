@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const fetch = require('node-fetch');
 const pgp = require('pg-promise')();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
