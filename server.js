@@ -73,12 +73,10 @@ app.post("/api/customer", (req, res) => {
         .catch(error => res.json({ error: error.message }));
 }); // allows a customer to be added to DB. Returns their new customer ID if success
 
-app.listen(8080, function(){
-    console.log('Listening on port 8080');
-});
+
 
 app.get('/api/google', function(req, res){
-    fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+Sydney&key=AIzaSyCimBnFkoA9Bb1y23hJqngTpjmjz_Z-gWs`)
+    fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${req}&key=AIzaSyCimBnFkoA9Bb1y23hJqngTpjmjz_Z-gWs`)
         .then(function(response) {
             return response.json();
             })
@@ -91,3 +89,7 @@ app.get('/api/google', function(req, res){
         // something went wrong. let's sort it out
           });
       })
+
+app.listen(8080, function(){
+    console.log('Listening on port 8080');
+});

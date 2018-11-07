@@ -8,7 +8,7 @@ export function setTripState(name, value ) {
 
 export function addNewTrip(){
    
-    console.log('fetch')
+    console.log('post new trip')
     return function(dispatch, getState){
     return fetch("/api/trip", {
             method: "post",
@@ -20,7 +20,7 @@ export function addNewTrip(){
             .then(response => response.json())
             .then(data => {
                 dispatch(createTrip(data));
-                dispatch(googleFetch(location))
+                dispatch(googleFetch(location));
             })
     }
 }
@@ -35,36 +35,19 @@ export function createTrip(tripName, tripDestination ) {
 }
 
 
-export function fetchQuestions(){
-    return function(dispatch){
-        return fetch('https://opentdb.com/api.php?amount=50&difficulty=easy&type=multiple')
-            .then(response => response.json())
-            .then(data => {
-                dispatch(receiveQuestions(data));
-            })
-    }
-}
-
-export function receiveQuestions(APIResult) {
-    return {
-        type: 'RECEIVE_QUESTIONS',
-        fullQuestionList: APIResult.results
-    }
-}
-
-
 export function googleFetch(location) {
         console.log('google fetch')
         return function(dispatch, getState){
         return fetch("/api/google", {
                 method: "get",
-                body: JSON.stringify(getState().location),
+                body: JSON.stringify(getState().tripForm.destination),
                 headers: {
                   "Content-Type": "application/json"
                 }
               })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('google info fetch', data)
                     dispatch(storeGoogleFetch(data));
                 })
         }
