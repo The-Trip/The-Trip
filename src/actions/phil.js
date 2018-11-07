@@ -12,7 +12,7 @@ export function addSuggestionToDB(){
     return function(dispatch, getState){
     return fetch("/api/suggestion", {
             method: "post",
-            body: JSON.stringify(getState().tripForm),
+            body: JSON.stringify(getState().suggestionForm,getState().user.id,getState().trip.id),
             headers: {
               "Content-Type": "application/json"
             }
