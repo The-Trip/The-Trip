@@ -1,23 +1,25 @@
 import { connect } from 'react-redux';
 import Suggestions from '../components/Suggestions.js'
-// import { fetchQuestionFromAPI, countSecond } from '../actions';
+import { fetchSuggestionsFromDB } from '../actions/phil';
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
   suggestions: state.suggestions,
+  tripId: ownProps.match.params.id
   };
 };
 
+
 const mapDispatchToProps = dispatch => {
-    return {
-      voting: () => {
-        console.log('voting')  
+  return {
+      fetchSuggestionsFromDB: (tripId) =>
+          dispatch(fetchSuggestionsFromDB(tripId))
       }
-    }
-  };
+  }
 
 
 export default connect(
   mapStateToProps,
+  mapDispatchToProps
 )(Suggestions);

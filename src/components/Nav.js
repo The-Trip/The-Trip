@@ -1,4 +1,6 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import TripsContainer from "../containers/TripsContainer.js";
 import HomeContainer from "../containers/HomeContainer.js";
 
@@ -12,6 +14,9 @@ function Nav ({ view }) {
         )}
         {view === 'your-trips' && (
             <TripsContainer />
+        )}
+        {view === 'trip-suggestions' && (
+            <SuggestionsContainer />
         )}
     </React.Fragment>
   );

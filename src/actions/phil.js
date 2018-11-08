@@ -53,9 +53,31 @@ export function fetchTripsFromDB(userId){
     }
   }
 
+  export function fetchSuggestionsFromDB(tripId){
+    console.log('fetchSuggestions')
+    return function(dispatch, getState){
+      fetch(`/api/trip/${tripId}/suggestion`)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        dispatch(receiveSuggestions(result))
+      })
+      .catch(function(error) {
+        console.log(error)
+    });
+    }
+  }
+
   export function receiveTrips(trips) {
     return {
         type: 'RECEIVE_TRIPS',
         trips: trips
+    }
+}
+
+export function receiveSuggestions(suggestions) {
+    return {
+        type: 'RECEIVE_SUGGESTIONS',
+        suggestions
     }
 }

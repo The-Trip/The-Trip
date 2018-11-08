@@ -129,3 +129,5 @@ app.get('/api/google', function(req, res){
         // something went wrong. let's sort it out
           });
       })
+
+app.get('*', (req, res) => res.sendFile(__dirname + '/index.html'));
