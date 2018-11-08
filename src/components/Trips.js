@@ -1,5 +1,6 @@
 import React from "react";
-import TripCreationContainer from "../containers/TripCreationContainer.js";
+import TripItem from "../containers/TripItem.js";
+import '../styles/components/Trips.scss';
 
 class Trips extends React.Component{
     
@@ -17,14 +18,22 @@ class Trips extends React.Component{
             <div>
                 <React.Fragment>
                 <TripCreationContainer />
-                <p>This is Trips.js</p>
+                    
+                    <section className="trips">
 
-                    {this.props.trips.map((trip)=> {
-                        return (
-                            <p key={trip.id} onClick={()=>this.props.handleClick(trip.id)}>{trip.name}</p>
-                        )
-                    })}
+                        <header className="trips__header">
+                            <h1 className="trips__title">Your trips</h1>
+                        </header>
 
+                        {this.props.trips.map((trip)=> {
+                            return (
+                                // <p key={trip.id} onClick={()=>this.props.handleClick(trip.id)}>{trip.name}</p>
+
+                                <TripItem key={trip.id} />
+                            )
+                        })}
+                    
+                    </section>
                 
                 </React.Fragment>
             </div>

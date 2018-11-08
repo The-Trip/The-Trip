@@ -43,7 +43,7 @@ Could always add a "new trip" conditional.
                     <nav className="nav">
                         <ul className="nav__menu menu--settings">
                             <a className="nav__menulink" href=<Link path="/"><li className="nav__menuitem">Login</li></a>
-                            <a className="nav__menulink"href=<Link path="/"><li className="nav__menuitem"></li>Your Trip</li></a>
+                            <a className="nav__menulink"href=<Link path="/trips"><li className="nav__menuitem"></li>Your Trip</li></a>
                             <a className="nav__menulink"href=<Link path="/"><li className="nav__menuitem"></li>All Trips</li></a>
                             <a className="nav__menulink"href=<Link path="/"><li className="nav__menuitem"></li>Suggestions</li></a>
                         </ul>
@@ -67,12 +67,12 @@ Could always add a "new trip" conditional.
                 </Menu>
 
                 <!-- Login/Register View-->
+                
                 <LoginContainer> - connect()(Login);
                 <Login>
 
                     <section className="login">
                         
-                        <!-- login form -->
                         <header className="login__header">
                             <h1 className="login__title">Login</h1>
                         </header>
@@ -105,7 +105,6 @@ Could always add a "new trip" conditional.
                         </form>
                     </section>
 
-                    <!-- registration form -->
                     <section className="registration">
                         
                         <header className="registration__header">
@@ -176,7 +175,6 @@ Could always add a "new trip" conditional.
                                 required /><span className="validity"></span>
                         </div>
 
-                        <!-- origin field ++ -->
                         <div>
                             <label className="trip-frm__originlabel" htmlFor="origin">Origin</label>
                             <input
@@ -198,7 +196,6 @@ Could always add a "new trip" conditional.
                                 required /><span className="validity"></span>
                         </div>
                         
-                        <!-- added trip details field ++ *** needs to be added to DB -->
                         <div>
                             <label className="trip-frm__detailslabel" htmlFor="details">About the trip</label>
                             <textarea 
@@ -231,7 +228,7 @@ Could always add a "new trip" conditional.
                                 <h1 className="trip__title">{destination}</h3>
                                 <h2 className="trip__destination">
                                     [array of trip members by {fname}]
-                                    <!--last in array to be prepended by "and" , appended by 's--> {tripname}</h2>
+                                    {tripname}</h2>
                             </header>
                         
                                 {!!tripdetails && 
@@ -244,6 +241,7 @@ Could always add a "new trip" conditional.
                                 View Suggestions <span>{array.length}</span>
                             </footer>
                         </article>
+                        <!--last in array to be prepended by "and" , appended by 's--> 
                         </TripItem>
 
                     </section>
@@ -263,7 +261,9 @@ Could always add a "new trip" conditional.
                     <section className="suggestion-create">
 
                         <header className="suggestion-create__header">
-                            <h2 className="suggestion-create__title">Make suggestions for [array of trip members by {fname}] <!--last in array to be prepended by "and" , appended by 's--> {trip.name} trip</h2>
+                            <h2 className="suggestion-create__title">Make suggestions for [array of trip members by {fname}] 
+                                last in array to be prepended by "and" , appended by 's
+                                {trip.name} trip</h2>
                         </header>
 
                         <form className="suggestion-frm" onSubmit={event => this.props.handleSubmit(event)}>
