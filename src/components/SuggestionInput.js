@@ -3,37 +3,37 @@ import React from 'react';
 function SuggestionInput({handleChange,handleSubmit}) {
 
     return (
-      <div>
-          <p>Suggestion Input</p>
+        <section className="suggestion-create">
 
-            <form className="suggestion"
-            onSubmit={event => {
-                handleSubmit(event);
-                }}
-            >
-            <input
-                id="place"
-                type="text"
-                name="place"
-                className="suggestion__place"
-                // defaultValue="Trip Name"
-                onChange={event => handleChange(event)}
-            />
-            <input
-                id="comment"
-                type="textArea"
-                name="comment"
-                className="suggestion__comment"
-                // defaultValue="Destination"
-                onChange={event => handleChange(event)}
-            />
-            <button
-                type="submit"
-                >Submit</button>
+            <header className="suggestion-create__header">
+                <h2 className="suggestion-create__title">
+                {/* Make suggestions for [array of trip members by {fname}] last in array to be prepended by "and" , appended by 's {trip.name} trip */}
+                </h2>
+            </header>
+
+            <form className="suggestion-frm" onSubmit={event => handleSubmit(event)}>
+                <div>
+                    <label className="suggestion-frm__placelabel" htmlFor="place">Add a suggestion … restaurant, drinking hole, museum, gallery, park, sight, den of iniquity</label>
+                    <input
+                        className="suggestion-frm__place"
+                        id="place"
+                        type="text"
+                        name="place"
+                        onChange={event => handleChange(event)}
+                        required /><span className="validity"></span>
+                </div>
+                <div>
+                    <label className="suggestion-frm__commentlabel" htmlFor="comment">Why should we go there?</label>
+                    <textarea 
+                        className="suggestion-frm__comment"
+                        id="suggestion-comment"
+                        name="comment"
+                        onChange={event => handleChange(event)} >
+                    </textarea>
+                </div>
+                <button type="submit" className="suggestion-frm__submit btn btn__submit">Submit</button>
             </form>
-
-
-      </div>
+        </section>
     )
   }
 

@@ -9,7 +9,6 @@ const mapStateToProps = state => {
     };
 }
 
-
 const mapDispatchToProps = dispatch => {
     return {
         handleChange: event => {
@@ -18,7 +17,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(setTripState(event.target.name, event.target.value))
         },
 
-        handleClick: event => {
+        handleSubmit: event => {
             event.preventDefault();
             dispatch(addNewTrip());
             // console.log(event.target.tripName.value);

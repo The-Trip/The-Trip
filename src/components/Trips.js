@@ -1,4 +1,6 @@
 import React from "react";
+import TripItem from "../components/TripItem.js";
+import '../styles/components/Trips.scss';
 import TripCreationContainer from "../containers/TripCreationContainer.js";
 import { Link } from "react-router-dom";
 
@@ -19,15 +21,22 @@ class Trips extends React.Component{
             <div>
                 <React.Fragment>
                 <TripCreationContainer />
-                <p>This is Trips.js</p>
+                    
+                    <section className="trips">
 
-                    {this.props.trips.map((trip)=> {
-                        const to = `/trip/${trip.id}/suggestion`
-                        return (
-                            <Link to={to} key={trip.id}>{trip.name}</Link>
-                        )
-                    })}
+                        <header className="trips__header">
+                            <h1 className="trips__title">Your trips</h1>
+                        </header>
 
+                        {this.props.trips.map((trip)=> {
+                            return (
+                                // <p key={trip.id} onClick={()=>this.props.handleClick(trip.id)}>{trip.name}</p>
+
+                                <TripItem key={trip.id} />
+                            )
+                        })}
+                    
+                    </section>
                 
                 </React.Fragment>
             </div>
