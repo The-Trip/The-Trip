@@ -40,32 +40,32 @@ app.post("/api/trip", (req,res) =>{
     const destinationJoin = destinationSplit.join("-");
     const randomURLString = `${req.body.user.name}-${destinationJoin}-${randomArrayValue}`;
     
-    console.log(`${randomURLString} ${req.body.trip.name} ${req.body.trip.origin} ${req.body.trip.destination} ${req.body.user.id}`)
+    console.log(`${randomURLString} ${req.body.trip.name} ${req.body.trip.origin} ${req.body.trip.destination} ${req.body.user.id}`);
 
     db.one(
         `INSERT INTO trip (url, name, origin, destination, customer_id)
             VALUES($1,$2,$3,$4,$5) RETURNING id`,
             [randomURLString, req.body.trip.name, req.body.trip.origin, req.body.trip.destination, req.body.user.id])
         .then(trip => {
-            console.log('db insert done')
+            console.log('db insert done');
             const response = {id: trip.id, fname: req.body.fname, destination: req.body.destination};
             return res.json(response)
         })
         .catch(error => {
-            console.log(error.stack)
+            console.log(error.stack);
             res.json({error: error.message})
         })
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
 app.post("/api/suggestion", (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
     db.one(`INSERT INTO suggestion (place, comment, trip_id, customer_id)
                 VALUES ($1, $2, $3, $4) RETURNING id`, [req.body.suggestion.place, req.body.suggestion.comment, req.body.trip, req.body.user])
         .then(suggestion => {
             return res.json({suggestionID: suggestion.id})
         })
         .catch(error => {
-            console.log(error.stack)
+            console.log(error.stack);
             res.json({error: error.message})
         })
 }); // allows a suggestion to be made (will error if not logged in as needs id)
@@ -85,35 +85,29 @@ app.post("/api/customer", (req, res) => {
 
 
 app.get('/api/user/:id/trip', function (req, res) {
-    const userId = req.params.id
-    console.log(req.params)
+    const userId = req.params.id;
+    console.log(req.params);
     db.any('SELECT * FROM trip WHERE customer_id = ($1)', [userId])
       .then(function(data){
-        console.log(data)
+        console.log(data);
         res.json(data)
       })
         .catch(error => {
             console.log(`${error}`)
         })
-    })
+    });
 
 app.get('/api/trip/:id/suggestion', function (req, res) {
-    const tripId = req.params.id
+    const tripId = req.params.id;
     db.any('SELECT * FROM suggestion WHERE trip_id = $1', [tripId])
       .then(function(data){
-        console.log(data)
+        console.log(data);
         res.json(data)
       })
         .catch(error => {
             console.log(`${error}`)
         })
-    })
-
-
-
-app.listen(8080, function(){
-    console.log('Listening on port 8080');
-});
+    });
 
 app.get('/api/google', function(req, res){
     fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+Sydney&key=AIzaSyCimBnFkoA9Bb1y23hJqngTpjmjz_Z-gWs`)
@@ -128,4 +122,9 @@ app.get('/api/google', function(req, res){
         .catch(function(error) {
         // something went wrong. let's sort it out
           });
-      })
+      });
+
+
+app.listen(8080, function(){
+    console.log('Listening on port 8080');
+});

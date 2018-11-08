@@ -18,3 +18,17 @@ export function receiveFlights(APIResult) {
         flightList: APIResult.data
     }
 }
+
+export function setStartDate(date) {
+    return {
+        type: 'UPDATE_START',
+        date: date
+    }
+}
+
+export function setEndDate(date) {
+    return {
+        type: 'UPDATE_END',
+        date: date
+    }
+}

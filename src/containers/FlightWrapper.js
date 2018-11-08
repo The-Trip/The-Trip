@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import Flight from '../components/Flight';
-import { fetchFlights } from '../actions/tomactions';
+import {fetchFlights, setEndDate, setStartDate} from '../actions/tomactions';
 
 const mapStateToProps = state => {
     return {
         flightResults: state.flightAPIResults,
+        startDate: state.startDate,
+        endDate: state.endDate
     }
 };
 
@@ -26,6 +28,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchFlights: () => dispatch(fetchFlights()),
+        setStartDate: (date) => dispatch(setStartDate(date)),
+        setEndDate: (date) => dispatch(setEndDate(date))
     };
 };
 
