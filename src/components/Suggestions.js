@@ -3,7 +3,17 @@ import SuggestionInputContainer from "../containers/SuggestionInputContainer.js"
 import SuggestionItem from "./SuggestionItem.js";
 import '../styles/components/Suggestions.scss';
 
-function Suggestions({ voting }) {
+class Suggestions extends React.Component{
+    
+  constructor() {
+      super();
+  }
+
+  componentDidMount(){
+      this.props.fetchSuggestionsFromDB(this.props.tripId)
+  }
+
+  render() {
   return (
    
         <React.Fragment>
@@ -21,13 +31,14 @@ function Suggestions({ voting }) {
             </ul>
           </header>
 
-          <SuggestionItem handleVote={voting} />
+          <SuggestionItem />
 
           </section>
 
         </React.Fragment>
     
   );
+}
 }
 
 export default Suggestions;

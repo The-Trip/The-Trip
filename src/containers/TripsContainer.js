@@ -14,9 +14,9 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchTripsFromDB: (userId) =>
             dispatch(fetchTripsFromDB(userId)),
-            handleClick: view => {
-                dispatch(setView('trip-suggestions'));
-            }
+        handleClick: view => {
+            dispatch(setView('trip-suggestions'));
+        }
         }
 
     }

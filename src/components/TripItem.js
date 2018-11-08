@@ -10,7 +10,7 @@ function TripItem({}){
                     <article className="trip__card">
                         
                         <header className="trip__header">
-                            <h1 className="trip__title">{destination}</h3>
+                            <h1 className="trip__title">{destination}</h1>
                             <h2 className="trip__destination">
                                 {/* [array of trip members by {fname}]
                                 last in array to be prepended by "and" , appended by 's */}
