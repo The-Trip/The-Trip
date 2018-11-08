@@ -42,7 +42,7 @@ app.post("/api/trip", (req,res) =>{
     console.log(`${randomURLString} ${req.body.trip.name} ${req.body.trip.origin} ${req.body.trip.destination} ${req.body.user.id}`)
 
     db.one(
-        `INSERT INTO trip (trip_url, trip_name, origin, destination, trip_owner_id)
+        `INSERT INTO trip (url, name, origin, destination, customer_id)
             VALUES($1,$2,$3,$4,$5) RETURNING id`,
             [randomURLString, req.body.trip.name, req.body.trip.origin, req.body.trip.destination, req.body.user.id])
         .then(trip => {
@@ -58,7 +58,7 @@ app.post("/api/trip", (req,res) =>{
 
 app.post("/api/suggestion", (req, res) => {
     console.log(req.body)
-    db.one(`INSERT INTO suggestion (place, place_comment, trip_id, suggester_id)
+    db.one(`INSERT INTO suggestion (place, comment, trip_id, customer_id)
                 VALUES ($1, $2, $3, $4) RETURNING id`, [req.body.suggestion.place, req.body.suggestion.comment, req.body.trip, req.body.user])
         .then(suggestion => {
             return res.json({suggestionID: suggestion.id})
@@ -73,7 +73,7 @@ app.post("/api/customer", (req, res) => {
     bcrypt.hash(req.body.password, saltRounds)
         .then(function(hash) {
              return db.one(
-                `INSERT INTO customer (fname, email, password, hash) VALUES ($1, $2, $3, $4) RETURNING id`,
+                `INSERT INTO customer (first_name, email, password, hash) VALUES ($1, $2, $3, $4) RETURNING id`,
                 [req.body.fname, req.body.email, req.body.password, hash])
         })
         .then(result => {
@@ -81,6 +81,34 @@ app.post("/api/customer", (req, res) => {
         })
         .catch(error => res.json({ error: error.message }));
 }); // allows a customer to be added to DB. Returns their new customer ID if success
+
+
+app.get('/api/user/:id/trip', function (req, res) {
+    const userId = req.params.id
+    console.log(req.params)
+    db.any('SELECT * FROM trip WHERE customer_id = ($1)', [userId])
+      .then(function(data){
+        console.log(data)
+        res.json(data)
+      })
+        .catch(error => {
+            console.log(`${error}`)
+        })
+    })
+
+app.get('/api/trip/:id/suggestion', function (req, res) {
+    const tripId = req.params.id
+    db.any('SELECT * FROM suggestion WHERE trip_id = $1', [tripId])
+      .then(function(data){
+        console.log(data)
+        res.json(data)
+      })
+        .catch(error => {
+            console.log(`${error}`)
+        })
+    })
+
+
 
 app.listen(8080, function(){
     console.log('Listening on port 8080');
