@@ -14,13 +14,15 @@ class Suggestions extends React.Component{
   }
 
   render() {
+    console.log(this.props.suggestions)
   return (
    
         <React.Fragment>
         <section className="suggestions">
 
           <header className="suggestions__header">
-            <h1 className="suggestions__title">{trip.destination}</h1>
+            <h1 className="suggestions__title">{this.props.trip.id}</h1>
+
 
           <SuggestionInputContainer />
 
@@ -31,7 +33,11 @@ class Suggestions extends React.Component{
             </ul>
           </header>
 
-          <SuggestionItem />
+          {this.props.suggestions.map((suggestion)=> {
+              return (
+                  <SuggestionItem key={suggestion.id} suggestion={suggestion} />
+              )
+          })}
 
           </section>
 

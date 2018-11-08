@@ -7,7 +7,6 @@ export function suggestionInputToState(name, value ) {
 }
 
 export function addSuggestionToDB(){
-    console.log('fetch')
     return function(dispatch, getState){
     return fetch("/api/suggestion", {
             method: "post",
@@ -40,15 +39,12 @@ export function setView(view) {
 
 export function fetchTripsFromDB(userId){
     return function(dispatch, getState){
-        console.log(userId)
       fetch(`/api/user/${userId}/trip`)
       .then(response => response.json())
       .then(result => {
-        console.log(result)
         dispatch(receiveTrips(result))
       })
       .catch(function(error) {
-        console.log(error)
     });
     }
   }

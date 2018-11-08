@@ -99,7 +99,7 @@ app.get('/api/user/:id/trip', function (req, res) {
 
 app.get('/api/trip/:id/suggestion', function (req, res) {
     const tripId = req.params.id
-    db.any('SELECT * FROM suggestion WHERE trip_id = $1', [tripId])
+    db.any('SELECT suggestion.id, suggestion.place, suggestion.comment, trip_id, suggestion.customer_id, customer.first_name FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id', [tripId])
       .then(function(data){
         console.log(data)
         res.json(data)
