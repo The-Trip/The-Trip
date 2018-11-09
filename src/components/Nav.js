@@ -5,17 +5,25 @@ import { NavLink } from "react-router-dom";
 
 function Nav () {
   return (
-        <header className="app__header">
-            <h1 className="app__title">The Trip</h1>
 
-            <nav className="nav">
-                <ul className="nav__menu menu--settings">
-                        <li className="nav__menuitem"><NavLink to="/login/" activeClassName="active">Login</NavLink></li>
-                        <li className="nav__menuitem"><NavLink to="/trip/" activeClassName="active">Your Trips</NavLink></li>
-                        <li className="nav__menuitem"><NavLink to="/create-trip/" activeClassName="active">Create a Trip</NavLink></li>       
-                </ul>
-            </nav>
+        <header className="sitehead shrink">
+
+        <nav className="sitehead__nav">
+
+           <NavLink to="/create-trip/" activeClassName="active" className="nav__item">Trip</NavLink>
+
+            <NavLink to="/trip/" activeClassName="active" className="nav__item"><i className="far fa-user"></i></NavLink>
+
+        </nav>
+
+        <h1 className="sitehead__title">The Trip</h1>
+
+        <div className="sitehead__logout">
+        <NavLink to="/login/" activeClassName="active" className="nav__item"><i className="fas fa-sign-in-alt"></i></NavLink></div>
+
         </header>
+        
+
   );
 }
 
