@@ -1,10 +1,11 @@
 import React from 'react';
+import PlaceResultsContainer from "../containers/PlaceResultsContainer.js";
 
 function SuggestionInput({handleChange,handleSubmit}) {
 
     return (
-        <section className="suggestion-create">
 
+        <section className="suggestion-create">
             <header className="suggestion-create__header">
                 <h2 className="suggestion-create__title">
                 {/* Make suggestions for [array of trip members by {fname}] last in array to be prepended by "and" , appended by 's {trip.name} trip */}
@@ -22,6 +23,7 @@ function SuggestionInput({handleChange,handleSubmit}) {
                         onChange={event => handleChange(event)}
                         required /><span className="validity"></span>
                 </div>
+                <PlaceResultsContainer />
                 <div>
                     <label className="suggestion-frm__commentlabel" htmlFor="comment">Why should we go there?</label>
                     <textarea 
