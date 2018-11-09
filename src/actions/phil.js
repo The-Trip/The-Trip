@@ -1,3 +1,6 @@
+import { googleFetch} from '../actions/chris';
+
+
 export function suggestionInputToState(name, value ) {
     return {
         type: 'SET_SUGGESTION_INPUT',
@@ -34,9 +37,12 @@ export function addSuggestionToDB(tripId){
             .then(response => response.json())
 // TODO - Create response in server.js
             .then(data => {
+                dispatch(suggestionsFromDB(data));
+                dispatch(googleFetch());
             })
     }
 }
+
 
 export function addUserToDB(){
     return function(dispatch, getState){

@@ -39,6 +39,7 @@ const getApiAndEmit = async socket => {
   };
 
 
+const api = process.env.GOOGLE_API
 const tripWordsArray = ['trip','holiday','vacation','break','rest','recess',
                         'tour', 'journey','voyage','vacay','hols'];
 
@@ -58,14 +59,14 @@ app.post("/api/login", (req, res) => {
 }); //allows a customer to login - NOTE USES PASSWORD NOT BCRYPT HASH ATM
 
 app.post("/api/trip", (req,res) =>{
-    console.log(req.body);
+    // console.log(req.body);
     const randomNum = Math.floor(Math.random()*tripWordsArray.length);
     const randomArrayValue = tripWordsArray[randomNum];
     const destinationSplit = req.body.trip.destination.split(" ");
     const destinationJoin = destinationSplit.join("-");
     const randomURLString = `${req.body.user.name}-${destinationJoin}-${randomArrayValue}`;
     
-    console.log(`${randomURLString} ${req.body.trip.name} ${req.body.trip.origin} ${req.body.trip.destination} ${req.body.user.id}`)
+    // console.log(`${randomURLString} ${req.body.trip.name} ${req.body.trip.origin} ${req.body.trip.destination} ${req.body.user.id}`)
 
 
     db.one(
@@ -78,7 +79,7 @@ app.post("/api/trip", (req,res) =>{
             return res.json(response)
         })
         .catch(error => {
-            console.log(error.stack)
+            // console.log(error.stack)
             res.json({error: error.message})
         })
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
@@ -109,7 +110,6 @@ app.post("/api/customer", (req, res) => {
         .catch(error => res.json({ error: error.message }));
 }); // allows a customer to be added to DB. Returns their new customer ID if success
 
-
 app.get('/api/user/:id/trip', function (req, res) {
     const userId = req.params.id
     console.log(req.params)
@@ -136,24 +136,24 @@ app.get('/api/trip/:id/suggestion', function (req, res) {
     })
 
 
+app.post('/api/google', function(req, res){
+    
+    // fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${req.body.place}&inputtype=textquery&fields=photos,formatted_address,name,rating,type,geometry&key=${api}`)
+    fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${req.body.place}&key=${api}`)
+  
+    .then(function(response) {
+            return response.json();
+            })
+        .then(data => {
+            return res.json(data.results)
+          })
+        .catch(function(error) {
+          });
+      })
+
+app.get('*', (req, res) => res.sendFile(__dirname + '/index.html'));
 
 server.listen(8080, function(){
     console.log('Listening on port 8080');
 });
 
-app.get('/api/google', function(req, res){
-    fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+Sydney&key=AIzaSyCimBnFkoA9Bb1y23hJqngTpjmjz_Z-gWs`)
-        .then(function(response) {
-            return response.json();
-            })
-        .then(data => {
-            // console.log(data);
-            // alert("I am fetching")
-            res.json(data)
-          })
-        .catch(function(error) {
-        // something went wrong. let's sort it out
-          });
-      })
-
-app.get('*', (req, res) => res.sendFile(__dirname + '/index.html'));

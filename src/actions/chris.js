@@ -8,11 +8,11 @@ export function setTripState(name, value ) {
 
 export function addNewTrip(){
    
-    console.log('fetch')
+    console.log('post new trip')
     return function(dispatch, getState){
     return fetch("/api/trip", {
             method: "post",
-            body: JSON.stringify({trip:getState().tripForm,user:getState().user}),
+            body: JSON.stringify({trip:getState().tripForm, user:getState().user}),
             headers: {
               "Content-Type": "application/json"
             }
@@ -20,7 +20,6 @@ export function addNewTrip(){
             .then(response => response.json())
             .then(data => {
                 dispatch(createTrip(data));
-                dispatch(googleFetch(location))
             })
     }
 }
@@ -35,36 +34,23 @@ export function createTrip(tripName, tripDestination ) {
 }
 
 
-export function fetchQuestions(){
-    return function(dispatch){
-        return fetch('https://opentdb.com/api.php?amount=50&difficulty=easy&type=multiple')
-            .then(response => response.json())
-            .then(data => {
-                dispatch(receiveQuestions(data));
-            })
-    }
-}
-
-export function receiveQuestions(APIResult) {
-    return {
-        type: 'RECEIVE_QUESTIONS',
-        fullQuestionList: APIResult.results
-    }
-}
-
-
-export function googleFetch(location) {
+export function googleFetch() {
         console.log('google fetch')
         return function(dispatch, getState){
-        return fetch("/api/google", {
-                method: "get",
-                body: JSON.stringify(getState().location),
+            // const info = getState().tripForm.destination
+            const place = getState().suggestionForm.place
+            const location = getState().tripForm.destination
+            console.log(place, location);
+                fetch("/api/google", {
+                method: "post",
+                body: JSON.stringify({place}, {location}),
                 headers: {
                   "Content-Type": "application/json"
                 }
               })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('google info fetch', data)
                     dispatch(storeGoogleFetch(data));
                 })
         }
@@ -79,3 +65,11 @@ export function googleFetch(location) {
         }
     }
     
+    export function setSelectedPlace(place) {
+        console.log("click")
+        return {
+            type: 'STORE_PLACE',
+           selectedPlaceInfo: place
+            
+        }
+    }
