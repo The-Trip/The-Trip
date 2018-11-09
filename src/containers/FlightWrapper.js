@@ -1,20 +1,22 @@
 import { connect } from 'react-redux';
 import Flight from '../components/Flight';
-import {fetchFlights, setEndDate, setStartDate} from '../actions/tomactions';
+import {fetchFlights, setCityFrom, setCityTo, setEndDate, setStartDate} from '../actions/tomactions';
 
 const mapStateToProps = state => {
     return {
         flightResults: state.flightAPIResults,
         startDate: state.startDate,
-        endDate: state.endDate
+        endDate: state.endDate,
+        cityFrom : state.cityFrom,
+        cityTo: state.cityTo
     }
 };
 
 //Currently only one way flights, need to do round trip
 
 // price is in .price
-//departure time is in .dTimeUTC
-//arrival time is in .aTimeUTC
+//departure time is in .dTime
+//arrival time is in .aTime
 //flight duration is in .fly_duration
 // city from is .cityFrom
 //city to is .cityTo
@@ -29,7 +31,9 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchFlights: () => dispatch(fetchFlights()),
         setStartDate: (date) => dispatch(setStartDate(date)),
-        setEndDate: (date) => dispatch(setEndDate(date))
+        setEndDate: (date) => dispatch(setEndDate(date)),
+        // setFlightsCityFrom: (city) => dispatch(setCityFrom(city)),
+        // setFlightsCityTo: (city) => dispatch(setCityTo(city)),
     };
 };
 

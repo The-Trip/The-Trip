@@ -14,6 +14,27 @@ const db = pgp({
     password: process.env.DB_PASSWORD
 });
 
+const airports = require('airport-codes/airports.json')
+    .filter(function(cityObject){
+        return !cityObject.name.includes("Heli")
+    })
+    .filter(function(cityObject){
+        return !cityObject.name.includes("Bus")
+    })
+    .filter(function(cityObject){
+        return cityObject.icao !== "\\N" || cityObject.name.startsWith('All') //UNLESS cityObject.name CONTAINS "All"
+    })
+    .filter(function(cityObject){
+        return cityObject.iata !== ""
+    })
+    .map(cityObject => Object.assign(cityObject, {value: cityObject.iata, label: `${cityObject.city} - ${cityObject.name} - ${cityObject.iata} - ${cityObject.country}`}));
+
+function filterAirport(airport, query) {
+    return airport.city.startsWith(query) || airport.iata === query
+}
+
+
+
 const tripWordsArray = ['trip','holiday','vacation','break','rest','recess',
                         'tour', 'journey','voyage','vacay','hols'];
 
@@ -22,6 +43,14 @@ app.use('/static', express.static('static'));
 app.use('/dist', express.static('dist'));
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+
+app.get('/api/airports', function (req, res) {
+     const city = req.query.query;
+     const results = airports.filter(function(airport){
+         return filterAirport(airport, city)
+         });
+    res.json(results)
+});
 
 app.post("/api/login", (req, res) => {
     db.one(

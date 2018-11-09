@@ -5,6 +5,8 @@ import user from './user'
 import view from './view'
 import startDate from './startDate'
 import endDate from './endDate'
+import flightsToCity from './flightsToCity'
+import flightsFromCity from './flightsFromCity'
 
 import suggestionForm from './suggestionForm'
 import setFlightsAPIResults from './setFlightsAPIResults'
@@ -18,5 +20,7 @@ export default combineReducers({
     user,
     view,
     startDate,
-    endDate
+    endDate,
+    cityFrom: flightsFromCity,
+    cityTo: flightsToCity
 });
