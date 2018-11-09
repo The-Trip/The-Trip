@@ -1,7 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import '../styles/components/TripItem.scss';
 
-function TripItem({}){
+function TripItem({trip}){
+    console.log(trip)
+    const to = `/trip/${trip.id}/suggestion`
 
         return (
             <div>
@@ -10,23 +14,23 @@ function TripItem({}){
                     <article className="trip__card">
                         
                         <header className="trip__header">
-                            <h1 className="trip__title">{destination}</h1>
+                            <h1 className="trip__title">{trip.name}</h1>
                             <h2 className="trip__destination">
                                 {/* [array of trip members by {fname}]
                                 last in array to be prepended by "and" , appended by 's */}
-                                {tripname}</h2>
+                                {trip.destination}</h2>
                         </header>
                     
                     
                             {/* IF Conditional content {!!tripdetails && } */}
 
                             <p className="trip__details">
-                                {tripdetails}
+                                {trip.details}
                             </p>
                             
 
                         <footer className="trip__footer">
-                            View Suggestions <span>{array.length}</span>
+                            <Link to={to}>View Suggestions</Link> <span></span>
                         </footer>
                         
                     </article>

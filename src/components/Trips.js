@@ -32,7 +32,7 @@ class Trips extends React.Component{
                             return (
                                 // <p key={trip.id} onClick={()=>this.props.handleClick(trip.id)}>{trip.name}</p>
 
-                                <TripItem key={trip.id} />
+                                <TripItem key={trip.id} trip={trip} />
                             )
                         })}
                     

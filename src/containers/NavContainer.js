@@ -3,7 +3,6 @@ import Nav from '../components/Nav.js'
 
 const mapStateToProps = state => {
   return {
-    view: state.view,
   };
 };
 
