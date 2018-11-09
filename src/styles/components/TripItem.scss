@@ -1,1 +1,49 @@
 @import '../base/_variables.scss';
+
+.trip__card {
+    background: $white;
+    
+    &__footer {
+        background: $secondary-color
+    }
+    .card__title {
+        text-transform: uppercase;
+        font-size: 1.5rem;
+    }
+    .card__footer {
+        background: $secondary-color;
+        display: flex;
+        a {
+           text-decoration: none; 
+        }
+
+        .card__itinerary {
+            padding: $main-padding;
+            flex: 1;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .card__suggestions {
+            padding: $main-padding;
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            .suggestion__item {
+                display: inline-block;
+                width:80%;
+                border-radius:50%;
+                text-align:center;
+                font-size: 1rem;
+                padding:40% 0;
+                line-height:0;
+                position:relative;
+                background:$primary-color;
+                color: $light-color;
+            }
+        }
+        
+    }
+}

@@ -22,11 +22,13 @@ function App() {
       <div>
         <SocketContainer />
         <Nav />
+        <main>
         <Route path="/" exact component={HomeContainer} />
         <Route path="/trip" exact component={TripsContainer} />
         <Route path="/trip/:id/suggestion"  component={SuggestionsContainer} />
         <Route path="/trip/create"  component={TripCreationContainer} />
         <Route path="/login"  component={LoginContainer} />
+        </main>
         <Footer />
       </div> 
   )

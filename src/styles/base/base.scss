@@ -24,12 +24,27 @@ body {
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: $headline-font;
+  font-style: normal;
 }
-main, .app__footer, .app__header {
+figure{ margin: 0 }
+
+a {
+  color: $primary-color{
+  }
+  &:hover {
+    color: lighten($primary-color, 10% );
+  }
+}
+
+.container, .app__footer {
   padding-left: $main-padding *1.5;
   padding-right: $main-padding *1.5; 
   margin: 0 auto;
 }  
+main {
+  margin-top: $main-padding *6;
+}
+
 .menu--settings {
   list-style-type: none;
   padding-left: 0;
