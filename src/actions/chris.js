@@ -12,7 +12,7 @@ export function addNewTrip(){
     return function(dispatch, getState){
     return fetch("/api/trip", {
             method: "post",
-            body: JSON.stringify({trip:getState().tripForm,user:getState().user}),
+            body: JSON.stringify({trip:getState().tripForm, user:getState().user}),
             headers: {
               "Content-Type": "application/json"
             }
@@ -20,7 +20,6 @@ export function addNewTrip(){
             .then(response => response.json())
             .then(data => {
                 dispatch(createTrip(data));
-                dispatch(googleFetch(location));
             })
     }
 }
@@ -35,12 +34,16 @@ export function createTrip(tripName, tripDestination ) {
 }
 
 
-export function googleFetch(location) {
+export function googleFetch() {
         console.log('google fetch')
         return function(dispatch, getState){
-        return fetch("/api/google", {
-                method: "get",
-                body: JSON.stringify(getState().tripForm.destination),
+            // const info = getState().tripForm.destination
+            const place = getState().suggestionForm.place
+            const location = getState().tripForm.destination
+            console.log(place, location);
+                fetch("/api/google", {
+                method: "post",
+                body: JSON.stringify({place}, {location}),
                 headers: {
                   "Content-Type": "application/json"
                 }
@@ -62,3 +65,11 @@ export function googleFetch(location) {
         }
     }
     
+    export function setSelectedPlace(place) {
+        console.log("click")
+        return {
+            type: 'STORE_PLACE',
+           selectedPlaceInfo: place
+            
+        }
+    }

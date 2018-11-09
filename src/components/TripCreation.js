@@ -37,6 +37,7 @@ class TripCreation extends React.Component {
         // defaultValue="Destination"
         onChange={event => this.props.handleChange(event)}
       />
+
       <button
         type="submit"
         >Submit</button>

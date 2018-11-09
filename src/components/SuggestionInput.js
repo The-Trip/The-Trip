@@ -1,4 +1,5 @@
 import React from 'react';
+import PlaceResultsContainer from "../containers/PlaceResultsContainer.js";
 
 function SuggestionInput({handleChange,handleSubmit}) {
 
@@ -19,6 +20,8 @@ function SuggestionInput({handleChange,handleSubmit}) {
                 // defaultValue="Trip Name"
                 onChange={event => handleChange(event)}
             />
+            <PlaceResultsContainer />
+            
             <input
                 id="comment"
                 type="textArea"

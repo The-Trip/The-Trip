@@ -1,3 +1,6 @@
+import { googleFetch} from '../actions/chris';
+
+
 export function suggestionInputToState(name, value ) {
     return {
         type: 'SET_SUGGESTION_INPUT',
@@ -20,6 +23,7 @@ export function addSuggestionToDB(){
             .then(response => response.json())
             .then(data => {
                 dispatch(suggestionsFromDB(data));
+                dispatch(googleFetch());
             })
     }
 }
