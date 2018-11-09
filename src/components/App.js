@@ -10,6 +10,7 @@ import TripsContainer from '../containers/TripsContainer';
 import SuggestionsContainer from '../containers/SuggestionsContainer';
 import TripCreationContainer from '../containers/TripCreationContainer';
 import LoginContainer from '../containers/LoginContainer';
+import SocketContainer from '../containers/SocketContainer'
 
 
 import '../styles/base/base.scss';
@@ -19,6 +20,7 @@ function App() {
 
   return (
       <div>
+        <SocketContainer />
         <Nav />
         <main>
         <Route path="/" exact component={HomeContainer} />

@@ -1,3 +1,6 @@
+import { googleFetch} from '../actions/chris';
+
+
 export function suggestionInputToState(name, value ) {
     return {
         type: 'SET_SUGGESTION_INPUT',
@@ -22,21 +25,24 @@ export function registerToState(name, value ) {
     }
 }
 
-export function addSuggestionToDB(){
+export function addSuggestionToDB(tripId){
     return function(dispatch, getState){
     return fetch("/api/suggestion", {
             method: "post",
-            body: JSON.stringify({suggestion:getState().suggestionForm,user:getState().user.id,trip:getState().trip.id}),
+            body: JSON.stringify({suggestion:getState().suggestionForm,user:getState().user.id,trip:tripId}),
             headers: {
               "Content-Type": "application/json"
             }
           })
             .then(response => response.json())
+// TODO - Create response in server.js
             .then(data => {
                 dispatch(suggestionsFromDB(data));
+                dispatch(googleFetch());
             })
     }
 }
+
 
 export function addUserToDB(){
     return function(dispatch, getState){
