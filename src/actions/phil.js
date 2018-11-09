@@ -6,11 +6,43 @@ export function suggestionInputToState(name, value ) {
     }
 }
 
+export function loginToState(name, value ) {
+    return {
+        type: 'SET_LOGIN_INPUT',
+        name,
+        value
+    }
+}
+
+export function registerToState(name, value ) {
+    return {
+        type: 'SET_REGISTER_INPUT',
+        name,
+        value
+    }
+}
+
 export function addSuggestionToDB(){
     return function(dispatch, getState){
     return fetch("/api/suggestion", {
             method: "post",
             body: JSON.stringify({suggestion:getState().suggestionForm,user:getState().user.id,trip:getState().trip.id}),
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+                dispatch(suggestionsFromDB(data));
+            })
+    }
+}
+
+export function addUserToDB(){
+    return function(dispatch, getState){
+    return fetch("/api/suggestion", {
+            method: "post",
+            body: JSON.stringify(getState().registerForm),
             headers: {
               "Content-Type": "application/json"
             }

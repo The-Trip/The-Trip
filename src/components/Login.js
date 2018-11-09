@@ -1,7 +1,7 @@
 import React from 'react'
-import '../styles/components/Login.scss';
+// import '../styles/components/Login.scss';
 
-function Login() {
+function Login({handleChangeRegister, handleChangeLogin, handleSubmitLogin, handleSubmitRegister}) {
 
   return (
     <React.Fragment>
@@ -13,14 +13,14 @@ function Login() {
                 <h1 className="login__title">Login</h1>
             </header>
 
-            <form className="login-frm" onSubmit={event => this.props.handleSubmit(event)}>
+            <form className="login-frm" onSubmit={event => handleSubmitLogin(event)}>
 
                 <div>
                     <label className="login-frm__emaillabel" htmlFor="loginEmail">Email</label>
                     <input 
                     className="login-frm__email" 
                     type="email" 
-                    onChange={event => this.props.handleChange(event)}
+                    onChange={event => handleChangeLogin(event)}
                     name="loginEmail" 
                     required />
                     <span className="validity"></span>
@@ -31,7 +31,7 @@ function Login() {
                     <input 
                     className="login-frm__password" 
                     type="password" 
-                    onChange={event => this.props.handleChange(event)}
+                    onChange={event => handleChangeLogin(event)}
                     name="loginPassword"
                     required />
                     <span className="validity"></span>
@@ -48,13 +48,13 @@ function Login() {
                 <h2 className="registration__title">Register</h2>
             </header>
 
-            <form className="registration-frm" onSubmit={event => this.props.handleSubmit(event)}>
+            <form className="registration-frm" onSubmit={event => handleSubmitRegister(event)}>
 
                 <div>
                     <label className="registration-frm__namelabel" htmlFor="firstName">Name</label>
                     <input
                     className="registration-frm__name" 
-                    onChange={event => this.props.handleChange(event)}
+                    onChange={event => handleChangeRegister(event)}
                     type="text" name="firstName" 
                     pattern="[A-Za-z]{3,}" required /><span className="validity"></span>
                 </div>
@@ -64,9 +64,9 @@ function Login() {
                     <input 
                     className="registration-frm__email"  
                     type="email" 
-                    onChange={event => this.props.handleChange(event)}
+                    onChange={event => handleChangeRegister(event)}
                     name="registrationEmail" 
-                    value={} 
+                    value="to add"
                     required /><span className="validity"></span>
                 </div>
 
@@ -75,7 +75,7 @@ function Login() {
                     <input 
                     className="registration-frm__password" 
                     type="password" 
-                    onChange={event => this.props.handleChange(event)}
+                    onChange={event => handleChangeRegister(event)}
                     name="registrationPassword" 
                     required /><span className="validity"></span>
                 </div>

@@ -4,6 +4,8 @@ import tripForm from './tripForm'
 import trips from './trips'
 import user from './user'
 import view from './view'
+import loginForm from './loginForm'
+
 
 import suggestionForm from './suggestionForm'
 import suggestions from './suggestions'
@@ -18,5 +20,6 @@ export default combineReducers({
     suggestions,
     trips,
     user,
-    view
+    view,
+    loginForm
 });
