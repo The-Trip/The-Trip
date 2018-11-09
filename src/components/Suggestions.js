@@ -9,6 +9,8 @@ class Suggestions extends React.Component{
       super();
   }
 
+
+
   componentDidMount(){
       this.props.fetchSuggestionsFromDB(this.props.tripId)
   }
@@ -24,7 +26,7 @@ class Suggestions extends React.Component{
             <h1 className="suggestions__title">{this.props.trip.id}</h1>
 
 
-          <SuggestionInputContainer />
+          <SuggestionInputContainer tripId={this.props.tripId} />
 
           {/* categories to be incorporated (google places?) */}
             <ul className="suggestions__categories menu--settings">

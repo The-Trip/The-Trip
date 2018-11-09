@@ -3,9 +3,11 @@ import SuggestionInput from '../components/SuggestionInput.js'
 import { suggestionInputToState, addSuggestionToDB } from '../actions/phil';
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     suggestionInput: state.suggestionInput,
+    tripId: ownProps.tripId
+    ,
   };
 };
 
@@ -17,9 +19,9 @@ const mapDispatchToProps = dispatch => {
             dispatch(suggestionInputToState(event.target.name, event.target.value))
         },
 
-        handleSubmit: event => {
+        handleSubmit: (event, tripId) => {
             event.preventDefault();
-            dispatch(addSuggestionToDB());
+            dispatch(addSuggestionToDB(tripId));
         }
     }
   };
