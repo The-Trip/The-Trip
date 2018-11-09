@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS customer;
 -- IMMUTABLE BASE TABLE FOR customer(S) (ONE-)
 CREATE TABLE customer (
 id serial,
-fname varchar(50) NOT NULL,
+first_name varchar(50) NOT NULL,
 email VARCHAR(50) NOT NULL UNIQUE,
 password VARCHAR(15) NOT NULL,
 hash VARCHAR(72),
@@ -37,23 +37,23 @@ PRIMARY KEY (id)
 -- DYNAMIC TABLE FOR TRIP(S) (MANY-)
 CREATE TABLE trip (
 id serial,
-trip_url VARCHAR(100) NOT NULL UNIQUE,
-trip_name VARCHAR(50) NOT NULL UNIQUE,
+url VARCHAR(100) NOT NULL UNIQUE,
+name VARCHAR(50) NOT NULL UNIQUE,
 origin VARCHAR(50) NOT NULL,
 destination VARCHAR(50) NOT NULL,
-trip_owner_id INT NOT NULL,
+customer_id INT NOT NULL,
 PRIMARY KEY (id),
-FOREIGN KEY (trip_owner_id) REFERENCES customer (id)
+FOREIGN KEY (customer_id) REFERENCES customer (id)
 );
 
 -- DYNAMIC MAPPING TABLE FOR SUGGESTION(S) (MANY-)
 CREATE TABLE suggestion (
 id serial,
 place VARCHAR(50) NOT NULL,
-place_comment TEXT NOT NULL,
+comment TEXT NOT NULL,
 trip_id INT NOT NULL,
-suggester_id INT NOT NULL,
+customer_id INT NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (trip_id) REFERENCES trip (id),
-FOREIGN KEY (suggester_id) REFERENCES customer (id)
+FOREIGN KEY (customer_id) REFERENCES customer (id)
 );
