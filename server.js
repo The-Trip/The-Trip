@@ -13,6 +13,32 @@ const db = pgp({
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD
 });
+const http = require("http");
+const socketIo = require("socket.io");
+
+const server = http.createServer(app);
+const io = socketIo(server);
+
+io.on("connection", socket => {
+    console.log("New client connected"), setInterval(
+      () => getApiAndEmit(socket),
+      10000
+    );
+    socket.on("disconnect", () => console.log("Client disconnected"));
+  });
+
+const getApiAndEmit = async socket => {
+    try {
+      const res = await fetch(
+        "https://api.darksky.net/forecast/81723aec02f11fffdcebd670b516a840/43.7695,11.2558"
+      ).then(res => res.json());
+      socket.emit("FromAPI", res.currently.temperature);
+    } catch (error) {
+      console.error(`Error: ${error.stack}`);
+    }
+  };
+
+
 const api = process.env.GOOGLE_API
 const tripWordsArray = ['trip','holiday','vacation','break','rest','recess',
                         'tour', 'journey','voyage','vacay','hols'];
@@ -42,10 +68,11 @@ app.post("/api/trip", (req,res) =>{
     
     // console.log(`${randomURLString} ${req.body.trip.name} ${req.body.trip.origin} ${req.body.trip.destination} ${req.body.user.id}`)
 
+
     db.one(
         `INSERT INTO trip (url, name, origin, destination, customer_id)
             VALUES($1,$2,$3,$4,$5) RETURNING id`,
-            [randomURLString, req.body.trip.name, req.body.trip.origin, req.body.trip.destination, req.body.user.id])
+            [randomURLString, req.body.trip.tripName, req.body.trip.origin, req.body.trip.destination, req.body.user.id])
         .then(trip => {
             console.log('db insert done')
             const response = {id: trip.id, fname: req.body.fname, destination: req.body.destination};
@@ -126,7 +153,7 @@ app.post('/api/google', function(req, res){
 
 app.get('*', (req, res) => res.sendFile(__dirname + '/index.html'));
 
-app.listen(8080, function(){
+server.listen(8080, function(){
     console.log('Listening on port 8080');
 });
 
