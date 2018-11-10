@@ -2,6 +2,9 @@ import React from "react";
 import SuggestionInputContainer from "../containers/SuggestionInputContainer.js";
 import SuggestionItem from "./SuggestionItem.js";
 import '../styles/components/Suggestions.scss';
+import SuggestionInputFinalContainer from "../containers/SuggestionInputFinalContainer.js";
+
+
 
 class Suggestions extends React.Component{
     
@@ -16,7 +19,6 @@ class Suggestions extends React.Component{
   }
 
   render() {
-    console.log(this.props.suggestions)
   return (
    
         <React.Fragment>
@@ -25,8 +27,11 @@ class Suggestions extends React.Component{
           <header className="suggestions__header">
             <h1 className="suggestions__title">{this.props.trip.id}</h1>
 
-
-          <SuggestionInputContainer tripId={this.props.tripId} />
+{this.props.selectedPlace ? 
+<SuggestionInputFinalContainer tripId={this.props.tripId}/> :  
+<SuggestionInputContainer tripId={this.props.tripId} />}
+         
+          
 
           {/* categories to be incorporated (google places?) */}
             <ul className="suggestions__categories menu--settings">

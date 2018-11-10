@@ -23,10 +23,10 @@ function SuggestionInput({handleChange,handleSubmit, tripId}) {
                         onChange={event => handleChange(event)}
                         required /><span className="validity"></span>
                 </div>
+                <button type="submit" className="suggestion-frm__submit btn btn__submit">Submit</button>
                 <PlaceResultsContainer />
-                <SuggestionInputFinalContainer />
-                
             </form>
+
         </section>
     )
   }

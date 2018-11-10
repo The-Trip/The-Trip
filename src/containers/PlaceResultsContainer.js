@@ -12,12 +12,10 @@ const mapStateToProps = state => {
 
 
 const mapDispatchToProps = dispatch => {
-
-    
+ 
     return {
         selectPlace: place => {
             dispatch(setSelectedPlace(place));
-            console.log("set selected");
      
       }
     }
@@ -25,5 +23,5 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps,mapDispatchToProps
 )(PlaceResults);

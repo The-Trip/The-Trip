@@ -12,7 +12,6 @@ class Trips extends React.Component{
     }
 
     componentDidMount(){
-        console.log(this.props.userId)
         this.props.fetchTripsFromDB(this.props.userId)
     }
 
