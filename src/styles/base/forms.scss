@@ -5,10 +5,10 @@ form {
     margin: 0 auto;
     }
 input, textarea {
-    background-color: $primary-color;
+    background-color: lighten($secondary-color, 15% );
     display: inline-block;
     transition: 300ms ease;
-    border-radius: 7px;
+    // border-radius: 7px;
     border: 0;
     margin: 0.3rem 0;
     padding: $main-padding * 0.7;
@@ -20,7 +20,7 @@ input[type=date], input[type=time] {
     padding: $main-padding * 0.5;
 }
 textarea {
-    background-color: lighten($primary-color, 30% );
+    background-color: lighten($secondary-color, 15% );
     height: 100px;
 }
 
@@ -29,13 +29,13 @@ form div {
     .validity {
         position: absolute;
         top: 50%;
-        right: -3px;
+        right: 10px;
     }
 }
 
 input:invalid + span.validity:after {
     content: '✖';
-    color: #f00;
+    color: $accent-color;
 }
 
 input:valid + span.validity:after {
@@ -50,7 +50,7 @@ label {
 	display: inline-block;
     // padding: 0.5rem 0;
     width: 100%;
-	color: lighten($primary-color, 30% );
+	color: $primary-color;
 	-webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
