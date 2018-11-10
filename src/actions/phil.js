@@ -25,19 +25,19 @@ export function registerToState(name, value ) {
     }
 }
 
-export function addSuggestionToDB(tripId){
+export function addSuggestionToDB(place, tripId){
     return function(dispatch, getState){
     return fetch("/api/suggestion", {
             method: "post",
-            body: JSON.stringify({suggestion:getState().suggestionForm,user:getState().user.id,trip:tripId}),
+            body: JSON.stringify({place:place,user:getState().user.id,trip:tripId}, ),
             headers: {
               "Content-Type": "application/json"
             }
           })
             .then(response => response.json())
 // TODO - Create response in server.js
-            .then(data => {
-                dispatch(suggestionsFromDB(data));
+            .then(() => {
+                dispatch(fetchSuggestionsFromDB(tripId));
                
             })
     }
@@ -56,6 +56,7 @@ export function addUserToDB(){
             .then(response => response.json())
             .then(data => {
                 dispatch(suggestionsFromDB(data));
+
             })
     }
 }
@@ -95,7 +96,7 @@ export function fetchTripsFromDB(userId){
         dispatch(receiveSuggestions(result))
       })
       .catch(function(error) {
-        console.log(error)
+  
     });
     }
   }

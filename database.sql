@@ -9,11 +9,11 @@ INSERT INTO trip VALUES (1, 'electric-dog', 'Mark and Emma Go Away', 'London', '
 INSERT INTO trip VALUES (2, 'messy-self', 'Jon''s Solo Adventure', 'Berlin', 'Rome',4);
 ALTER SEQUENCE trip_id_seq RESTART WITH 3 INCREMENT BY 1;
 
-INSERT INTO suggestion VALUES (1, 'Bobs Burgers', 'Best Burgers in Town', 1,2);
-INSERT INTO suggestion VALUES (2, 'Big Lady Statue', 'Amazing Views', 1,3);
-INSERT INTO suggestion VALUES (3, 'Scary Museum', 'SO SCARY', 1,3);
-INSERT INTO suggestion VALUES (4, 'The Watering Hole', 'We got durnk! Hik!', 1,3);
-INSERT INTO suggestion VALUES (5, 'Old Fighting Pit', 'Gladiators ROCK', 2,5);
+INSERT INTO suggestion VALUES (1, 'Bobs Burgers', '1440 Avenue of the Americas, New York, NY', '2efeaf42323rfwefwe', 'bar', 1,2);
+INSERT INTO suggestion VALUES (2, 'Big Lady Statue', '23 Tompkins Square Park, New York, NY', 'awdf42323rfwefwe', 'nightclub', 1,3);
+INSERT INTO suggestion VALUES (3, 'Scary Museum', '13 Chestnut Lane, New York, NY', 'wefwefwefwefewf', 'cafe', 1,3);
+INSERT INTO suggestion VALUES (4, 'The Watering Hole', '100 peartree lane, New York, NY', 'qwdqwdqwd575qwd', 'cafe', 1,3);
+INSERT INTO suggestion VALUES (5, 'Old Fighting Pit', '23, Avenue road,New York, NY', '23er23r234234qwd', 'cafe', 2,5);
 ALTER SEQUENCE suggestion_id_seq RESTART WITH 6 INCREMENT BY 1;
 
 -- ORIGIN TABLE (to amend use drop as below)
@@ -49,8 +49,10 @@ FOREIGN KEY (customer_id) REFERENCES customer (id)
 -- DYNAMIC MAPPING TABLE FOR SUGGESTION(S) (MANY-)
 CREATE TABLE suggestion (
 id serial,
-place VARCHAR(50) NOT NULL,
-comment TEXT NOT NULL,
+place_name VARCHAR(50) NOT NULL,
+place_address VARCHAR(50) NOT NULL,
+place_id VARCHAR(50) NOT NULL,
+place_category VARCHAR(50) NOT NULL,
 trip_id INT NOT NULL,
 customer_id INT NOT NULL,
 PRIMARY KEY (id),
