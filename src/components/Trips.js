@@ -13,6 +13,7 @@ class Trips extends React.Component{
 
     componentDidMount(){
         this.props.fetchTripsFromDB(this.props.userId)
+        this.props.fetchImagesFromUnsplash()
     }
 
     render() {
