@@ -19,7 +19,7 @@ class Trips extends React.Component{
         return (
             <div>
                 <React.Fragment>
-                {/* <TripCreationContainer /> */}
+                <TripCreationContainer />
                     
                     <section className="trips">
 

@@ -13,18 +13,19 @@ function TripItem({trip}){
             <div>
                 <React.Fragment>
                     
-                    <article className="trip__card">
+                    <article className="card">
                         
-                        <figure>
+                        <figure className="card__figure">
+                        <h1 className="card__destination"><span>{trip.destination}</span></h1>
                             <img src="../static/images/newyork.jpg" alt="newyork" />
                         </figure>
 
                         <header className="card__header container">
-                            <h1 className="card__title">{trip.name}</h1>
-                            <h2 className="card__destination">
+
+                            <h2 className="card__title">
                                 {/* [array of trip members by {fname}]
                                 last in array to be prepended by "and" , appended by 's */}
-                                {trip.destination}</h2>
+                                {trip.name}</h2>
                         </header>
                     
                         {/* IF Conditional content {!!tripdetails && } */}
@@ -38,17 +39,19 @@ function TripItem({trip}){
                         <footer className="card__footer">
 
                             <section className="card__itinerary">
-                            <Link to={to}>Itinerary</Link>     
+                            <Link to={to}><i className="fas fa-clipboard-list"></i> Itinerary </Link>     
                             </section>
 
                             <section className="card__suggestions">
-                            <Link to={to}>Suggestions</Link>
-                                <ul className="suggestion__list">
-                                    <li className="suggestion__item">M</li>
-                                    <li className="suggestion__item">P</li>
-                                    <li className="suggestion__item">T</li>
-                                    <li className="suggestion__item">C</li>
+                            <Link to={to} className="card__suggestions--title">Suggestions</Link>
+                            <Link to={to}>
+                                <ul className="card__suggestors menu--settings">
+                                    <li className="card__suggestor">M</li>
+                                    <li className="card__suggestor">C</li>
+                                    <li className="card__suggestor">P</li>
+                                    <li className="card__suggestor">T</li>
                                 </ul>
+                            </Link>
                             </section>
                         </footer>
                         

@@ -6,7 +6,7 @@ function TripCreation({handleChange,handleSubmit}) {
 return (
     <React.Fragment>
 
-    <section className="trip-create">
+    <section className="trip-create container">
 
       <header className="trip-create__header">
           <h1 className="trip-create__title">Create new trip</h1>

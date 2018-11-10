@@ -26,8 +26,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: $headline-font;
   font-style: normal;
 }
-figure{ margin: 0 }
-
 a {
   color: $primary-color{
   }
@@ -42,7 +40,7 @@ a {
   margin: 0 auto;
 }  
 main {
-  margin-top: $main-padding *6;
+  margin-top: $main-padding *4;
 }
 
 .menu--settings {
