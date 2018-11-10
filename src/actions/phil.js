@@ -38,7 +38,7 @@ export function addSuggestionToDB(tripId){
 // TODO - Create response in server.js
             .then(data => {
                 dispatch(suggestionsFromDB(data));
-                dispatch(googleFetch());
+               
             })
     }
 }
@@ -88,12 +88,10 @@ export function fetchTripsFromDB(userId){
   }
 
   export function fetchSuggestionsFromDB(tripId){
-    console.log('fetchSuggestions')
     return function(dispatch, getState){
       fetch(`/api/trip/${tripId}/suggestion`)
       .then(response => response.json())
       .then(result => {
-        console.log(result)
         dispatch(receiveSuggestions(result))
       })
       .catch(function(error) {

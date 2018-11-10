@@ -5,6 +5,7 @@ import trips from './trips'
 import user from './user'
 import view from './view'
 import loginForm from './loginForm'
+import selectedPlace from './selectedPlace'
 
 
 import suggestionForm from './suggestionForm'
@@ -22,5 +23,7 @@ export default combineReducers({
     googlePlaceInfo,
     suggestions,
     trips,
-    view
+    view,
+    selectedPlace,
+    loginForm
 });
