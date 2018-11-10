@@ -7,7 +7,7 @@ function SuggestionItem({suggestion}) {
       <article className="suggestion__card">
       
         <header className="suggestion__header">
-            <h1 className="suggestion__title">{suggestion.place}</h1>
+            <h1 className="suggestion__title">{suggestion.place_name}</h1>
 
             {/* {votes.filter((vote)=>vote.customerId===customerId).length < 1 && (
                 <button className="btn btn__vote btn--small" onClick={(e)=>(addVote(suggestion.id))}><i className="fas fa-plus"></i></button>
@@ -19,7 +19,8 @@ function SuggestionItem({suggestion}) {
 
         {/* IF Conditional content {!!suggestion.comment && } */}
         <p className="suggestion__comments">
-            {suggestion.comment}
+            {suggestion.place_address}
+            {suggestion.place_category}
         </p>
     
         <footer className="suggestion__footer">
