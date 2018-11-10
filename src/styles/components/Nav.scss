@@ -19,11 +19,13 @@
     position: fixed;
     text-align: center;
     display: flex;
+    
     a.nav__item {
         display: inline-block;
         color: $light-color;
         margin-right: 5px;
     }
+
     &__nav {
         flex: 1;
         display: flex;
@@ -38,6 +40,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        a {
+            color: $white;
+            text-decoration: none;
+        }
 
     }
     &__logout {
