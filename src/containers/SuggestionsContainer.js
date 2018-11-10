@@ -21,8 +21,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      fetchSuggestionsFromDB: (tripId) =>
+      fetchSuggestionsFromDB: (tripId) =>{
           dispatch(fetchSuggestionsFromDB(tripId))
+      }
       }
   }
 

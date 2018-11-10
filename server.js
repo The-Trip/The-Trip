@@ -86,9 +86,14 @@ app.post("/api/trip", (req,res) =>{
 
 app.post("/api/suggestion", (req, res) => {
     console.log(req.body)
-    db.one(`INSERT INTO suggestion (place, comment, trip_id, customer_id)
-                VALUES ($1, $2, $3, $4) RETURNING id`, [req.body.suggestion.place, req.body.suggestion.comment, req.body.trip, req.body.user])
-        .then(suggestion => {
+   
+    // db.one(`INSERT INTO suggestion (place, comment, trip_id, customer_id)
+    //             VALUES ($1, $2, $3, $4) RETURNING id`, [req.body.suggestion, req.body.suggestion.comment, req.body.trip, req.body.user])
+       
+    db.one(`INSERT INTO suggestion (place_name, place_address, place_id, place_category, trip_id, customer_id)
+            VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`, [req.body.place.name, req.body.place.formatted_address, req.body.place.place_id, req.body.place.types[0], req.body.trip, req.body.user])
+                .then(suggestion => {
+                    console.log('suggestion',suggestion)
             return res.json({suggestionID: suggestion.id})
         })
         .catch(error => {
@@ -112,10 +117,9 @@ app.post("/api/customer", (req, res) => {
 
 app.get('/api/user/:id/trip', function (req, res) {
     const userId = req.params.id
-    console.log(req.params)
+    // console.log(req.params)
     db.any('SELECT * FROM trip WHERE customer_id = ($1)', [userId])
       .then(function(data){
-        console.log(data)
         res.json(data)
       })
         .catch(error => {
@@ -124,10 +128,11 @@ app.get('/api/user/:id/trip', function (req, res) {
     })
 
 app.get('/api/trip/:id/suggestion', function (req, res) {
+    console.log('Im getting')
     const tripId = req.params.id
-    db.any('SELECT suggestion.id, suggestion.place, suggestion.comment, trip_id, suggestion.customer_id, customer.first_name FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id', [tripId])
+    db.any('SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id', [tripId])
       .then(function(data){
-        console.log(data)
+          console.log(data)
         res.json(data)
       })
         .catch(error => {
@@ -137,10 +142,6 @@ app.get('/api/trip/:id/suggestion', function (req, res) {
 
 
 app.post('/api/google', function(req, res){
-    console.log(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${req.body.place}%in%${req.body.location}&key=${api}`)
-
-    // fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${req.body.place}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=${api}`)
-    // fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${req.body.place}&inputtype=textquery&fields=photos,formatted_address,name,rating,type,geometry&key=${api}`)
     fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${req.body.place}%in%${req.body.location}&key=${api}`)
   
     .then(function(response) {

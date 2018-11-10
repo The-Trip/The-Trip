@@ -14,9 +14,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        handleClick: () => {
+        handleSubmit: (place, tripId) => {
             event.preventDefault();
-            dispatch(addSuggestionToDB());
+            dispatch(addSuggestionToDB(place, tripId));
         }
     }
   };
