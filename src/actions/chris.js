@@ -34,13 +34,13 @@ export function createTrip(tripName, tripDestination ) {
 }
 
 
-export function googleFetch() {
+export function googleFetch(tripId) {
         return function(dispatch, getState){
             const place = getState().suggestionForm.place
-            const location = getState().tripForm.destination
+            const location = getState().trips.find(trip => trip.id == tripId).destination
                 fetch("/api/google", {
                 method: "post",
-                body: JSON.stringify({place}, {location}),
+                body: JSON.stringify({place, location}),
                 headers: {
                   "Content-Type": "application/json"
                 }
