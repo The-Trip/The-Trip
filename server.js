@@ -22,7 +22,7 @@ const io = socketIo(server);
 io.on("connection", socket => {
     console.log("New client connected"), setInterval(
       () => getApiAndEmit(socket),
-      10000
+      1000000000
     );
     socket.on("disconnect", () => console.log("Client disconnected"));
   });

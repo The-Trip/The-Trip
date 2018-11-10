@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import '../styles/components/TripItem.scss';
 
 function TripItem({trip}){
-    console.log(trip)
     const to = `/trip/${trip.id}/suggestion`
 
         return (

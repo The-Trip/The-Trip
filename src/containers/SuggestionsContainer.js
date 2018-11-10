@@ -12,7 +12,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
   suggestions: state.suggestions,
   tripId: ownProps.match.params.id,
-  trip: trip
+  trip: trip,
+  selectedPlace: state.selectedPlace
+
   };
 };
 

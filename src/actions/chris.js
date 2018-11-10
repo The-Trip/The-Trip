@@ -35,12 +35,9 @@ export function createTrip(tripName, tripDestination ) {
 
 
 export function googleFetch() {
-        console.log('google fetch')
         return function(dispatch, getState){
-            // const info = getState().tripForm.destination
             const place = getState().suggestionForm.place
             const location = getState().tripForm.destination
-            console.log(place, location);
                 fetch("/api/google", {
                 method: "post",
                 body: JSON.stringify({place}, {location}),
@@ -50,7 +47,6 @@ export function googleFetch() {
               })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('google info fetch', data)
                     dispatch(storeGoogleFetch(data));
                 })
         }
@@ -66,10 +62,9 @@ export function googleFetch() {
     }
     
     export function setSelectedPlace(place) {
-        console.log("click")
         return {
             type: 'STORE_PLACE',
-           selectedPlaceInfo: place
+           selectedPlaceID: place
             
         }
     }
