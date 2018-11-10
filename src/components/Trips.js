@@ -20,11 +20,11 @@ class Trips extends React.Component{
         return (
             <div>
                 <React.Fragment>
-                <TripCreationContainer />
+                {/* <TripCreationContainer /> */}
                     
                     <section className="trips">
 
-                        <header className="trips__header">
+                        <header className="trips__header container">
                             <h1 className="trips__title">Your trips</h1>
                         </header>
 
