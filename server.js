@@ -137,9 +137,11 @@ app.get('/api/trip/:id/suggestion', function (req, res) {
 
 
 app.post('/api/google', function(req, res){
-    
+    console.log(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${req.body.place}%in%${req.body.location}&key=${api}`)
+
+    // fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${req.body.place}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=${api}`)
     // fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${req.body.place}&inputtype=textquery&fields=photos,formatted_address,name,rating,type,geometry&key=${api}`)
-    fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${req.body.place}&key=${api}`)
+    fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${req.body.place}%in%${req.body.location}&key=${api}`)
   
     .then(function(response) {
             return response.json();
