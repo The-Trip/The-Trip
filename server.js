@@ -71,7 +71,6 @@ app.post("/api/login", (req, res) => {
 }); //allows a customer to login - NOTE USES PASSWORD NOT BCRYPT HASH ATM
 
 app.post("/api/trip", (req, res) => {
-  // console.log(req.body);
   const randomNum = Math.floor(Math.random() * tripWordsArray.length);
   const randomArrayValue = tripWordsArray[randomNum];
   const destinationSplit = req.body.trip.destination.split(" ");
@@ -121,7 +120,7 @@ app.post("/api/trip", (req, res) => {
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
 app.post("/api/suggestion", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   db.one(
     `INSERT INTO suggestion (place_name, place_address, place_id, place_category, trip_id, customer_id)
@@ -139,7 +138,7 @@ app.post("/api/suggestion", (req, res) => {
       return res.json({ suggestionID: suggestion.id });
     })
     .catch(error => {
-      console.error(error.stack);
+      console.error(req.body.place.name, error);
       res.json({ error: error.message });
     });
 }); // allows a suggestion to be made (will error if not logged in as needs id)
@@ -182,7 +181,7 @@ app.get("/api/user/:id/trip", function(req, res) {
       res.json(data);
     })
     .catch(error => {
-      console.log(`${error}`);
+      console.error(`${error}`);
     });
 });
 
@@ -197,7 +196,7 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
       res.json(data);
     })
     .catch(error => {
-      console.log(`${error}`);
+      console.error(`${error}`);
     });
 });
 

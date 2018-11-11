@@ -20,10 +20,10 @@ const mapDispatchToProps = dispatch => {
       dispatch(commentInputToState(event.target.name, event.target.value));
     },
 
-    handleSubmit: (place, tripId) => {
+    handleSubmit: (place, tripId, event) => {
       event.preventDefault();
       dispatch(addSuggestionToDB(place, tripId));
-      dispatch(addCommentToDB());
+      // dispatch(addCommentToDB());
     }
   };
 };
