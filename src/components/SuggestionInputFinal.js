@@ -2,7 +2,7 @@
 import React from 'react';
 import PlaceResultsContainer from "../containers/PlaceResultsContainer.js";
 
-function SuggestionInputFinal({handleSubmit,place, tripId}) {
+function SuggestionInputFinal({handleSubmit,place, tripId, handleChange}) {
 
 
 
@@ -15,6 +15,14 @@ function SuggestionInputFinal({handleSubmit,place, tripId}) {
         <h3>{place.rating}</h3>
         <h3>{place.types[0]}</h3>
         <form className="suggestion-frm" onSubmit={() => handleSubmit(place, tripId)}>
+        <label className="suggestion-frm__commentlabel" htmlFor="comment">Why should we go there????????</label>
+    <textarea 
+        className="suggestion-frm__comment"
+        id="suggestion-comment"
+        name="comment"
+        onChange={event => handleChange(event)} 
+        >
+    </textarea>
         <button type="submit" className="suggestion-frm__submit btn btn__submit">Submitting</button>
         </form>
     </div>
