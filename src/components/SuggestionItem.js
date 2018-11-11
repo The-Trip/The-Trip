@@ -21,6 +21,7 @@ function SuggestionItem({suggestion}) {
         <p className="suggestion__comments">
             {suggestion.place_address}
             {suggestion.place_category}
+            {suggestion.comment}
         </p>
     
         <footer className="suggestion__footer">
