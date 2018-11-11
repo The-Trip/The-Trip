@@ -112,9 +112,9 @@ app.post("/api/comment", (req, res) => {
     console.log("I am posting a comment")
     db.one(`INSERT INTO comment (suggestion_id, customer_id, comment)
             VALUES ($1, $2, $3) RETURNING id`, [req.body.suggest_id, req.body.cust_id, req.body.comment ])
-                .then(suggestion => {
-                    console.log('suggestion',suggestion)
-            return res.json({commentID: comment.id})
+                .then(id => {
+                    console.log('comment id',id)
+            return res.json({commentID: id})
         })
         .catch(error => {
             console.log(error.stack)
@@ -150,7 +150,6 @@ app.get('/api/user/:id/trip', function (req, res) {
     })
 
 app.get('/api/trip/:id/suggestion', function (req, res) {
-    console.log('Im getting')
     const tripId = req.params.id
 
     
