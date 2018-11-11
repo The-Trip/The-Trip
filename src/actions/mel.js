@@ -1,12 +1,13 @@
+// fetch needs to happen for each tripitem; do I therefore need to run ComponentDidMount in TripItem comp?
+
+// I will need to pull from state to get query string for location
+// const location = getState().trips.find(trip => trip.id == tripId).destination
+
+// api from dotenv is not referencing - needs to be sorted before merge
+//const api = process.env.UNSPLASH_API
 
 export function fetchImageFromUnsplash() {
     return function(dispatch, getState){
-
-        // need to pull from state location by id
-        // const location = getState().trips.find(trip => trip.id == tripId).destination
-        
-        // HOW TO REFERENCE ID FROM .ENV? not referencing
-        //const api = process.env.UNSPLASH_API
 
         const photoUrl = `https://api.unsplash.com/search/photos?page=1&query=Zagreb&client_id=b86a7bedd1b8ec0a69b8569aa17c9b1fa7c8377200e6c71c99d09e92da2c1a0d`
             fetch(photoUrl)
