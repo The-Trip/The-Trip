@@ -40,6 +40,7 @@ const getApiAndEmit = async socket => {
 
 
 const api = process.env.GOOGLE_API
+const unsplashId = process.env.UNSPLASH_API
 const tripWordsArray = ['trip','holiday','vacation','break','rest','recess',
                         'tour', 'journey','voyage','vacay','hols'];
 
@@ -68,20 +69,27 @@ app.post("/api/trip", (req,res) =>{
     
     // console.log(`${randomURLString} ${req.body.trip.name} ${req.body.trip.origin} ${req.body.trip.destination} ${req.body.user.id}`)
 
-
-    db.one(
-        `INSERT INTO trip (url, name, origin, destination, customer_id)
-            VALUES($1,$2,$3,$4,$5) RETURNING id`,
-            [randomURLString, req.body.trip.tripName, req.body.trip.origin, req.body.trip.destination, req.body.user.id])
-        .then(trip => {
-            console.log('db insert done')
-            const response = {id: trip.id, fname: req.body.fname, destination: req.body.destination};
-            return res.json(response)
-        })
-        .catch(error => {
-            // console.log(error.stack)
-            res.json({error: error.message})
-        })
+    const photoUrl = `https://api.unsplash.com/search/photos?page=1&query=${req.body.trip.destination}&client_id=${unsplashId}`
+        
+    fetch(photoUrl)
+    .then(response => response.json())
+    .then(unSplashData => {
+        const regularImage = unSplashData.results[0].urls.regular;
+        console.log(regularImage);
+        db.one(
+            `INSERT INTO trip (url, name, origin, destination, image, customer_id)
+                VALUES($1,$2,$3,$4,$5, $6) RETURNING id`,
+                [randomURLString, req.body.trip.tripName, req.body.trip.origin, req.body.trip.destination, regularImage,req.body.user.id])
+            .then(trip => {
+                console.log('db insert done')
+                const response = {id: trip.id, fname: req.body.fname, destination: req.body.destination};
+                return res.json(response)
+            })
+            .catch(error => {
+                // console.log(error.stack)
+                res.json({error: error.message})
+            })
+    })
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
 app.post("/api/suggestion", (req, res) => {
