@@ -8,7 +8,3 @@ function setAPIFetchResults(state = [], action){
 }
 
 export default setAPIFetchResults;
-
-
-
-
