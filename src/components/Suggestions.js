@@ -25,10 +25,10 @@ class Suggestions extends React.Component {
             {/* categories to be incorporated (google places?) */}
             <ul className="suggestions__categories menu--settings">
               <li>
-                <a href="">Food and Drink</a>
+                <p>Food and Drink</p>
               </li>
               <li>
-                <a href="">Sights</a>
+                <p>Sights</p>
               </li>
             </ul>
           </header>

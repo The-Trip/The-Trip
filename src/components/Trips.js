@@ -2,13 +2,8 @@ import React from "react";
 import TripItem from "../components/TripItem.js";
 import "../styles/components/Trips.scss";
 import TripCreationContainer from "../containers/TripCreationContainer.js";
-import { Link } from "react-router-dom";
 
 class Trips extends React.Component {
-  constructor() {
-    super();
-  }
-
   componentDidMount() {
     this.props.fetchTripsFromDB(this.props.userId);
   }
