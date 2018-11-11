@@ -13,7 +13,7 @@ import suggestions from './suggestions'
 
 import setFlightsAPIResults from './setFlightsAPIResults'
 import googlePlaceInfo from './googlePlaceInfo'
-import unsplashImages from './unsplashImages'
+import unsplashImage from './unsplashImage'
 
 
 export default combineReducers({
@@ -27,5 +27,5 @@ export default combineReducers({
     view,
     selectedPlace,
     loginForm,
-    unsplashImages
+    unsplashImage
 });

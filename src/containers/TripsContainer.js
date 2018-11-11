@@ -1,13 +1,13 @@
 import { connect } from "react-redux";
 import Trips from  "../components/Trips";
 import { fetchTripsFromDB, setView } from "../actions/phil";
-import { fetchImagesFromUnsplash } from "../actions/mel";
+import { fetchImageFromUnsplash } from "../actions/mel";
 
 const mapStateToProps = state => {
     return {
         trips: state.trips,
         userId: state.user.id,
-        images: state.images
+        image: state.image
     };
 }
 
@@ -16,8 +16,8 @@ const mapDispatchToProps = dispatch => {
         fetchTripsFromDB: (userId) =>
             dispatch(fetchTripsFromDB(userId)),
 
-        fetchImagesFromUnsplash: () => 
-            dispatch(fetchImagesFromUnsplash()),   
+        fetchImageFromUnsplash: () => 
+            dispatch(fetchImageFromUnsplash()),   
 
         handleClick: view => {
             dispatch(setView('trip-suggestions'));
