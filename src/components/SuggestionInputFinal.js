@@ -1,5 +1,4 @@
 import React from "react";
-import PlaceResultsContainer from "../containers/PlaceResultsContainer.js";
 
 function SuggestionInputFinal({ handleSubmit, place, tripId, handleChange }) {
   return (

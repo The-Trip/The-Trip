@@ -1,5 +1,3 @@
-import { googleFetch } from "../actions/chris";
-
 export function suggestionInputToState(name, value) {
   return {
     type: "SET_SUGGESTION_INPUT",

@@ -1,14 +1,11 @@
 import { connect } from "react-redux";
 import SuggestionInputFinal from "../components/SuggestionInputFinal.js";
-import {
-  addSuggestionToDB,
-  addCommentToDB,
-  commentInputToState
-} from "../actions/phil";
+import { addSuggestionToDB, commentInputToState } from "../actions/phil";
 
 const mapStateToProps = state => {
   return {
     place: state.googlePlaceInfo.find(
+      // eslint-disable-next-line
       place => place.place_id == state.selectedPlace
     )
   };
