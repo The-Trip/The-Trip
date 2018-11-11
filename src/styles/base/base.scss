@@ -1,0 +1,71 @@
+@import '_normalize';
+@import 'variables';
+
+/* ==== BASE ==== */
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+ 
+body {
+    font-family: $body-font;
+    margin: 0;
+    padding: 0;
+    background: $light-color; 
+    line-height: 1.5;
+    color: $primary-color; 
+    -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: $headline-font;
+  font-style: normal;
+}
+a {
+  color: $primary-color{
+  }
+  &:hover {
+    color: lighten($primary-color, 10% );
+  }
+}
+
+.container, .app__footer {
+  padding-left: $main-padding *1.5;
+  padding-right: $main-padding *1.5; 
+  margin: 0 auto;
+}  
+main {
+  margin-top: $main-padding *4;
+}
+
+.menu--settings {
+  list-style-type: none;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0;
+} 
+img {
+    max-width: 100%;
+    height: auto;
+    border-style: none;
+}
+
+/* ==== LAYOUT ==== */
+
+// MEDIA QUERIES - post MVP
+@media (min-width: 768px) {
+}
+
+@media (min-width: 960px) {
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1440px) {
+}
