@@ -17,7 +17,7 @@ function TripItem({trip}){
                         
                         <figure className="card__figure">
                         <h1 className="card__destination"><span>{trip.destination}</span></h1>
-                            <img src="../static/images/newyork.jpg" alt="newyork" />
+                            <img src={trip.image} alt="newyork" />
                         </figure>
 
                         <header className="card__header container">
