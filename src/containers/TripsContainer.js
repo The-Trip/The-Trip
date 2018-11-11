@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Trips from  "../components/Trips";
-import { fetchTripsFromDB, setView } from "../actions/phil"
+import { fetchTripsFromDB, setView } from "../actions/phil";
 
 const mapStateToProps = state => {
     return {
@@ -9,17 +9,16 @@ const mapStateToProps = state => {
     };
 }
 
-
 const mapDispatchToProps = dispatch => {
     return {
         fetchTripsFromDB: (userId) =>
             dispatch(fetchTripsFromDB(userId)),
+
         handleClick: view => {
             dispatch(setView('trip-suggestions'));
         }
-        }
-
     }
+}
   
   export default connect(
     mapStateToProps,

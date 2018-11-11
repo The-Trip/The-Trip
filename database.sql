@@ -5,8 +5,8 @@ INSERT INTO customer VALUES (4, 'Jon', 'jon@gmail.com', 'cat');
 INSERT INTO customer VALUES (5, 'William', 'william@gmail.com', 'ostrich');
 ALTER SEQUENCE customer_id_seq RESTART WITH 6 INCREMENT BY 1;
 
-INSERT INTO trip VALUES (1, 'electric-dog', 'Mark and Emma Go Away', 'London', 'New York',1);
-INSERT INTO trip VALUES (2, 'messy-self', 'Jon''s Solo Adventure', 'Berlin', 'Rome',4);
+INSERT INTO trip VALUES (1, 'electric-dog', 'Mark and Emma Go Away', 'London', 'New York', 'https://images.unsplash.com/photo-1510379872535-9310dc6fd6a7?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjM2NzU0fQ&s=892bad4d3f7fec1823f0668a2598e041',1);
+INSERT INTO trip VALUES (2, 'messy-self', 'Jon''s Solo Adventure', 'Berlin', 'Rome', 'https://images.unsplash.com/photo-1510379872535-9310dc6fd6a7?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjM2NzU0fQ&s=892bad4d3f7fec1823f0668a2598e041', 4);
 ALTER SEQUENCE trip_id_seq RESTART WITH 3 INCREMENT BY 1;
 
 INSERT INTO suggestion VALUES (1, 'Bobs Burgers', '1440 Avenue of the Americas, New York, NY', '2efeaf42323rfwefwe', 'bar', 1,2);
@@ -41,6 +41,7 @@ url VARCHAR(100) NOT NULL UNIQUE,
 name VARCHAR(50) NOT NULL UNIQUE,
 origin VARCHAR(50) NOT NULL,
 destination VARCHAR(50) NOT NULL,
+image VARCHAR(500) NOT NULL,
 customer_id INT NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (customer_id) REFERENCES customer (id)
