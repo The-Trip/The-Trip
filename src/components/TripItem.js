@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import '../styles/components/TripItem.scss';
 
 function TripItem({trip}){
+    
     const to = `/trip/${trip.id}/suggestion`
 
         return (
@@ -31,7 +32,7 @@ function TripItem({trip}){
                         {/* IF Conditional content {!!tripdetails && } */}
                         <section className ="card__details container">
                             <p>
-                                It's our honeymoon and we've been dreaming of eating oysters and staring into each others' eyes on the top of the Empire State Building. King Kong style.
+                                {/* It's our honeymoon and we've been dreaming of eating oysters and staring into each others' eyes on the top of the Empire State Building. King Kong style. */}
                                 {trip.details}
                             </p>
                         </section>

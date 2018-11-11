@@ -75,13 +75,12 @@ app.post("/api/trip", (req,res) =>{
     .then(response => response.json())
     .then(unSplashData => {
         const regularImage = unSplashData.results[0].urls.regular;
-        console.log(regularImage);
+ 
         db.one(
-            `INSERT INTO trip (url, name, origin, destination, image, customer_id)
-                VALUES($1,$2,$3,$4,$5, $6) RETURNING id`,
-                [randomURLString, req.body.trip.tripName, req.body.trip.origin, req.body.trip.destination, regularImage,req.body.user.id])
+            `INSERT INTO trip (url, name, origin, destination, details, image, customer_id)
+                VALUES($1,$2,$3,$4,$5, $6, $7) RETURNING id`,
+                [randomURLString, req.body.trip.tripName, req.body.trip.origin, req.body.trip.destination, req.body.trip.details, regularImage,req.body.user.id])
             .then(trip => {
-                console.log('db insert done')
                 const response = {id: trip.id, fname: req.body.fname, destination: req.body.destination};
                 return res.json(response)
             })
@@ -98,26 +97,22 @@ app.post("/api/suggestion", (req, res) => {
     db.one(`INSERT INTO suggestion (place_name, place_address, place_id, place_category, trip_id, customer_id)
             VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`, [req.body.place.name, req.body.place.formatted_address, req.body.place.place_id, req.body.place.types[0], req.body.trip, req.body.user])
                 .then(suggestion => {
-                    console.log('suggestion',suggestion)
             return res.json({suggestionID: suggestion.id})
         })
         .catch(error => {
-            console.log(error.stack)
+            console.error(error.stack)
             res.json({error: error.message})
         })
 }); // allows a suggestion to be made (will error if not logged in as needs id)
 
 app.post("/api/comment", (req, res) => {
-    console.log(req.body)
-    console.log("I am posting a comment")
     db.one(`INSERT INTO comment (suggestion_id, customer_id, comment)
             VALUES ($1, $2, $3) RETURNING id`, [req.body.suggest_id, req.body.cust_id, req.body.comment ])
                 .then(id => {
-                    console.log('comment id',id)
             return res.json({commentID: id})
         })
         .catch(error => {
-            console.log(error.stack)
+            console.error(error.stack)
             res.json({error: error.message})
         })
 }); // al
@@ -145,7 +140,7 @@ app.get('/api/user/:id/trip', function (req, res) {
         res.json(data)
       })
         .catch(error => {
-            console.log(`${error}`)
+            console.error(`${error}`)
         })
     })
 
@@ -160,7 +155,7 @@ app.get('/api/trip/:id/suggestion', function (req, res) {
         res.json(data)
       })
         .catch(error => {
-            console.log(`${error}`)
+            console.error(`${error}`)
         })
     })
 
@@ -174,8 +169,7 @@ app.post('/api/google', function(req, res){
         .then(data => {
             return res.json(data.results)
           })
-        .catch(function(error) {
-          });
+        .catch(console.error);
       })
 
 app.get('*', (req, res) => res.sendFile(__dirname + '/index.html'));

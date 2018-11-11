@@ -19,19 +19,20 @@ export function addNewTrip(){
           })
             .then(response => response.json())
             .then(data => {
-                dispatch(createTrip(data));
+                console.log("probably not needed")
+                // dispatch(createTrip(data));
             })
     }
 }
 
-
-export function createTrip(tripName, tripDestination ) {
-    return {
-        type: 'CREATE_TRIP',
-        tripName: tripName,
-        tripDestination: tripDestination
-    }
-}
+//
+// export function createTrip(tripName, tripDestination ) {
+//     return {
+//         type: 'CREATE_TRIP',
+//         tripName: tripName,
+//         tripDestination: tripDestination
+//     }
+// }
 
 
 export function googleFetch(tripId) {
