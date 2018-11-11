@@ -29,12 +29,7 @@ function TripItem({ trip }) {
 
           {/* IF Conditional content {!!tripdetails && } */}
           <section className="card__details container">
-            <p>
-              It&apos;s our honeymoon and we&apos;ve been dreaming of eating
-              oysters and staring into each others&apos; eyes on the top of the
-              Empire State Building. King Kong style.
-              {trip.details}
-            </p>
+            <p>{trip.details}</p>
           </section>
 
           <footer className="card__footer">

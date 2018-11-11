@@ -8,9 +8,11 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const db = pgp({
   host: "localhost",
+
   port: 5432,
   database: process.env.DB_NAME,
   user: process.env.DB_USERNAME,
+
   password: process.env.DB_PASSWORD
 });
 const http = require("http");
@@ -20,8 +22,8 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 io.on("connection", socket => {
-  console.log("New client connected"),
-    setInterval(() => getApiAndEmit(socket), 1000000000);
+  console.log("New client connected");
+  setInterval(() => getApiAndEmit(socket), 1000000000);
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
 
@@ -90,13 +92,14 @@ app.post("/api/trip", (req, res) => {
     .then(unSplashData => unSplashData.results[0].urls.regular)
     .then(unsplashImage => {
       db.one(
-        `INSERT INTO trip (url, name, origin, destination, image, customer_id)
-                VALUES($1,$2,$3,$4,$5, $6) RETURNING id`,
+        `INSERT INTO trip (url, name, origin, destination, details, image, customer_id)
+                VALUES($1,$2,$3,$4,$5, $6, $7) RETURNING id`,
         [
           randomURLString,
           req.body.trip.tripName,
           req.body.trip.origin,
           req.body.trip.destination,
+          req.body.trip.details,
           unsplashImage,
           req.body.user.id
         ]
@@ -133,29 +136,25 @@ app.post("/api/suggestion", (req, res) => {
     ]
   )
     .then(suggestion => {
-      console.log("suggestion", suggestion);
       return res.json({ suggestionID: suggestion.id });
     })
     .catch(error => {
-      console.log(error.stack);
+      console.error(error.stack);
       res.json({ error: error.message });
     });
 }); // allows a suggestion to be made (will error if not logged in as needs id)
 
 app.post("/api/comment", (req, res) => {
-  console.log(req.body);
-  console.log("I am posting a comment");
   db.one(
     `INSERT INTO comment (suggestion_id, customer_id, comment)
             VALUES ($1, $2, $3) RETURNING id`,
     [req.body.suggest_id, req.body.cust_id, req.body.comment]
   )
     .then(id => {
-      console.log("comment id", id);
       return res.json({ commentID: id });
     })
     .catch(error => {
-      console.log(error.stack);
+      console.error(error.stack);
       res.json({ error: error.message });
     });
 }); // al
@@ -195,7 +194,6 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
     [tripId]
   )
     .then(function(data) {
-      console.log(data);
       res.json(data);
     })
     .catch(error => {
@@ -215,7 +213,7 @@ app.post("/api/google", function(req, res) {
     .then(data => {
       return res.json(data.results);
     })
-    .catch(function(error) {});
+    .catch(console.error);
 });
 
 app.get("*", (req, res) => res.sendFile(__dirname + "/index.html"));
