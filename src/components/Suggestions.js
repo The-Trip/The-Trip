@@ -5,10 +5,6 @@ import "../styles/components/Suggestions.scss";
 import SuggestionInputFinalContainer from "../containers/SuggestionInputFinalContainer.js";
 
 class Suggestions extends React.Component {
-  constructor() {
-    super();
-  }
-
   componentDidMount() {
     this.props.fetchSuggestionsFromDB(this.props.tripId);
   }

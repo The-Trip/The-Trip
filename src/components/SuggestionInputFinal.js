@@ -1,5 +1,4 @@
 import React from "react";
-import PlaceResultsContainer from "../containers/PlaceResultsContainer.js";
 
 function SuggestionInputFinal({ handleSubmit, place, tripId, handleChange }) {
   return (
@@ -10,10 +9,10 @@ function SuggestionInputFinal({ handleSubmit, place, tripId, handleChange }) {
       <h3>{place.types[0]}</h3>
       <form
         className="suggestion-frm"
-        onSubmit={() => handleSubmit(place, tripId)}
+        onSubmit={event => handleSubmit(place, tripId, event)}
       >
         <label className="suggestion-frm__commentlabel" htmlFor="comment">
-          Why should we go there????????
+          Why should we go there?
         </label>
         <textarea
           className="suggestion-frm__comment"

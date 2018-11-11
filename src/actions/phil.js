@@ -1,5 +1,3 @@
-import { googleFetch } from "../actions/chris";
-
 export function suggestionInputToState(name, value) {
   return {
     type: "SET_SUGGESTION_INPUT",
@@ -50,14 +48,12 @@ export function addSuggestionToDB(place, tripId) {
         // TODO - Create response in server.js
         .then(id => {
           dispatch(addCommentToDB(id, tripId));
-          console.log(id);
         })
     );
   };
 }
 
 export function addCommentToDB(id, tripId) {
-  console.log(id);
   return function(dispatch, getState) {
     return (
       fetch("/api/comment", {

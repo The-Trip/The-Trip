@@ -57,8 +57,8 @@ FOREIGN KEY (customer_id) REFERENCES customer (id)
 -- DYNAMIC MAPPING TABLE FOR SUGGESTION(S) (MANY-)
 CREATE TABLE suggestion (
 id serial,
-place_name VARCHAR(50) NOT NULL,
-place_address VARCHAR(50) NOT NULL,
+place_name VARCHAR(100) NOT NULL,
+place_address VARCHAR(500) NOT NULL,
 place_id VARCHAR(50) NOT NULL,
 place_category VARCHAR(50) NOT NULL,
 trip_id INT NOT NULL,
