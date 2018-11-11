@@ -94,10 +94,7 @@ app.post("/api/trip", (req,res) =>{
 
 app.post("/api/suggestion", (req, res) => {
     console.log(req.body)
-   
-    // db.one(`INSERT INTO suggestion (place, comment, trip_id, customer_id)
-    //             VALUES ($1, $2, $3, $4) RETURNING id`, [req.body.suggestion, req.body.suggestion.comment, req.body.trip, req.body.user])
-       
+
     db.one(`INSERT INTO suggestion (place_name, place_address, place_id, place_category, trip_id, customer_id)
             VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`, [req.body.place.name, req.body.place.formatted_address, req.body.place.place_id, req.body.place.types[0], req.body.trip, req.body.user])
                 .then(suggestion => {
@@ -110,6 +107,22 @@ app.post("/api/suggestion", (req, res) => {
         })
 }); // allows a suggestion to be made (will error if not logged in as needs id)
 
+app.post("/api/comment", (req, res) => {
+    console.log(req.body)
+    console.log("I am posting a comment")
+    db.one(`INSERT INTO comment (suggestion_id, customer_id, comment)
+            VALUES ($1, $2, $3) RETURNING id`, [req.body.suggest_id, req.body.cust_id, req.body.comment ])
+                .then(suggestion => {
+                    console.log('suggestion',suggestion)
+            return res.json({commentID: comment.id})
+        })
+        .catch(error => {
+            console.log(error.stack)
+            res.json({error: error.message})
+        })
+}); // al
+
+
 app.post("/api/customer", (req, res) => {
     bcrypt.hash(req.body.password, saltRounds)
         .then(function(hash) {
@@ -121,7 +134,8 @@ app.post("/api/customer", (req, res) => {
             return res.json({id: result.id});
         })
         .catch(error => res.json({ error: error.message }));
-}); // allows a customer to be added to DB. Returns their new customer ID if success
+}); // allows a comment to be added to DB. Returns new comment ID if success
+
 
 app.get('/api/user/:id/trip', function (req, res) {
     const userId = req.params.id
@@ -138,7 +152,10 @@ app.get('/api/user/:id/trip', function (req, res) {
 app.get('/api/trip/:id/suggestion', function (req, res) {
     console.log('Im getting')
     const tripId = req.params.id
-    db.any('SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id', [tripId])
+
+    
+
+    db.any('SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name , comment.comment FROM customer, suggestion, comment, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) AND suggestion.id = comment.suggestion_id GROUP BY suggestion.customer_id, suggestion.id, customer.id, comment.id', [tripId])
       .then(function(data){
           console.log(data)
         res.json(data)

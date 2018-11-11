@@ -10,6 +10,7 @@ import selectedPlace from './selectedPlace'
 
 import suggestionForm from './suggestionForm'
 import suggestions from './suggestions'
+import suggestionComment from './suggestionComment'
 
 import setFlightsAPIResults from './setFlightsAPIResults'
 import googlePlaceInfo from './googlePlaceInfo'
@@ -25,5 +26,6 @@ export default combineReducers({
     trips,
     view,
     selectedPlace,
-    loginForm
+    loginForm,
+    suggestionComment
 });

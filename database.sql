@@ -16,6 +16,11 @@ INSERT INTO suggestion VALUES (4, 'The Watering Hole', '100 peartree lane, New Y
 INSERT INTO suggestion VALUES (5, 'Old Fighting Pit', '23, Avenue road,New York, NY', '23er23r234234qwd', 'cafe', 2,5);
 ALTER SEQUENCE suggestion_id_seq RESTART WITH 6 INCREMENT BY 1;
 
+INSERT INTO comment VALUES (1, 1, 3,'Lovely place');
+INSERT INTO comment VALUES (2, 1, 2,'This is where we first looked up at the stars and expressed or mutual love of Seinfeld');
+INSERT INTO comment VALUES (3, 2, 2,'Rude waiters, but the exquisite food keeps me going back, again, and again and again');
+ALTER SEQUENCE suggestion_id_seq RESTART WITH 4 INCREMENT BY 1;
+
 -- ORIGIN TABLE (to amend use drop as below)
 
 --CREATE DATABASE thetrip
@@ -23,6 +28,7 @@ ALTER SEQUENCE suggestion_id_seq RESTART WITH 6 INCREMENT BY 1;
 DROP TABLE IF EXISTS suggestion;
 DROP TABLE IF EXISTS trip;
 DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS comment;
 
 -- IMMUTABLE BASE TABLE FOR customer(S) (ONE-)
 CREATE TABLE customer (
@@ -58,5 +64,17 @@ trip_id INT NOT NULL,
 customer_id INT NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (trip_id) REFERENCES trip (id),
+FOREIGN KEY (customer_id) REFERENCES customer (id)
+);
+
+-- DYNAMIC TABLE FOR COMMENTS ON SUGGESTIONS
+CREATE TABLE comment (
+id serial,
+suggestion_id INT NOT NULL,
+customer_id INT NOT NULL,
+comment VARCHAR(500) NOT NULL,
+time timestamptz default current_timestamp NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (suggestion_id) REFERENCES suggestion (id),
 FOREIGN KEY (customer_id) REFERENCES customer (id)
 );

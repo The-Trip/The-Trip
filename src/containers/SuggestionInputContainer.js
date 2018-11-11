@@ -20,7 +20,6 @@ const mapDispatchToProps = dispatch => {
 
         handleSubmit: (event, tripId) => {
             event.preventDefault();
-            // dispatch(addSuggestionToDB(tripId));
             dispatch(googleFetch(tripId));
         }
     }
