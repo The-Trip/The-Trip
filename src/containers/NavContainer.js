@@ -1,19 +1,17 @@
-import { connect } from 'react-redux';
-import Nav from '../components/Nav.js'
+import { connect } from "react-redux";
+import Nav from "../components/Nav.js";
 
 const mapStateToProps = state => {
-  return {
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        handleClick: event => {
-            console.log(event.target.name);
-        },
+  return {
+    handleClick: event => {
+      console.log(event.target.name);
     }
   };
-
+};
 
 export default connect(
   mapStateToProps,

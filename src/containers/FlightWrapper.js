@@ -1,11 +1,11 @@
-import { connect } from 'react-redux';
-import Flight from '../components/Flight';
-import { fetchFlights } from '../actions/tomactions';
+import { connect } from "react-redux";
+import Flight from "../components/Flight";
+import { fetchFlights } from "../actions/tomactions";
 
 const mapStateToProps = state => {
-    return {
-        flightResults: state.flightAPIResults,
-    }
+  return {
+    flightResults: state.flightAPIResults
+  };
 };
 
 //Currently only one way flights, need to do round trip
@@ -22,14 +22,13 @@ const mapStateToProps = state => {
 //Need list of timezone deviance from UTC
 //Need number of seconds in an hour (3600)
 
-
 const mapDispatchToProps = dispatch => {
-    return {
-        fetchFlights: () => dispatch(fetchFlights()),
-    };
+  return {
+    fetchFlights: () => dispatch(fetchFlights())
+  };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Flight);
