@@ -1,22 +1,20 @@
-import { connect } from 'react-redux';
-import Home from '../components/Home.js'
-import { setView } from '../actions/phil';
-
+import { connect } from "react-redux";
+import Home from "../components/Home.js";
+import { setView } from "../actions/phil";
 
 const mapStateToProps = state => {
   return {
-    view: state.view,
+    view: state.view
   };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        handleClick: view => {
-            dispatch(setView(view));
-        },
+  return {
+    handleClick: view => {
+      dispatch(setView(view));
     }
   };
-
+};
 
 export default connect(
   mapStateToProps,

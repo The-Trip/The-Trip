@@ -1,23 +1,21 @@
-import React from 'react';
+import React from "react";
 
-class Flight extends React.Component{
-    constructor(){
-        super();
-    }
+class Flight extends React.Component {
+  constructor() {
+    super();
+  }
 
-    componentDidMount(){
-        this.props.fetchFlights()
-    }
+  componentDidMount() {
+    this.props.fetchFlights();
+  }
 
-    render() {
-        return (
-            <div>
-                <p>Hello World!</p>
-            </div>
-        )
-
-    }
-
+  render() {
+    return (
+      <div>
+        <p>Hello World!</p>
+      </div>
+    );
+  }
 }
 
-export default Flight
+export default Flight;
