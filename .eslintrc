@@ -1,0 +1,36 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "globals": {
+    "module": false,
+    "browser": true,
+    "Promise": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "prettier", "prettier/react"
+  ],
+  "plugins": [
+    "react", "prettier"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "no-console": "warn",
+    "no-undefined": "error",
+    "no-unused-vars": "warn",
+    "no-unused-expressions": "off",
+    "react/prop-types": 0,
+    "react/jsx-curly-spacing": 0,
+    "react/jsx-wrap-multilines": 0,
+    "jsx-ally/href-no-hash": 0
+  }
+}
