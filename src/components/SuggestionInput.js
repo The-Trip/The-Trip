@@ -1,40 +1,44 @@
-import React from 'react';
+import React from "react";
+import PlaceResultsContainer from "../containers/PlaceResultsContainer.js";
 
-function SuggestionInput({handleChange,handleSubmit}) {
+function SuggestionInput({ handleChange, handleSubmit, tripId }) {
+  return (
+    <section className="suggestion-create">
+      <header className="suggestion-create__header">
+        <h2 className="suggestion-create__title">
+          {/* Make suggestions for [array of trip members by {fname}] last in array to be prepended by "and" , appended by 's {trip.name} trip */}
+        </h2>
+      </header>
 
-    return (
-      <div>
-          <p>Suggestion Input</p>
-
-            <form className="suggestion"
-            onSubmit={event => {
-                handleSubmit(event);
-                }}
-            >
-            <input
-                id="place"
-                type="text"
-                name="place"
-                className="suggestion__place"
-                // defaultValue="Trip Name"
-                onChange={event => handleChange(event)}
-            />
-            <input
-                id="comment"
-                type="textArea"
-                name="comment"
-                className="suggestion__comment"
-                // defaultValue="Destination"
-                onChange={event => handleChange(event)}
-            />
-            <button
-                type="submit"
-                >Submit</button>
-            </form>
-
-
-      </div>
-    )
-  }
+      <form
+        className="suggestion-frm"
+        onSubmit={event => handleSubmit(event, tripId)}
+      >
+        <div>
+          <label className="suggestion-frm__placelabel" htmlFor="place">
+            Add a suggestion … restaurant, drinking hole, museum, gallery, park,
+            sight, den of iniquity
+          </label>
+          <input
+            className="suggestion-frm__place"
+            id="place"
+            type="text"
+            name="place"
+            onChange={event => handleChange(event)}
+            required
+          />
+          <span className="validity" />
+        </div>
+        <button
+          type="submit"
+          className="suggestion-frm__submit btn btn__submit"
+        >
+          Submit
+        </button>
+        <PlaceResultsContainer />
+      </form>
+    </section>
+  );
+}
 
 export default SuggestionInput;

@@ -1,14 +1,17 @@
 import { connect } from "react-redux";
-import Nav from "../components/Nav.js";
+import Socket from "../components/Socket.js";
+import { setView } from "../actions/phil";
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    view: state.view
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleClick: event => {
-      console.log(event.target.name);
+    handleClick: view => {
+      dispatch(setView(view));
     }
   };
 };
@@ -16,4 +19,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Nav);
+)(Socket);

@@ -1,19 +1,28 @@
 import React from "react";
-import TripsContainer from "../containers/TripsContainer.js";
-import HomeContainer from "../containers/HomeContainer.js";
+import "../styles/components/Nav.scss";
+import { NavLink } from "react-router-dom";
 
-
-function Nav ({ view }) {
+function Nav() {
   return (
-    <React.Fragment>
-        <p>This is Nav.js</p>
-        {view === 'home' && (
-            <HomeContainer />
-        )}
-        {view === 'your-trips' && (
-            <TripsContainer />
-        )}
-    </React.Fragment>
+    <header className="sitehead shrink">
+      <nav className="sitehead__nav">
+        {/* <NavLink to="/create-trip/" activeClassName="active" className="nav__item">Trip</NavLink> */}
+
+        <NavLink to="/trip/" activeClassName="active" className="nav__item">
+          Trips
+        </NavLink>
+      </nav>
+
+      <h1 className="sitehead__title">
+        <NavLink to="/">The Trip</NavLink>
+      </h1>
+
+      <div className="sitehead__logout">
+        <NavLink to="/login/" activeClassName="active" className="nav__item">
+          <i className="fas fa-sign-in-alt" />
+        </NavLink>
+      </div>
+    </header>
   );
 }
 
