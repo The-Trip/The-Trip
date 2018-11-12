@@ -35,7 +35,7 @@ class Flight extends React.Component{
     }
 
     flightsAPIFetch(){
-        
+
     }
 
     promiseOptions(inputValue) {
