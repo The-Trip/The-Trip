@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import setAPIFetchResults from "./setAPIFetchResults";
 import tripForm from "./tripForm";
 import trips from "./trips";
 import user from "./user";
