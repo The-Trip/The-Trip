@@ -1,25 +1,45 @@
-require("dotenv").config();
-const express = require("express");
-const bodyParser = require("body-parser");
+require('dotenv').config();
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
-const fetch = require("node-fetch");
-const pgp = require("pg-promise")();
-const bcrypt = require("bcrypt");
+const fetch = require('node-fetch');
+const pgp = require('pg-promise')();
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const db = pgp({
-  host: "localhost",
-
-  port: 5432,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USERNAME,
-
-  password: process.env.DB_PASSWORD
+    host: 'localhost',
+    port: 5432,
+    database: process.env.DB_NAME,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD
 });
 const http = require("http");
 const socketIo = require("socket.io");
 
 const server = http.createServer(app);
 const io = socketIo(server);
+
+const airports = require('airport-codes/airports.json')
+    .filter(function(cityObject){
+        return !cityObject.name.includes("Heli")
+    })
+    .filter(function(cityObject){
+        return !cityObject.name.includes("Bus")
+    })
+    .filter(function(cityObject){
+        return cityObject.icao !== "\\N" || cityObject.name.startsWith('All') //UNLESS cityObject.name CONTAINS "All"
+    })
+    .filter(function(cityObject){
+        return cityObject.iata !== ""
+    })
+    .map(cityObject => Object.assign(cityObject, {value: cityObject.iata, label: `${cityObject.city} - ${cityObject.name} - ${cityObject.iata} - ${cityObject.country}`}));
+
+function filterAirport(airport, query) {
+    return airport.city.startsWith(query) || airport.iata === query
+}
+
+const tripWordsArray = ['trip','holiday','vacation','break','rest','recess',
+                        'tour', 'journey','voyage','vacay','hols'];
 
 io.on("connection", socket => {
   console.log("New client connected");
@@ -40,25 +60,21 @@ const getApiAndEmit = async socket => {
 
 const api = process.env.GOOGLE_API;
 const unsplashId = process.env.UNSPLASH_API;
-const tripWordsArray = [
-  "trip",
-  "holiday",
-  "vacation",
-  "break",
-  "rest",
-  "recess",
-  "tour",
-  "journey",
-  "voyage",
-  "vacay",
-  "hols"
-];
+
 
 app.use(bodyParser.json());
-app.use("/static", express.static("static"));
-app.use("/dist", express.static("dist"));
+app.use('/static', express.static('static'));
+app.use('/dist', express.static('dist'));
 
-app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
+app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+
+app.get('/api/airports', function (req, res) {
+     const city = req.query.query;
+     const results = airports.filter(function(airport){
+         return filterAirport(airport, city)
+         });
+    res.json(results)
+});
 
 app.post("/api/login", (req, res) => {
   db.one(
@@ -70,17 +86,14 @@ app.post("/api/login", (req, res) => {
     .catch(error => res.json({ error: error.message }));
 }); //allows a customer to login - NOTE USES PASSWORD NOT BCRYPT HASH ATM
 
-app.post("/api/trip", (req, res) => {
-  const randomNum = Math.floor(Math.random() * tripWordsArray.length);
-  const randomArrayValue = tripWordsArray[randomNum];
-  const destinationSplit = req.body.trip.destination.split(" ");
-  const destinationJoin = destinationSplit.join("-");
-  const randomURLString = `${
-    req.body.user.name
-  }-${destinationJoin}-${randomArrayValue}`;
-
-  // console.log(`${randomURLString} ${req.body.trip.name} ${req.body.trip.origin} ${req.body.trip.destination} ${req.body.user.id}`)
-
+app.post("/api/trip", (req,res) =>{
+    console.log(req.body);
+    const randomNum = Math.floor(Math.random()*tripWordsArray.length);
+    const randomArrayValue = tripWordsArray[randomNum];
+    const destinationSplit = req.body.trip.destination.split(" ");
+    const destinationJoin = destinationSplit.join("-");
+    const randomURLString = `${req.body.user.name}-${destinationJoin}-${randomArrayValue}`;
+    
   const photoUrl = `https://api.unsplash.com/search/photos?page=1&query=${
     req.body.trip.destination
   }&client_id=${unsplashId}`;

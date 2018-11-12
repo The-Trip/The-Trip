@@ -10,6 +10,7 @@ import SuggestionsContainer from "../containers/SuggestionsContainer";
 import TripCreationContainer from "../containers/TripCreationContainer";
 import LoginContainer from "../containers/LoginContainer";
 import SocketContainer from "../containers/SocketContainer";
+import FlightWrapper from '../containers/FlightWrapper'
 
 import "../styles/base/base.scss";
 import "../styles/base/forms.scss";
@@ -25,6 +26,7 @@ function App() {
         <Route path="/trip/:id/suggestion" component={SuggestionsContainer} />
         <Route path="/trip/create" component={TripCreationContainer} />
         <Route path="/login" component={LoginContainer} />
+        <Route path="/flight" component={FlightWrapper} />
       </main>
       <Footer />
     </div>
