@@ -1,9 +1,9 @@
 import React from "react";
-import TripItem from "../components/TripItem.js";
-import "../styles/components/Trips.scss";
-import TripCreationContainer from "../containers/TripCreationContainer.js";
+import TripsListItem from "./TripsListItem.js";
+import "../styles/components/TripsList.scss";
+// import TripCreationContainer from "../containers/TripCreationContainer.js";
 
-class Trips extends React.Component {
+class TripsList extends React.Component {
   componentDidMount() {
     this.props.fetchTripsFromDB(this.props.userId);
   }
@@ -12,7 +12,7 @@ class Trips extends React.Component {
     return (
       <div>
         <React.Fragment>
-          <TripCreationContainer />
+          {/* <TripCreationContainer /> */}
 
           <section className="trips">
             <header className="trips__header container">
@@ -23,7 +23,7 @@ class Trips extends React.Component {
               return (
                 // <p key={trip.id} onClick={()=>this.props.handleClick(trip.id)}>{trip.name}</p>
 
-                <TripItem key={trip.id} trip={trip} />
+                <TripsListItem key={trip.id} trip={trip} />
               );
             })}
           </section>
@@ -33,4 +33,4 @@ class Trips extends React.Component {
   }
 }
 
-export default Trips;
+export default TripsList;

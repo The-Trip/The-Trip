@@ -3,10 +3,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "../styles/components/TripItem.scss";
+import "../styles/components/TripsListItem.scss";
 
 function TripItem({ trip }) {
-  const to = `/trip/${trip.id}/suggestion`;
+  const to = `/trips/${trip.id}/`;
 
   return (
     <div>
