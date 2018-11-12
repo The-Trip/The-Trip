@@ -6,9 +6,15 @@ function Nav() {
   return (
     <header className="sitehead shrink">
       <nav className="sitehead__nav">
-        {/* <NavLink to="/create-trip/" activeClassName="active" className="nav__item">Trip</NavLink> */}
+        <NavLink
+          to="/create-trip/"
+          activeClassName="active"
+          className="nav__item"
+        >
+          Create Trip
+        </NavLink>
 
-        <NavLink to="/trip/" activeClassName="active" className="nav__item">
+        <NavLink to="/trips/" activeClassName="active" className="nav__item">
           Trips
         </NavLink>
       </nav>
