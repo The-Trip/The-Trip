@@ -16,16 +16,15 @@ class Flight extends React.Component{
         this.promiseOptions = this.promiseOptions.bind(this)
     }
 
-    componentDidMount(){
-        this.props.fetchFlights();
-    }
-
     handleSubmit(event){
         event.preventDefault();
         if (this.state.selectedAirportToIATA && this.state.selectedAirportFromIATA) {
 
             let flightOutDateInput = this.props.startDate.format("DD/MM/YYYY");
             let returnFlightDateInput = this.props.endDate.format("DD/MM/YYYY");
+
+
+
 
             console.log("HOLIDAY WITH DETAILS");
             console.log(`Date Flying Out - ${flightOutDateInput}`);
@@ -35,13 +34,16 @@ class Flight extends React.Component{
         }
     }
 
+    flightsAPIFetch(){
+        
+    }
+
     promiseOptions(inputValue) {
        return fetch(`/api/airports?query=${inputValue}`)
             .then(data => data.json())
     };
 
     render() {
-        console.info('Render', this.state)
             return (
                 <div>
                     <p>Flight Component</p>

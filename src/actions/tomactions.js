@@ -1,6 +1,6 @@
-export function fetchFlights(){
+export function fetchFlights(flyFrom, flyTo, dateFrom, dateTo){
     return function(dispatch){
-        return fetch('https://api.skypicker.com/flights?flyFrom=LGW&to=JFK&dateFrom=18/11/2018&dateTo=12/12/2018&max_stopovers=0&curr=GBP')
+        return fetch(`https://api.skypicker.com/flights?flyFrom=${flyFrom}&to=${flyTo}&dateFrom=${dateFrom}&dateTo=${dateTo}&max_stopovers=0&curr=GBP`)
             .then(response => response.json())
             .then(data => {
                 let arrivalTime = data.data[0].aTime;
