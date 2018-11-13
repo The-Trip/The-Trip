@@ -1,9 +1,11 @@
 import { connect } from "react-redux";
 import TripCreation from "../components/TripCreation";
-import { addNewTrip, setTripState } from "../actions/chris";
+import { addNewTrip, setTripState, setAddedTripId } from "../actions/chris";
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    addedTripId: state.addedTripId
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -20,6 +22,10 @@ const mapDispatchToProps = dispatch => {
       // dispatch(googleFetch());
       // console.log(event.target.tripName.value);
       // console.log(event.target.destination.value);
+    },
+
+    resetAddedTripId: () => {
+      dispatch(setAddedTripId(null));
     }
   };
 };

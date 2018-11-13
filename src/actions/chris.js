@@ -21,7 +21,7 @@ export function addNewTrip() {
     })
       .then(response => response.json())
       .then(data => {
-        // dispatch(createTrip(data));
+        dispatch(setAddedTripId(data));
       });
   };
 }
@@ -57,5 +57,13 @@ export function setSelectedPlace(place) {
   return {
     type: "STORE_PLACE",
     selectedPlaceID: place
+  };
+}
+
+export function setAddedTripId(tripId) {
+  console.log(tripId);
+  return {
+    type: "SET_ADDED_TRIP_ID",
+    tripId
   };
 }
