@@ -234,12 +234,14 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
 });
 
 app.get("/api/trip/:id/comments", function(req, res) {
-  const suggestId = req.params.id;
+  const tripId = req.params.id;
+  console.log(tripId, "comments fetch on server");
   db.any(
-    "SELECT comment.id, comment.suggestion_id, comment.customer_id,  comment.comment FROM comment AND suggestion_id = ($1)",
-    [suggestId]
+    "SELECT comment.id, comment.suggestion_id, comment.customer_id,  comment.comment FROM suggestion, comment WHERE trip_id = ($1) AND suggestion.id = comment.suggestion_id",
+    [tripId]
   )
     .then(function(data) {
+      console.log(data);
       res.json(data);
     })
     .catch(error => {

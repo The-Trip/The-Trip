@@ -61,7 +61,6 @@ export function setSelectedPlace(place) {
 }
 
 export function fetchCommentsFromDB(suggestId) {
-  console.log("I am calling");
   return function(dispatch) {
     fetch(`/api/trip/${suggestId}/comments`)
       .then(response => response.json())

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import Suggestions from "../components/Suggestions.js";
 import { fetchSuggestionsFromDB } from "../actions/phil";
+import { fetchCommentsFromDB } from "../actions/chris";
 
 const mapStateToProps = (state, ownProps) => {
   const trips = state.trips;
@@ -19,6 +20,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchSuggestionsFromDB: tripId => {
       dispatch(fetchSuggestionsFromDB(tripId));
+      dispatch(fetchCommentsFromDB(tripId));
     }
   };
 };

@@ -43,7 +43,11 @@ class Suggestions extends React.Component {
 
           {deDupedSuggest.map(suggestion => {
             return (
-              <SuggestionItem key={suggestion.id} suggestion={suggestion} />
+              <SuggestionItem
+                key={suggestion.id}
+                suggestion={suggestion}
+                tripId={this.props.tripId}
+              />
             );
           })}
         </section>
