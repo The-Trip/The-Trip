@@ -4,6 +4,7 @@ import "../styles/components/Trip.scss";
 import SuggestionsContainer from "../containers/SuggestionsContainer";
 import HotelsContainer from "../containers/HotelsContainer";
 import FlightWrapper from "../containers/FlightWrapper";
+import cx from "classnames";
 
 class Trip extends React.Component {
   componentDidMount() {
@@ -13,6 +14,11 @@ class Trip extends React.Component {
     }
   }
   render() {
+    const tabClasses = cx("tab__class", {
+      "tab-open": this.props.tabOpen,
+      "tab-closed": !this.props.tabOpen
+    });
+
     const suggestionsUrl = `/trips/${this.props.tripId}/suggestions`;
     const flightsUrl = `/trips/${this.props.tripId}/flights`;
     const hotelsUrl = `/trips/${this.props.tripId}/hotels`;
@@ -36,6 +42,10 @@ class Trip extends React.Component {
               </h1>
             </figure>
 
+            <button onClick={event => this.props.setTabOpen()}>Open</button>
+
+            <p className={tabClasses}>This is the open tab</p>
+
             <nav>
               <ul>
                 <li>
@@ -55,19 +65,6 @@ class Trip extends React.Component {
                 </li>
               </ul>
             </nav>
-
-            {/* <div className="tripcard__tabs__links">
-              <label htmlFor="flights-toggle">
-                <NavLink to={flightsUrl}>Flights</NavLink>
-              </label>
-              <label htmlFor="hotels-toggle">
-                <NavLink to={hotelsUrl}>Hotels</NavLink>
-              </label>
-              <label htmlFor="suggestions-toggle">
-                <NavLink to={suggestionsUrl}>Suggestions</NavLink>
-              </label>
-            </div> */}
-
             <div className="tabs">
               <Switch>
                 <Route path="/trips/:id/flights" component={FlightWrapper} />

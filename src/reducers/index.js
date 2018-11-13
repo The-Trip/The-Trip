@@ -16,6 +16,7 @@ import addedTripId from "./addedTripId";
 import setFlightsAPIResults from "./setFlightsAPIResults";
 import googlePlaceInfo from "./googlePlaceInfo";
 import comments from "./comments";
+import stylesSwitches from "./stylesSwitches";
 
 export default combineReducers({
   flightAPIResults: setFlightsAPIResults,
@@ -34,5 +35,6 @@ export default combineReducers({
   endDate,
   cityFrom: flightsFromCity,
   cityTo: flightsToCity,
-  comments
+  comments,
+  stylesSwitches
 });
