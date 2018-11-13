@@ -13,6 +13,7 @@ import SocketContainer from "../containers/SocketContainer";
 
 import "../styles/base/base.scss";
 import "../styles/base/forms.scss";
+import FlightWrapper from "../containers/FlightWrapper";
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
         <Route path="/trips/:id/" component={TripContainer} />
         <Route path="/create-trip/" component={TripCreationContainer} />
         <Route path="/login/" component={LoginContainer} />
+          <Route path="/flights/" component={FlightWrapper} />
+
       </main>
       <Footer />
     </div>

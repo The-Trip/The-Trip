@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/components/SuggestionItem.scss";
 import CommentsContainer from "../containers/CommentsContainer";
 
-function SuggestionItem({ suggestion, tripId }) {
+function SuggestionItem({ suggestion, tripId, comments }) {
   return (
     <article className="suggestion__card">
       <header className="suggestion__header">
@@ -29,12 +29,15 @@ function SuggestionItem({ suggestion, tripId }) {
                         return <li className="suggestion__voter" key={vote.voteId}>{vote.fname.charAt(0).toUpperCase()}</li>
                     })}
             </ul> */}
-        <p>more info</p>
-        <CommentsContainer
-          key={suggestion.id}
-          suggestionId={suggestion.id}
-          tripId={tripId}
-        />
+        {comments && (
+          <React.Fragment>
+            <CommentsContainer
+              key={suggestion.id}
+              suggestionId={suggestion.id}
+              tripId={tripId}
+            />
+          </React.Fragment>
+        )}
       </footer>
     </article>
   );
