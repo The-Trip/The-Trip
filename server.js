@@ -221,10 +221,11 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
   const tripId = req.params.id;
 
   db.any(
-    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name , comment.comment FROM customer, suggestion, comment, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) AND suggestion.id = comment.suggestion_id GROUP BY suggestion.customer_id, suggestion.id, customer.id, comment.id",
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
     [tripId]
   )
     .then(function(data) {
+      console.log(data);
       res.json(data);
     })
     .catch(error => {

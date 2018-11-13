@@ -1,24 +1,24 @@
 import { connect } from "react-redux";
-import Suggestions from "../components/Suggestions.js";
-import { fetchSuggestionsFromDB } from "../actions/phil";
+import Trip from "../components/Trip";
+import { fetchTripsFromDB } from "../actions/phil";
 
 const mapStateToProps = (state, ownProps) => {
   const trips = state.trips;
   const tripId = parseInt(ownProps.match.params.id, 10);
   const trip = trips.find(trip => trip.id === tripId);
+  const userId = state.user.id;
 
   return {
-    suggestions: state.suggestions,
     tripId,
     trip,
-    selectedPlace: state.selectedPlace
+    userId
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchSuggestionsFromDB: tripId => {
-      dispatch(fetchSuggestionsFromDB(tripId));
+    fetchTripsFromDB: userId => {
+      dispatch(fetchTripsFromDB(userId));
     }
   };
 };
@@ -26,4 +26,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Suggestions);
+)(Trip);

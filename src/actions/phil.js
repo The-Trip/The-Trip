@@ -110,6 +110,7 @@ export function setView(view) {
 }
 
 export function fetchTripsFromDB(userId) {
+  console.log(`fetch trips ` + userId);
   return function(dispatch, getState) {
     fetch(`/api/user/${userId}/trip`)
       .then(response => response.json())
@@ -126,7 +127,6 @@ export function fetchSuggestionsFromDB(tripId) {
       .then(response => response.json())
       .then(result => {
         dispatch(receiveSuggestions(result));
-        dispatch(fetchCommentsFromDB());
         console.log("calling!");
       })
       .catch(function(error) {});

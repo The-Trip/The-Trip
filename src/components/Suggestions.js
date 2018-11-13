@@ -39,16 +39,6 @@ class Suggestions extends React.Component {
             ) : (
               <SuggestionInputContainer tripId={this.props.tripId} />
             )}
-
-            {/* categories to be incorporated (google places?) */}
-            <ul className="suggestions__categories menu--settings">
-              <li>
-                <p>Food and Drink</p>
-              </li>
-              <li>
-                <p>Sights</p>
-              </li>
-            </ul>
           </header>
 
           {deDupedSuggest.map(suggestion => {
