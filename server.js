@@ -7,7 +7,7 @@ const pgp = require("pg-promise")();
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const db = pgp({
-  host: "localhost",
+  host: process.env.DB_HOST,
   port: 5432,
   database: process.env.DB_NAME,
   user: process.env.DB_USERNAME,
@@ -152,7 +152,6 @@ app.post("/api/trip", (req, res) => {
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
 app.post("/api/suggestion", (req, res) => {
-
   db.one(
     `INSERT INTO suggestion (place_name, place_address, place_id, place_category, trip_id, customer_id)
             VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
@@ -265,10 +264,10 @@ app.post("/api/google", function(req, res) {
 app.get("*", (req, res) => res.sendFile(__dirname + "/index.html"));
 
 app.post("/api/flights", (req, res) => {
-    console.log(req.body);
-    let request = req.body.flightObject;
-    db.one(
-        `INSERT INTO flight (
+  console.log(req.body);
+  let request = req.body.flightObject;
+  db.one(
+    `INSERT INTO flight (
         airport_from, 
         airport_to, 
         city_from, 
@@ -282,29 +281,32 @@ app.post("/api/flights", (req, res) => {
         return_local_arrival_time, 
         return_local_departure_time)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
-        [
-            request.airportFrom,
-            request.airportTo,
-            request.cityFrom,
-            request.cityTo,
-            request.flightCombinationID,
-            request.outboundFlightDate,
-            request.outboundLocalDepartureTime,
-            request.outboundLocalArrivalTime,
-            request.price,
-            request.returnFlightDate,
-            request.returnLocalArrivalTime,
-            request.returnLocalDepartureTime
-        ])
-        .then(flight => {
-            return res.json({flightID: flight.id });
-        })
-        .catch(error => {
-            console.error(error);
-            res.json({ error: error.message });
-        });
+    [
+      request.airportFrom,
+      request.airportTo,
+      request.cityFrom,
+      request.cityTo,
+      request.flightCombinationID,
+      request.outboundFlightDate,
+      request.outboundLocalDepartureTime,
+      request.outboundLocalArrivalTime,
+      request.price,
+      request.returnFlightDate,
+      request.returnLocalArrivalTime,
+      request.returnLocalDepartureTime
+    ]
+  )
+    .then(flight => {
+      return res.json({ flightID: flight.id });
+    })
+    .catch(error => {
+      console.error(error);
+      res.json({ error: error.message });
+    });
 }); // allows a flight to be added
 
-server.listen(8080, function() {
+const port = process.env.PORT || 8080;
+
+server.listen(port, function() {
   console.log("Listening on port 8080");
 });

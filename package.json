@@ -8,7 +8,8 @@
     "dev": "webpack --mode development",
     "start": "nodemon server.js",
     "build": "webpack --mode production",
-    "eslint": "eslint ./src/"
+    "eslint": "eslint ./src/",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -74,5 +75,8 @@
       "@babel/preset-react",
       "@babel/preset-env"
     ]
+  },
+  "engines": {
+    "node": "10.11.0"
   }
 }
