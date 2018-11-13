@@ -1,13 +1,10 @@
 export function fetchFlights(flyFrom, flyTo, dateFrom, dateTo){
     return function(dispatch){
-        return fetch(`https://api.skypicker.com/flights?flyFrom=${flyFrom}&to=${flyTo}&dateFrom=${dateFrom}&dateTo=${dateTo}&max_stopovers=0&curr=GBP`)
+        return fetch(`https://api.skypicker.com/flights?flyFrom=${flyFrom}&to=${flyTo}&dateFrom=${dateFrom}&dateTo=${dateFrom}&returnFrom=${dateTo}&returnTo=${dateTo}&max_stopovers=0&curr=GBP&limit=5`)
             .then(response => response.json())
             .then(data => {
-                let arrivalTime = data.data[0].aTime;
-                let departureTime = data.data[0].dTime;
-                console.log(new Date(departureTime*1000));
-                console.log(new Date(arrivalTime*1000));
                 dispatch(receiveFlights(data));
+                dispatch(isAPILoading())
             })
     }
 }
@@ -15,7 +12,7 @@ export function fetchFlights(flyFrom, flyTo, dateFrom, dateTo){
 export function receiveFlights(APIResult) {
     return {
         type: 'RECEIVE_FLIGHTS',
-        flightList: APIResult.data
+        flightList: APIResult
     }
 }
 
@@ -33,16 +30,8 @@ export function setEndDate(date) {
     }
 }
 
-export function setCityFrom(city) {
+export function isAPILoading() {
     return {
-        type: 'FROM_CITY',
-        city: city
-    }
-}
-
-export function setCityTo(city) {
-    return {
-        type: 'TO_CITY',
-        city: city
+        type: 'IS_LOADING'
     }
 }

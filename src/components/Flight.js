@@ -2,6 +2,7 @@ import React from 'react';
 import DatePicker from "react-datepicker";
 import '../styles/datepicker.scss';
 import {AsyncTypeahead} from 'react-bootstrap-typeahead';
+import FlightResultsWrapper from '../containers/FlightResultsWrapper'
 
 class Flight extends React.Component{
     constructor(){
@@ -10,7 +11,8 @@ class Flight extends React.Component{
             selectedAirportFromIATA: null,
             selectedAirportToIATA: null,
             airportToOptions: [],
-            airportFromOptions: []
+            airportFromOptions: [],
+            flightSubmit: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.promiseOptions = this.promiseOptions.bind(this)
@@ -20,22 +22,18 @@ class Flight extends React.Component{
         event.preventDefault();
         if (this.state.selectedAirportToIATA && this.state.selectedAirportFromIATA) {
 
+            this.props.isAPILoading();
+
             let flightOutDateInput = this.props.startDate.format("DD/MM/YYYY");
             let returnFlightDateInput = this.props.endDate.format("DD/MM/YYYY");
+            let airportFrom = this.state.selectedAirportFromIATA;
+            let airportTo = this.state.selectedAirportToIATA;
 
-
-
-
-            console.log("HOLIDAY WITH DETAILS");
-            console.log(`Date Flying Out - ${flightOutDateInput}`);
-            console.log(`Return Flight - ${returnFlightDateInput}`);
-            console.log(`Airport From - ${this.state.selectedAirportFromIATA}`);
-            console.log(`Airport To - ${this.state.selectedAirportToIATA}`)
+            this.props.fetchFlights(airportFrom, airportTo,flightOutDateInput,returnFlightDateInput);
+            this.setState({flightSubmit:true})
+        } else {
+            alert("Pick a To and From Airport")
         }
-    }
-
-    flightsAPIFetch(){
-
     }
 
     promiseOptions(inputValue) {
@@ -92,7 +90,7 @@ class Flight extends React.Component{
                             placeholder="To:"
                             isLoading={this.state.airportToLoading}
                             onSearch={query => {
-                                this.setState({ airportToLoading: true });
+                                this.setState({airportToLoading: true});
                                 this.promiseOptions(query)
                                     .then(airports => {
                                         this.setState({
@@ -105,15 +103,15 @@ class Flight extends React.Component{
                             onChange={selected => {
                                 console.log('SELECTED:', selected);
                                 this.setState({
-                                    selectedAirportToIATA: selected[0].iata
+                                    selectedAirportToIATA: selected[0] && selected[0].iata
                                 })
                             }}
                         />
                         <AsyncTypeahead
-                            placeholder= "From:"
+                            placeholder="From:"
                             isLoading={this.state.airportFromLoading}
                             onSearch={query => {
-                                this.setState({ airportFromLoading: true });
+                                this.setState({airportFromLoading: true});
                                 this.promiseOptions(query)
                                     .then(airports => {
                                         this.setState({
@@ -126,15 +124,19 @@ class Flight extends React.Component{
                             onChange={selected => {
                                 console.log('SELECTED:', selected);
                                 this.setState({
-                                    selectedAirportFromIATA: selected[0].iata
+                                    selectedAirportFromIATA: selected[0] && selected[0].iata
                                 })
                             }}
                         />
                         <button type="submit" className="Submit-button">Search Flights</button>
                     </form>
+                    {
+                        this.state.flightSubmit ? <FlightResultsWrapper /> : null
+                    }
                 </div>
             )
         }
+
 }
 
 export default Flight

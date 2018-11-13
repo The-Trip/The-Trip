@@ -9,11 +9,10 @@ import suggestions from "./suggestions";
 import suggestionComment from "./suggestionComment";
 import startDate from './startDate'
 import endDate from './endDate'
-import flightsToCity from './flightsToCity'
-import flightsFromCity from './flightsFromCity'
 import suggestionForm from './suggestionForm'
 import setFlightsAPIResults from "./setFlightsAPIResults";
 import googlePlaceInfo from "./googlePlaceInfo";
+import isAPILoading from './isAPILoading'
 
 export default combineReducers({
     flightAPIResults: setFlightsAPIResults,
@@ -29,6 +28,5 @@ export default combineReducers({
     suggestionComment,
     startDate,
     endDate,
-    cityFrom: flightsFromCity,
-    cityTo: flightsToCity
+    isAPILoading
 });
