@@ -12,7 +12,7 @@ class Suggestions extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <section className="suggestions">
+        <section className="suggestions container">
           <header className="suggestions__header">
             {/* <h1 className="suggestions__title">{this.props.tripId}</h1> */}
 

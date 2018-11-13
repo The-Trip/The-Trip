@@ -36,7 +36,27 @@ class Trip extends React.Component {
               </h1>
             </figure>
 
-            <div className="tripcard__tabs__links">
+            <nav>
+              <ul>
+                <li>
+                  <NavLink to={flightsUrl} className="flights-toggle">
+                    Flights
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={hotelsUrl} className="hotels-toggle">
+                    Hotels
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={suggestionsUrl} className="suggestions-toggle">
+                    Suggestions
+                  </NavLink>
+                </li>
+              </ul>
+            </nav>
+
+            {/* <div className="tripcard__tabs__links">
               <label htmlFor="flights-toggle">
                 <NavLink to={flightsUrl}>Flights</NavLink>
               </label>
@@ -46,7 +66,7 @@ class Trip extends React.Component {
               <label htmlFor="suggestions-toggle">
                 <NavLink to={suggestionsUrl}>Suggestions</NavLink>
               </label>
-            </div>
+            </div> */}
 
             <div className="tabs">
               <Switch>

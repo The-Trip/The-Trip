@@ -8,8 +8,8 @@
   width: 100%;
   padding: $main-padding * 0.8 $main-padding * 1.5;
   margin: 0 auto;
-  background: $light-color;
-  color: $primary-color;
+  background: $primary-color;
+  color: $light-color;
   transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4s ease-in-out;
   -moz-transition: all 0.4s ease-in-out;
@@ -21,7 +21,7 @@
 
   a.nav__item {
     display: inline-block;
-    color: $primary-color;
+    color: $light-color;
     margin-right: 5px;
     padding: 5px;
   }
@@ -40,8 +40,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: $light-color;
     a {
-      color: $primary-color;
+      color: $light-color;
       text-decoration: none;
     }
   }

@@ -15,7 +15,10 @@ function SuggestionInput({ handleChange, handleSubmit, tripId }) {
         onSubmit={event => handleSubmit(event, tripId)}
       >
         <div>
-          <label className="suggestion-frm__placelabel" htmlFor="place">
+          <label
+            className="suggestion-frm__placelabel show--screenreaders"
+            htmlFor="place"
+          >
             Add a suggestion
           </label>
           <input
