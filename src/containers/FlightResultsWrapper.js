@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import FlightResults from '../components/FlightResults';
 
 const mapStateToProps = state => {
-    console.log(state.flightAPIResults[1]);
-
     return {
         flightResults: state.flightAPIResults.data,
-        isAPILoading: state.isAPILoading
+        isAPILoading: state.isAPILoading,
+        startDate: state.startDate,
+        endDate: state.endDate
     }
 };
 

@@ -133,7 +133,6 @@ app.post("/api/trip", (req,res) =>{
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
 app.post("/api/suggestion", (req, res) => {
-  // console.log(req.body);
 
   db.one(
     `INSERT INTO suggestion (place_name, place_address, place_id, place_category, trip_id, customer_id)
@@ -229,6 +228,47 @@ app.post("/api/google", function(req, res) {
 });
 
 app.get("*", (req, res) => res.sendFile(__dirname + "/index.html"));
+
+app.post("/api/flights", (req, res) => {
+    console.log(req.body);
+    let request = req.body.flightObject;
+    db.one(
+        `INSERT INTO flight (
+        airport_from, 
+        airport_to, 
+        city_from, 
+        city_to, 
+        flight_combination_id, 
+        outbound_flight_date, 
+        outbound_local_departure_time, 
+        outbound_local_arrival_time, 
+        price, 
+        return_flight_date, 
+        return_local_arrival_time, 
+        return_local_departure_time)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
+        [
+            request.airportFrom,
+            request.airportTo,
+            request.cityFrom,
+            request.cityTo,
+            request.flightCombinationID,
+            request.outboundFlightDate,
+            request.outboundLocalDepartureTime,
+            request.outboundLocalArrivalTime,
+            request.price,
+            request.returnFlightDate,
+            request.returnLocalArrivalTime,
+            request.returnLocalDepartureTime
+        ])
+        .then(flight => {
+            return res.json({flightID: flight.id });
+        })
+        .catch(error => {
+            console.error(error);
+            res.json({ error: error.message });
+        });
+}); // allows a flight to be added
 
 server.listen(8080, function() {
   console.log("Listening on port 8080");

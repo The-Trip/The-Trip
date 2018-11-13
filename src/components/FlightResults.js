@@ -7,7 +7,42 @@ function addZero(i){
     return i;
 }
 
-function FlightResults({flightResults, isAPILoading}){
+function handleClick(flightDetail,departureTimeReturn,arrivalTimeReturn,arrivalTimeOutbound,departureTimeOutbound,startDate,endDate){
+
+    let flightDetailsObject = {
+        flightCombinationID: flightDetail.route[0].combination_id,
+        outboundFlightDate: startDate.toISOString(),
+        returnFlightDate: endDate.toISOString(),
+        cityFrom: flightDetail.route[0].cityFrom,
+        cityTo: flightDetail.route[0].cityTo,
+        airportFrom: flightDetail.route[0].flyFrom,
+        airportTo: flightDetail.route[0].flyTo,
+        outboundLocalArrivalTime: `${addZero(arrivalTimeOutbound.getHours())}:${addZero(arrivalTimeOutbound.getMinutes())}:00`,
+        outboundLocalDepartureTime: `${addZero(departureTimeOutbound.getHours())}:${addZero(departureTimeOutbound.getMinutes())}:00`,
+        returnLocalDepartureTime: `${addZero(departureTimeReturn.getHours())}:${addZero(departureTimeReturn.getMinutes())}:00`,
+        returnLocalArrivalTime: `${addZero(arrivalTimeReturn.getHours())}:${addZero(arrivalTimeReturn.getMinutes())}:00`,
+        price: flightDetail.price
+    };
+
+    addFlightToDB(flightDetailsObject);
+}
+
+function addFlightToDB(flightObject) {
+        console.log("add flight to DB running");
+        return (
+            fetch("/api/flights", {
+                method: "post",
+                body: JSON.stringify({flightObject}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                .then((data) => console.log("Response data", data))
+        );
+}
+
+function FlightResults({flightResults, isAPILoading, startDate, endDate}){
 
 
         if (isAPILoading){
@@ -43,6 +78,16 @@ function FlightResults({flightResults, isAPILoading}){
                                 <p>Departure Time (local time): {`${addZero(departureTimeReturn.getHours())}:${addZero(departureTimeReturn.getMinutes())}:00`}</p>
                                 <p>Arrival Time (local time): {`${addZero(arrivalTimeReturn.getHours())}:${addZero(arrivalTimeReturn.getMinutes())}:00`}</p>
                                 <h2>Total Price: £{flightDetail.price}</h2>
+                                <button type="button"
+                                        onClick={() => handleClick(
+                                            flightDetail,
+                                            departureTimeReturn,
+                                            arrivalTimeReturn,
+                                            arrivalTimeOutbound,
+                                            departureTimeOutbound,
+                                            startDate,
+                                            endDate)}>
+                                    Pick this Flight!</button>
                             </div>
                         )
                     })
