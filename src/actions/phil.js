@@ -108,6 +108,7 @@ export function setView(view) {
 }
 
 export function fetchTripsFromDB(userId) {
+  console.log(`fetch trips ` + userId);
   return function(dispatch, getState) {
     fetch(`/api/user/${userId}/trip`)
       .then(response => response.json())
