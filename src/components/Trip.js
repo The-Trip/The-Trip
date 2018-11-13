@@ -7,10 +7,23 @@ import HotelsContainer from "../containers/HotelsContainer";
 import FlightWrapper from "../containers/FlightWrapper";
 
 class Trip extends React.Component {
+  componentDidMount() {
+    console.log("trip : " + this.props.trip);
+    if (!this.props.trip) {
+      this.props.fetchTripsFromDB(this.props.userId);
+    }
+  }
   render() {
+
     const suggestionsUrl = `/trips/${this.props.tripId}/suggestions`;
     const flightsUrl = `/trips/${this.props.tripId}/flights`;
     const hotelsUrl = `/trips/${this.props.tripId}/hotels`;
+
+
+    if (!this.props.trip) {
+      return <div>Loading...</div>;
+    }
+
 
     return (
       <div>

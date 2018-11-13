@@ -7,7 +7,6 @@ export function setTripState(name, value) {
 }
 
 export function addNewTrip() {
-  console.log("post new trip");
   return function(dispatch, getState) {
     return fetch("/api/trip", {
       method: "post",
@@ -21,7 +20,7 @@ export function addNewTrip() {
     })
       .then(response => response.json())
       .then(data => {
-        // dispatch(createTrip(data));
+        dispatch(setAddedTripId(data));
       });
   };
 }
@@ -57,5 +56,12 @@ export function setSelectedPlace(place) {
   return {
     type: "STORE_PLACE",
     selectedPlaceID: place
+  };
+}
+
+export function setAddedTripId(tripId) {
+  return {
+    type: "SET_ADDED_TRIP_ID",
+    tripId
   };
 }

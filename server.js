@@ -1,17 +1,17 @@
-require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
-const fetch = require('node-fetch');
-const pgp = require('pg-promise')();
-const bcrypt = require('bcrypt');
+const fetch = require("node-fetch");
+const pgp = require("pg-promise")();
+const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const db = pgp({
-    host: 'localhost',
-    port: 5432,
-    database: process.env.DB_NAME,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD
+  host: "localhost",
+  port: 5432,
+  database: process.env.DB_NAME,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD
 });
 const http = require("http");
 const socketIo = require("socket.io");
@@ -19,27 +19,45 @@ const socketIo = require("socket.io");
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const airports = require('airport-codes/airports.json')
-    .filter(function(cityObject){
-        return !cityObject.name.includes("Heli")
+const airports = require("airport-codes/airports.json")
+  .filter(function(cityObject) {
+    return !cityObject.name.includes("Heli");
+  })
+  .filter(function(cityObject) {
+    return !cityObject.name.includes("Bus");
+  })
+  .filter(function(cityObject) {
+    return cityObject.icao !== "\\N" || cityObject.name.startsWith("All"); //UNLESS cityObject.name CONTAINS "All"
+  })
+  .filter(function(cityObject) {
+    return cityObject.iata !== "";
+  })
+  .map(cityObject =>
+    Object.assign(cityObject, {
+      value: cityObject.iata,
+      label: `${cityObject.city} - ${cityObject.name} - ${cityObject.iata} - ${
+        cityObject.country
+      }`
     })
-    .filter(function(cityObject){
-        return !cityObject.name.includes("Bus")
-    })
-    .filter(function(cityObject){
-        return cityObject.icao !== "\\N" || cityObject.name.startsWith('All') //UNLESS cityObject.name CONTAINS "All"
-    })
-    .filter(function(cityObject){
-        return cityObject.iata !== ""
-    })
-    .map(cityObject => Object.assign(cityObject, {value: cityObject.iata, label: `${cityObject.city} - ${cityObject.name} - ${cityObject.iata} - ${cityObject.country}`}));
+  );
 
 function filterAirport(airport, query) {
-    return airport.city.startsWith(query) || airport.iata === query
+  return airport.city.startsWith(query) || airport.iata === query;
 }
 
-const tripWordsArray = ['trip','holiday','vacation','break','rest','recess',
-                        'tour', 'journey','voyage','vacay','hols'];
+const tripWordsArray = [
+  "trip",
+  "holiday",
+  "vacation",
+  "break",
+  "rest",
+  "recess",
+  "tour",
+  "journey",
+  "voyage",
+  "vacay",
+  "hols"
+];
 
 io.on("connection", socket => {
   console.log("New client connected");
@@ -61,19 +79,18 @@ const getApiAndEmit = async socket => {
 const api = process.env.GOOGLE_API;
 const unsplashId = process.env.UNSPLASH_API;
 
-
 app.use(bodyParser.json());
-app.use('/static', express.static('static'));
-app.use('/dist', express.static('dist'));
+app.use("/static", express.static("static"));
+app.use("/dist", express.static("dist"));
 
-app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
 
-app.get('/api/airports', function (req, res) {
-     const city = req.query.query;
-     const results = airports.filter(function(airport){
-         return filterAirport(airport, city)
-         });
-    res.json(results)
+app.get("/api/airports", function(req, res) {
+  const city = req.query.query;
+  const results = airports.filter(function(airport) {
+    return filterAirport(airport, city);
+  });
+  res.json(results);
 });
 
 app.post("/api/login", (req, res) => {
@@ -86,14 +103,16 @@ app.post("/api/login", (req, res) => {
     .catch(error => res.json({ error: error.message }));
 }); //allows a customer to login - NOTE USES PASSWORD NOT BCRYPT HASH ATM
 
-app.post("/api/trip", (req,res) =>{
-    console.log(req.body);
-    const randomNum = Math.floor(Math.random()*tripWordsArray.length);
-    const randomArrayValue = tripWordsArray[randomNum];
-    const destinationSplit = req.body.trip.destination.split(" ");
-    const destinationJoin = destinationSplit.join("-");
-    const randomURLString = `${req.body.user.name}-${destinationJoin}-${randomArrayValue}`;
-    
+app.post("/api/trip", (req, res) => {
+  console.log(req.body);
+  const randomNum = Math.floor(Math.random() * tripWordsArray.length);
+  const randomArrayValue = tripWordsArray[randomNum];
+  const destinationSplit = req.body.trip.destination.split(" ");
+  const destinationJoin = destinationSplit.join("-");
+  const randomURLString = `${
+    req.body.user.name
+  }-${destinationJoin}-${randomArrayValue}`;
+
   const photoUrl = `https://api.unsplash.com/search/photos?page=1&query=${
     req.body.trip.destination
   }&client_id=${unsplashId}`;
@@ -202,7 +221,7 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
   const tripId = req.params.id;
 
   db.any(
-    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name , comment.comment FROM customer, suggestion, comment, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) AND suggestion.id = comment.suggestion_id GROUP BY suggestion.customer_id, suggestion.id, customer.id, comment.id",
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
     [tripId]
   )
     .then(function(data) {

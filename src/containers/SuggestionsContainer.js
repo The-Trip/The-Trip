@@ -4,8 +4,8 @@ import { fetchSuggestionsFromDB } from "../actions/phil";
 
 const mapStateToProps = (state, ownProps) => {
   const trips = state.trips;
-  const tripId = ownProps.match.params.id;
-  const trip = trips.find(trip => trip.id == tripId);
+  const tripId = parseInt(ownProps.match.params.id, 10);
+  const trip = trips.find(trip => trip.id === tripId);
 
   return {
     suggestions: state.suggestions,

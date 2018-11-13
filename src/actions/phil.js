@@ -47,7 +47,6 @@ export function addSuggestionToDB(place, tripId) {
         .then(response => response.json())
         // TODO - Create response in server.js
         .then(id => {
-          console.log(id);
           dispatch(addCommentToDB(id, tripId));
         })
     );
