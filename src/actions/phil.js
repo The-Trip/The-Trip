@@ -1,3 +1,5 @@
+import { fetchCommentsFromDB } from "./chris";
+
 export function suggestionInputToState(name, value) {
   return {
     type: "SET_SUGGESTION_INPUT",
@@ -124,6 +126,8 @@ export function fetchSuggestionsFromDB(tripId) {
       .then(response => response.json())
       .then(result => {
         dispatch(receiveSuggestions(result));
+        dispatch(fetchCommentsFromDB());
+        console.log("calling!");
       })
       .catch(function(error) {});
   };

@@ -59,3 +59,22 @@ export function setSelectedPlace(place) {
     selectedPlaceID: place
   };
 }
+
+export function fetchCommentsFromDB(suggestId) {
+  console.log("I am calling");
+  return function(dispatch) {
+    fetch(`/api/trip/${suggestId}/comments`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveComments(result));
+      })
+      .catch(function(error) {});
+  };
+}
+
+export function receiveComments(results) {
+  return {
+    type: "STORE_COMMENTS",
+    comments: results
+  };
+}

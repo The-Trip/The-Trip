@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/components/SuggestionItem.scss";
+// import Comments from "../components/Comments";
 
 function SuggestionItem({ suggestion }) {
   return (
@@ -29,6 +30,8 @@ function SuggestionItem({ suggestion }) {
                         return <li className="suggestion__voter" key={vote.voteId}>{vote.fname.charAt(0).toUpperCase()}</li>
                     })}
             </ul> */}
+        <p>more info</p>
+        {/* <Comments key={suggestion.id} suggestionId={suggestion.id} /> */}
       </footer>
     </article>
   );
