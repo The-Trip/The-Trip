@@ -59,9 +59,9 @@ export function setSelectedPlace(place) {
   };
 }
 
-export function fetchCommentsFromDB(suggestId) {
+export function fetchCommentsFromDB(tripId) {
   return function(dispatch) {
-    fetch(`/api/trip/${suggestId}/comments`)
+    fetch(`/api/trip/${tripId}/comments`)
       .then(response => response.json())
       .then(result => {
         dispatch(receiveComments(result));
