@@ -24,7 +24,6 @@ class Suggestions extends React.Component {
           </header>
 
           {this.props.suggestions.map(suggestion => {
-            console.log(suggestion.id);
             return (
               <SuggestionItem key={suggestion.id} suggestion={suggestion} />
             );
