@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import SuggestionInput from "../components/SuggestionInput.js";
-import { suggestionInputToState, addSuggestionToDB } from "../actions/phil";
+import { suggestionInputToState } from "../actions/phil";
 import { googleFetch } from "../actions/chris";
 
 const mapStateToProps = (state, ownProps) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import DatePicker from "react-datepicker";
-import '../styles/datepicker.scss';
+import '../styles/base/datepicker.scss';
 import {AsyncTypeahead} from 'react-bootstrap-typeahead';
 import FlightResultsWrapper from '../containers/FlightResultsWrapper'
 
@@ -36,10 +36,9 @@ class Flight extends React.Component{
         }
     }
 
-    promiseOptions(inputValue) {
-       return fetch(`/api/airports?query=${inputValue}`)
-            .then(data => data.json())
-    };
+  promiseOptions(inputValue) {
+    return fetch(`/api/airports?query=${inputValue}`).then(data => data.json());
+  }
 
     render() {
             return (
@@ -139,4 +138,4 @@ class Flight extends React.Component{
 
 }
 
-export default Flight
+export default Flight;

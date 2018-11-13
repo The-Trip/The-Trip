@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Trips from "../components/Trips";
+import TripsList from "../components/TripsList";
 import { fetchTripsFromDB, setView } from "../actions/phil";
 
 const mapStateToProps = state => {
@@ -22,4 +22,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Trips);
+)(TripsList);

@@ -47,7 +47,6 @@ export function addSuggestionToDB(place, tripId) {
         .then(response => response.json())
         // TODO - Create response in server.js
         .then(id => {
-          console.log(id);
           dispatch(addCommentToDB(id, tripId));
         })
     );
@@ -124,6 +123,7 @@ export function fetchSuggestionsFromDB(tripId) {
       .then(response => response.json())
       .then(result => {
         dispatch(receiveSuggestions(result));
+        console.log("calling!");
       })
       .catch(function(error) {});
   };
