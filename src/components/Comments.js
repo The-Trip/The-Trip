@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/components/TripCreation.scss";
-// import { commentInputToState } from "../actions/phil";
+import cx from "classnames";
+
 class Comments extends React.Component {
   render() {
     const comments = this.props.comments;
@@ -8,16 +9,24 @@ class Comments extends React.Component {
     const commentObj = comments.filter(
       comment => comment.suggestion_id === suggestionId
     );
+
+    const commentsOpen = cx("comments", {
+      "tab-open": this.props.tabOpen,
+      "tab-closed": !this.props.tabOpen
+    });
+
     return (
       <ul>
         {console.log(commentObj, "commentsObj")}
         {commentObj.length > 0 && (
           <React.Fragment>
-            <p>Comments {commentObj.length}</p>
+            <p onClick={event => this.props.setTabOpen()}>
+              Comments {commentObj.length}
+            </p>
             {commentObj.map(comment => {
               return (
                 <React.Fragment key={comment.id}>
-                  <section className="comments">
+                  <section className={commentsOpen}>
                     <li>
                       {comment.comment}
                       {comment.first_name}{" "}

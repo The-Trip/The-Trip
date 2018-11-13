@@ -4,7 +4,6 @@ import "../styles/components/Trip.scss";
 import SuggestionsContainer from "../containers/SuggestionsContainer";
 import HotelsContainer from "../containers/HotelsContainer";
 import FlightWrapper from "../containers/FlightWrapper";
-import cx from "classnames";
 
 class Trip extends React.Component {
   componentDidMount() {
@@ -14,11 +13,6 @@ class Trip extends React.Component {
     }
   }
   render() {
-    const tabClasses = cx("tab__class", {
-      "tab-open": this.props.tabOpen,
-      "tab-closed": !this.props.tabOpen
-    });
-
     const suggestionsUrl = `/trips/${this.props.tripId}/suggestions`;
     const flightsUrl = `/trips/${this.props.tripId}/flights`;
     const hotelsUrl = `/trips/${this.props.tripId}/hotels`;
@@ -34,17 +28,13 @@ class Trip extends React.Component {
             <figure
               className="trip__figure"
               style={{
-                backgroundImage: `url(${this.props.trip.image})`
+                backgroundImage: `url(${this.props.trip.image})` 
               }}
             >
               <h1 className="trip__destination">
                 <span>{this.props.trip.destination}</span>
               </h1>
             </figure>
-
-            <button onClick={event => this.props.setTabOpen()}>Open</button>
-
-            <p className={tabClasses}>This is the open tab</p>
 
             <nav>
               <ul>
