@@ -1,0 +1,9 @@
+@import "../base/_variables.scss";
+
+.sockets__loader {
+  position: absolute;
+  background: $secondary-color;
+  top: 0;
+  left: 0;
+  width: 100%;
+}

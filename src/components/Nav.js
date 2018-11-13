@@ -6,16 +6,15 @@ function Nav() {
   return (
     <header className="sitehead shrink">
       <nav className="sitehead__nav">
+        <NavLink to="/trips/" activeClassName="active" className="nav__item">
+          <i className="fas fa-home fa-lg" />
+        </NavLink>
         <NavLink
           to="/create-trip/"
           activeClassName="active"
           className="nav__item"
         >
-          Create Trip
-        </NavLink>
-
-        <NavLink to="/trips/" activeClassName="active" className="nav__item">
-          Trips
+          <i className="fas fa-plus-circle fa-lg" />
         </NavLink>
       </nav>
 
@@ -25,7 +24,7 @@ function Nav() {
 
       <div className="sitehead__logout">
         <NavLink to="/login/" activeClassName="active" className="nav__item">
-          <i className="fas fa-sign-in-alt" />
+          <i className="fas fa-sign-in-alt fa-lg" />
         </NavLink>
       </div>
     </header>

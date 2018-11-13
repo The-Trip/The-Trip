@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "../styles/components/TripsListItem.scss";
 
-function TripsListItem({ trip, tripId }) {
+function TripInfo({ trip }) {
   const to = `/trips/${trip.id}/`;
 
   return (
@@ -55,4 +55,4 @@ function TripsListItem({ trip, tripId }) {
   );
 }
 
-export default TripsListItem;
+export default TripInfo;
