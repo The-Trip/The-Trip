@@ -1,1 +1,63 @@
-@import "../base/variables.scss";
+@import "../base/_variables.scss";
+
+.trip {
+  background: $white;
+  border-top: $main-padding solid $secondary-color;
+
+  &__link {
+    text-decoration: none;
+  }
+
+  &__figure {
+    position: relative;
+    margin: 0;
+    background-color: var(--primary-color);
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding-top: 56%;
+    background-size: cover;
+  }
+
+  &__destination {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
+    font-size: $main-padding * 1.5;
+    span {
+      display: block;
+      text-align: center;
+      background-color: $secondary-color;
+      height: $main-padding * 2.5;
+      line-height: $main-padding * 1.8;
+      padding-left: $main-padding * 0.5;
+      padding-right: $main-padding;
+      color: $light-color;
+      position: relative;
+
+      &:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-top: $main-padding * 2.5 solid $secondary-color;
+        border-left: $main-padding * 2.5 solid transparent;
+        border-bottom-left-radius: 5px;
+        position: absolute;
+        right: 100%;
+        top: 0px;
+      }
+    }
+  }
+
+  &__title {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    margin: $main-padding 0 0;
+  }
+
+  &__details {
+    p {
+      margin-top: 0;
+    }
+  }
+}

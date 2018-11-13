@@ -1,7 +1,6 @@
 import React from "react";
-import { Route, NavLink } from "react-router-dom";
+import { Route, NavLink, Switch } from "react-router-dom";
 import "../styles/components/Trip.scss";
-import TripsListItem from "./TripsListItem";
 import SuggestionsContainer from "../containers/SuggestionsContainer";
 import HotelsContainer from "../containers/HotelsContainer";
 import FlightWrapper from "../containers/FlightWrapper";
@@ -14,44 +13,57 @@ class Trip extends React.Component {
     }
   }
   render() {
+    const suggestionsUrl = `/trips/${this.props.tripId}/suggestions`;
+    const flightsUrl = `/trips/${this.props.tripId}/flights`;
+    const hotelsUrl = `/trips/${this.props.tripId}/hotels`;
+
     if (!this.props.trip) {
       return <div>Loading...</div>;
     }
-    const suggestionUrl = `/trips/${this.props.tripId}/suggestions`;
+
     return (
       <div>
         <React.Fragment>
           <section className="trip">
-            <header className="trips__header container">
-              <h1 className="trips__title">Your trip</h1>
-            </header>
+            <figure
+              className="trip__figure"
+              style={{
+                backgroundImage: `url(${this.props.trip.image})` 
+              }}
+            >
+              <h1 className="trip__destination">
+                <span>{this.props.trip.destination}</span>
+              </h1>
+            </figure>
 
-            <div className="trip__tabs__control">
-              <input type="radio" name="toggle" id="flights-toggle" />
-              <input type="radio" name="toggle" id="hotels-toggle" />
-              <input type="radio" name="toggle" id="suggestions-toggle" />
-
-              <div className="tabs">
-                <label htmlFor="flights-toggle">Flights</label>
-                <label htmlFor="hotels-toggle">Hotels</label>
-                <label htmlFor="suggestions-toggle">
-                  <NavLink to={suggestionUrl}>Suggestions</NavLink>
-                </label>
-              </div>
-
-              <section className="content">
-                <Route
-                  path="/trips/:id/"
-                  exact
-                  render={props => <TripsListItem trip={this.props.trip} />}
-                />
+            <nav>
+              <ul>
+                <li>
+                  <NavLink to={flightsUrl} className="flights-toggle">
+                    Flights
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={hotelsUrl} className="hotels-toggle">
+                    Hotels
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={suggestionsUrl} className="suggestions-toggle">
+                    Suggestions
+                  </NavLink>
+                </li>
+              </ul>
+            </nav>
+            <div className="tabs">
+              <Switch>
                 <Route path="/trips/:id/flights" component={FlightWrapper} />
                 <Route path="/trips/:id/hotels" component={HotelsContainer} />
                 <Route
                   path="/trips/:id/suggestions"
                   component={SuggestionsContainer}
                 />
-              </section>
+              </Switch>
             </div>
           </section>
         </React.Fragment>
