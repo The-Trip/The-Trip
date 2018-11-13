@@ -59,6 +59,24 @@ export function setSelectedPlace(place) {
   };
 }
 
+export function fetchCommentsFromDB(tripId) {
+  return function(dispatch) {
+    fetch(`/api/trip/${tripId}/comments`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveComments(result));
+      })
+      .catch(function(error) {});
+  };
+}
+
+export function receiveComments(results) {
+  return {
+    type: "STORE_COMMENTS",
+    comments: results
+  };
+}
+
 export function setAddedTripId(tripId) {
   return {
     type: "SET_ADDED_TRIP_ID",

@@ -1,12 +1,12 @@
 import React from "react";
 import "../styles/components/SuggestionItem.scss";
+import CommentsContainer from "../containers/CommentsContainer";
 
-function SuggestionItem({ suggestion }) {
+function SuggestionItem({ suggestion, tripId }) {
   return (
     <article className="suggestion__card">
       <header className="suggestion__header">
         <h1 className="suggestion__title">{suggestion.place_name}</h1>
-
         {/* {votes.filter((vote)=>vote.customerId===customerId).length < 1 && (
                 <button className="btn btn__vote btn--small" onClick={(e)=>(addVote(suggestion.id))}><i className="fas fa-plus"></i></button>
                         )}
@@ -29,6 +29,12 @@ function SuggestionItem({ suggestion }) {
                         return <li className="suggestion__voter" key={vote.voteId}>{vote.fname.charAt(0).toUpperCase()}</li>
                     })}
             </ul> */}
+        <p>more info</p>
+        <CommentsContainer
+          key={suggestion.id}
+          suggestionId={suggestion.id}
+          tripId={tripId}
+        />
       </footer>
     </article>
   );
