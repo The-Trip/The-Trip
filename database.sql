@@ -46,7 +46,7 @@ FOREIGN KEY (customer_id) REFERENCES customer (id)
 -- DYNAMIC TABLE FOR FLIGHTS
 CREATE TABLE flight (
 id serial,
-trip_id INT
+trip_id INT,
 airport_from VARCHAR(50) NOT NULL,
 airport_to VARCHAR(50) NOT NULL,
 city_from VARCHAR(50) NOT NULL,
@@ -59,8 +59,8 @@ price INT NOT NULL,
 return_flight_date DATE NOT NULL,
 return_local_arrival_time TIME NOT NULL,
 return_local_departure_time TIME NOT NULL,
-PRIMARY KEY (id)
-FOREIGN KEY (trip_id) REFERENCES trip (id),
+PRIMARY KEY (id),
+FOREIGN KEY (trip_id) REFERENCES trip (id)
 );
 
 -- DYNAMIC TABLE FOR COMMENTS ON SUGGESTIONS
