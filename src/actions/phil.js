@@ -1,5 +1,3 @@
-import { fetchCommentsFromDB } from "./chris";
-
 export function suggestionInputToState(name, value) {
   return {
     type: "SET_SUGGESTION_INPUT",
@@ -109,7 +107,6 @@ export function setView(view) {
 }
 
 export function fetchTripsFromDB(userId) {
-  console.log(`fetch trips ` + userId);
   return function(dispatch, getState) {
     fetch(`/api/user/${userId}/trip`)
       .then(response => response.json())

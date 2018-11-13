@@ -12,6 +12,7 @@ import endDate from "./endDate";
 import flightsToCity from "./flightsToCity";
 import flightsFromCity from "./flightsFromCity";
 import suggestionForm from "./suggestionForm";
+import addedTripId from "./addedTripId";
 import setFlightsAPIResults from "./setFlightsAPIResults";
 import googlePlaceInfo from "./googlePlaceInfo";
 import comments from "./comments";
@@ -24,6 +25,7 @@ export default combineReducers({
   googlePlaceInfo,
   suggestions,
   trips,
+  addedTripId,
   view,
   selectedPlace,
   loginForm,

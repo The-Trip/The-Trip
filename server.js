@@ -225,7 +225,6 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
     [tripId]
   )
     .then(function(data) {
-      console.log(data);
       res.json(data);
     })
     .catch(error => {
