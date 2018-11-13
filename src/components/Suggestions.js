@@ -47,6 +47,7 @@ class Suggestions extends React.Component {
                 key={suggestion.id}
                 suggestion={suggestion}
                 tripId={this.props.tripId}
+                comments={this.props.comments}
               />
             );
           })}
