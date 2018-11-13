@@ -14,7 +14,7 @@ class Suggestions extends React.Component {
       <React.Fragment>
         <section className="suggestions">
           <header className="suggestions__header">
-            <h1 className="suggestions__title">{this.props.tripId}</h1>
+            {/* <h1 className="suggestions__title">{this.props.tripId}</h1> */}
 
             {this.props.selectedPlace ? (
               <SuggestionInputFinalContainer tripId={this.props.tripId} />
