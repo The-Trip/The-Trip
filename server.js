@@ -112,6 +112,12 @@ app.post("/api/trip", (req, res) => {
   const randomURLString = `${
     req.body.user.name
   }-${destinationJoin}-${randomArrayValue}`;
+  const suggest_code = `${randomNum}_${
+    req.body.trip.destination.split(" ")[0]
+  }_${req.body.user.id}_suggest`;
+  const collaborate_code = `${randomNum}_${
+    req.body.trip.destination.split(" ")[0]
+  }_${req.body.user.id}_collarborate`;
 
   const photoUrl = `https://api.unsplash.com/search/photos?page=1&query=${
     req.body.trip.destination
@@ -123,10 +129,12 @@ app.post("/api/trip", (req, res) => {
     .then(unSplashData => unSplashData.results[0].urls.regular)
     .then(unsplashImage => {
       db.one(
-        `INSERT INTO trip (url, name, origin, destination, details, image, customer_id)
-                VALUES($1,$2,$3,$4,$5, $6, $7) RETURNING id`,
+        `INSERT INTO trip (url, auth_code_suggest, auth_code_collaborate, name, origin, destination, details, image, customer_id)
+                VALUES($1,$2,$3,$4,$5, $6, $7, $8, $9) RETURNING id`,
         [
           randomURLString,
+          suggest_code,
+          collaborate_code,
           req.body.trip.tripName,
           req.body.trip.origin,
           req.body.trip.destination,
@@ -135,13 +143,23 @@ app.post("/api/trip", (req, res) => {
           req.body.user.id
         ]
       )
-        .then(trip => {
-          const response = {
-            id: trip.id,
-            fname: req.body.fname,
-            destination: req.body.destination
-          };
-          return res.json(response);
+        .then(tripId => {
+          return db
+            .none(
+              `INSERT INTO permission (trip_id, customer_id, permission)
+                VALUES ($1, $2, 'owner')`,
+              [tripId.id, req.body.user.id, req.body.permission]
+            )
+            .then(permission => {
+              console.log(permission);
+              const response = {
+                id: tripId.id,
+                fname: req.body.fname,
+                destination: req.body.destination
+              };
+              console.log("trip creation response " + response.id);
+              return res.json(response);
+            });
         })
         .catch(error => {
           // console.log(error.stack)
@@ -150,6 +168,21 @@ app.post("/api/trip", (req, res) => {
     })
     .catch(error => console.error(error));
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
+
+app.post("/api/permission", (req, res) => {
+  db.one(
+    `INSERT INTO permission (trip_id, customer_id, permission)
+            VALUES ($1, $2, 'owner') RETURNING trip_id`,
+    [req.body_trip_id, req.body.cust_id, req.body.permission]
+  )
+    .then(id => {
+      return res.json({ permission: id });
+    })
+    .catch(error => {
+      console.error(error.stack);
+      res.json({ error: error.message });
+    });
+}); // al
 
 app.post("/api/suggestion", (req, res) => {
   db.one(
@@ -207,9 +240,10 @@ app.post("/api/customer", (req, res) => {
 app.get("/api/user/:id/trip", function(req, res) {
   const userId = req.params.id;
   // console.log(req.params)
-  db.any("SELECT * FROM trip WHERE customer_id = ($1) ORDER BY time DESC", [
-    userId
-  ])
+  db.any(
+    "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = ($1) AND trip.id = permission.trip_id",
+    [userId]
+  )
     .then(function(data) {
       res.json(data);
     })
