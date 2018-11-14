@@ -21,9 +21,14 @@ function SuggestionItem({ suggestion, tripId, comments }) {
         {suggestion.place_category}
         {suggestion.comment}
       </p>
+
+      {/* REMOVE BACON PLACEHOLDER BEFORE LIVE */}
       {suggestion.photo && (
         <img
-          src={`/api/google-photo/${suggestion.photo}`}
+          src={
+            `/api/google-photo/${suggestion.photo}` ||
+            `http://baconmockup.com/300/200`
+          }
           alt={suggestion.place_name}
         />
       )}

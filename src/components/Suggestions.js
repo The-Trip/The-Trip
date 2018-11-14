@@ -11,6 +11,7 @@ class Suggestions extends React.Component {
 
   render() {
     const deDupedSuggest = [];
+    console.log(this.props.suggestions);
     const map = new Map();
     for (const item of this.props.suggestions) {
       if (!map.has(item.place_id)) {
@@ -25,8 +26,10 @@ class Suggestions extends React.Component {
           customer_id: item.customer_id,
           place_id: item.place_id,
           trip_id: item.trip_id,
-          photo: item.photos && item.photo_reference
+          photo: item.photo_reference
+          // item.photos &&
         });
+        console.log(deDupedSuggest);
       }
     }
     return (
