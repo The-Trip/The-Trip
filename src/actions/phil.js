@@ -142,3 +142,10 @@ export function receiveSuggestions(suggestions) {
     suggestions
   };
 }
+
+export function suggestionInputClearState() {
+  console.log("suggestion input clear action");
+  return {
+    type: "CLEAR_SUGGESTION_INPUT"
+  };
+}
