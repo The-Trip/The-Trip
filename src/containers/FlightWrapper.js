@@ -3,7 +3,7 @@ import Flight from '../components/Flight';
 import {fetchFlights, isAPILoading, setEndDate, setStartDate} from '../actions/tomactions';
 
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
     return {
         flightResults: state.flightAPIResults.data,
         startDate: state.startDate,
