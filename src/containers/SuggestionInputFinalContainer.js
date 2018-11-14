@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import SuggestionInputFinal from "../components/SuggestionInputFinal.js";
 import { addSuggestionToDB, commentInputToState } from "../actions/phil";
+import AddIndivComment from "../components/AddIndivComment.js";
 
 const mapStateToProps = state => {
   return {
@@ -25,7 +26,15 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(SuggestionInputFinal);
+
+const connector = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SuggestionInputFinal);
+);
+
+export const SuggestionInputFinalContainer = connector(SuggestionInputFinal);
+export const AddIndivCommentContainer = connector(AddIndivComment);

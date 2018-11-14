@@ -29,6 +29,7 @@ destination VARCHAR(50) NOT NULL,
 details VARCHAR(50) NOT NULL,
 image VARCHAR(500) NOT NULL,
 customer_id INT NOT NULL,
+time timestamptz default current_timestamp NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (customer_id) REFERENCES customer (id)
 );
@@ -42,6 +43,7 @@ place_id VARCHAR(50) NOT NULL,
 place_category VARCHAR(50) NOT NULL,
 trip_id INT NOT NULL,
 customer_id INT NOT NULL,
+photo_reference VARCHAR(200),
 PRIMARY KEY (id),
 FOREIGN KEY (trip_id) REFERENCES trip (id),
 FOREIGN KEY (customer_id) REFERENCES customer (id)

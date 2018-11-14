@@ -123,7 +123,6 @@ export function fetchSuggestionsFromDB(tripId) {
       .then(response => response.json())
       .then(result => {
         dispatch(receiveSuggestions(result));
-        console.log("calling!");
       })
       .catch(function(error) {});
   };

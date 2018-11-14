@@ -186,15 +186,16 @@ app.post("/api/permission", (req, res) => {
 
 app.post("/api/suggestion", (req, res) => {
   db.one(
-    `INSERT INTO suggestion (place_name, place_address, place_id, place_category, trip_id, customer_id)
-            VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+    `INSERT INTO suggestion (place_name, place_address, place_id, place_category, trip_id, customer_id, photo_reference)
+            VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
     [
       req.body.place.name,
       req.body.place.formatted_address,
       req.body.place.place_id,
       req.body.place.types[0],
       req.body.trip,
-      req.body.user
+      req.body.user,
+      req.body.place.photos[0].photo_reference
     ]
   )
     .then(suggestion => {
@@ -255,7 +256,7 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
   const tripId = req.params.id;
 
   db.any(
-    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
     [tripId]
   )
     .then(function(data) {
@@ -295,6 +296,18 @@ app.post("/api/google", function(req, res) {
       return res.json(data.results);
     })
     .catch(console.error);
+});
+
+app.get("/api/google-photo/:reference", (req, res) => {
+  const { reference } = req.params;
+  const url = `https://maps.googleapis.com/maps/api/place/photo?key=${api}&photoreference=${reference}&maxwidth=600`;
+
+  fetch(url)
+    .then(response => response.body.pipe(res))
+    .catch(error => {
+      console.log("Error fetching photo from Google API", error.message);
+      res.json(500, { error: error.message });
+    });
 });
 
 app.get("*", (req, res) => res.sendFile(__dirname + "/index.html"));

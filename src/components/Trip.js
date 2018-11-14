@@ -7,7 +7,6 @@ import FlightWrapper from "../containers/FlightWrapper";
 
 class Trip extends React.Component {
   componentDidMount() {
-    console.log("trip : " + this.props.trip);
     if (!this.props.trip) {
       this.props.fetchTripsFromDB(this.props.userId);
     }
@@ -28,7 +27,7 @@ class Trip extends React.Component {
             <figure
               className="trip__figure"
               style={{
-                backgroundImage: `url(${this.props.trip.image})` 
+                backgroundImage: `url(${this.props.trip.image})`
               }}
             >
               <h1 className="trip__destination">
