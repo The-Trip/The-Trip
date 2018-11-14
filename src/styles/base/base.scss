@@ -79,6 +79,14 @@ img {
   border: 0;
 }
 
+/* --- Actions ---- */
+.item--closed {
+  display: none;
+}
+.item--open {
+  display: block;
+}
+
 /* ==== LAYOUT ==== */
 
 // MEDIA QUERIES - post MVP

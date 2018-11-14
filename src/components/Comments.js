@@ -11,8 +11,8 @@ class Comments extends React.Component {
     );
 
     const commentsOpen = cx("comments", {
-      "tab-open": this.props.tabOpen,
-      "tab-closed": !this.props.tabOpen
+      "tab-open": this.props.clicked,
+      "tab-closed": !this.props.clicked
     });
 
     return (
@@ -20,9 +20,16 @@ class Comments extends React.Component {
         {console.log(commentObj, "commentsObj")}
         {commentObj.length > 0 && (
           <React.Fragment>
-            <p onClick={event => this.props.setTabOpen()}>
+            <button
+              className="btn"
+              onClick={event => {
+                this.props.clicked
+                  ? this.props.removeClickedClass()
+                  : this.props.addClickedClass();
+              }}
+            >
               Comments {commentObj.length}
-            </p>
+            </button>
             {commentObj.map(comment => {
               return (
                 <React.Fragment key={comment.id}>
