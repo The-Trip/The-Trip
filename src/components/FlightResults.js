@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/components/FlightResults.scss";
 
 function addZero(i) {
   if (i < 10) {
@@ -88,8 +89,67 @@ function FlightResults({ flightResults, isAPILoading, startDate, endDate }) {
         let departureTimeReturn = new Date(departureTimeUTCReturn * 1000);
 
         return (
-          <div>
-            <p>
+          <article className="results" key={flightDetail.route[0].cityFrom}>
+            <table className="results__table">
+              <tbody>
+                <tr className="results__outbound">
+                  <td>Out</td>
+                  <td>{`${addZero(departureTimeOutbound.getHours())}:${addZero(
+                    departureTimeOutbound.getMinutes()
+                  )}:00`}</td>
+                  <td>
+                    <i className="fas fa-plane" />
+                  </td>
+                  <td>
+                    {" "}
+                    {`${addZero(arrivalTimeOutbound.getHours())}:${addZero(
+                      arrivalTimeOutbound.getMinutes()
+                    )}:00`}
+                  </td>
+                </tr>
+                <tr className="results__return">
+                  <td>Return</td>
+                  <td>
+                    {`${addZero(departureTimeReturn.getHours())}:${addZero(
+                      departureTimeReturn.getMinutes()
+                    )}:00`}
+                  </td>
+                  <td>
+                    <i className="fas fa-plane" />
+                  </td>
+                  <td>
+                    {`${addZero(arrivalTimeReturn.getHours())}:${addZero(
+                      arrivalTimeReturn.getMinutes()
+                    )}:00`}
+                  </td>
+                </tr>
+                <tr className="results__price">
+                  <td>Price</td>
+                  <td> £{flightDetail.price}</td>
+                  <td colSpan="2">
+                    <button
+                      type="button"
+                      className="results__btn"
+                      onClick={() =>
+                        handleClick(
+                          flightDetail,
+                          departureTimeReturn,
+                          arrivalTimeReturn,
+                          arrivalTimeOutbound,
+                          departureTimeOutbound,
+                          startDate,
+                          endDate
+                        )
+                      }
+                    >
+                      Pick this Flight!
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            {/* <p>
               Outbound: {flightDetail.route[0].cityFrom} -{" "}
               {flightDetail.route[0].flyFrom} to {flightDetail.route[0].cityTo}{" "}
               - {flightDetail.route[0].flyTo}
@@ -139,8 +199,8 @@ function FlightResults({ flightResults, isAPILoading, startDate, endDate }) {
               }
             >
               Pick this Flight!
-            </button>
-          </div>
+            </button> */}
+          </article>
         );
       })}
     </div>

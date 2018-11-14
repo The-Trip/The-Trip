@@ -1,7 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import "../styles/base/datepicker.scss";
-import "../styles/components/flights.scss";
+import "../styles/components/Flights.scss";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import FlightResultsWrapper from "../containers/FlightResultsWrapper";
 import cx from "classnames";
