@@ -2,7 +2,7 @@ import React from "react";
 import SuggestionInputContainer from "../containers/SuggestionInputContainer.js";
 import SuggestionItem from "./SuggestionItem.js";
 import "../styles/components/Suggestions.scss";
-import SuggestionInputFinalContainer from "../containers/SuggestionInputFinalContainer.js";
+import { SuggestionInputFinalContainer } from "../containers/SuggestionInputFinalContainer.js";
 
 class Suggestions extends React.Component {
   componentDidMount() {
@@ -24,7 +24,8 @@ class Suggestions extends React.Component {
           first_name: item.first_name,
           customer_id: item.customer_id,
           place_id: item.place_id,
-          trip_id: item.trip_id
+          trip_id: item.trip_id,
+          photo: item.photos && item.photo_reference
         });
       }
     }

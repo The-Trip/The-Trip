@@ -21,6 +21,12 @@ function SuggestionItem({ suggestion, tripId, comments }) {
         {suggestion.place_category}
         {suggestion.comment}
       </p>
+      {suggestion.photo && (
+        <img
+          src={`/api/google-photo/${suggestion.photo}`}
+          alt={suggestion.place_name}
+        />
+      )}
 
       <footer className="suggestion__footer">
         Suggested by <span>{suggestion.first_name}</span>
@@ -29,15 +35,13 @@ function SuggestionItem({ suggestion, tripId, comments }) {
                         return <li className="suggestion__voter" key={vote.voteId}>{vote.fname.charAt(0).toUpperCase()}</li>
                     })}
             </ul> */}
-        {comments && (
-          <React.Fragment>
-            <CommentsContainer
-              key={suggestion.id}
-              suggestionId={suggestion.id}
-              tripId={tripId}
-            />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          <CommentsContainer
+            key={suggestion.id}
+            suggestionId={suggestion.id}
+            tripId={tripId}
+          />
+        </React.Fragment>
       </footer>
     </article>
   );
