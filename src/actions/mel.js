@@ -4,8 +4,15 @@ export function setNavActive() {
   };
 }
 
-export function setTabOpen() {
+export function addClickedClass() {
   return {
-    type: "SET_TAB_OPEN"
+    type: "ADD_CLICKED_CLASS"
   };
 }
+
+export function removeClickedClass() {
+  return {
+    type: "REMOVE_CLICKED_CLASS"
+  };
+}
+
