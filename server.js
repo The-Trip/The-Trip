@@ -18,6 +18,24 @@ const socketIo = require("socket.io");
 
 const server = http.createServer(app);
 const io = socketIo(server);
+const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const expressSession = require("express-session");
+const LocalStrategy = require("passport-local").Strategy;
+
+app.use("/dist", express.static("dist"));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(
+  expressSession({
+    secret: "some random text #^*%!!", // used to generate session ids
+    resave: false,
+    saveUninitialized: false
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const airports = require("airport-codes/airports.json")
   .filter(function(cityObject) {
@@ -79,10 +97,6 @@ const getApiAndEmit = async socket => {
 const api = process.env.GOOGLE_API;
 const unsplashId = process.env.UNSPLASH_API;
 
-app.use(bodyParser.json());
-app.use("/static", express.static("static"));
-app.use("/dist", express.static("dist"));
-
 app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
 
 app.get("/api/airports", function(req, res) {
@@ -93,18 +107,7 @@ app.get("/api/airports", function(req, res) {
   res.json(results);
 });
 
-app.post("/api/login", (req, res) => {
-  db.one(
-    `SELECT * FROM customer
-            WHERE email=$1 and password=$2`,
-    [req.body.email, req.body.password]
-  )
-    .then(data => res.json(data))
-    .catch(error => res.json({ error: error.message }));
-}); //allows a customer to login - NOTE USES PASSWORD NOT BCRYPT HASH ATM
-
 app.post("/api/trip", (req, res) => {
-  console.log(req.body);
   const randomNum = Math.floor(Math.random() * tripWordsArray.length);
   const randomArrayValue = tripWordsArray[randomNum];
   const destinationSplit = req.body.trip.destination.split(" ");
@@ -224,11 +227,11 @@ app.post("/api/comment", (req, res) => {
 
 app.post("/api/customer", (req, res) => {
   bcrypt
-    .hash(req.body.password, saltRounds)
+    .hash(req.body.registrationPassword, saltRounds)
     .then(function(hash) {
       return db.one(
-        `INSERT INTO customer (first_name, email, password, hash) VALUES ($1, $2, $3, $4) RETURNING id`,
-        [req.body.fname, req.body.email, req.body.password, hash]
+        `INSERT INTO customer (first_name, email, hash) VALUES ($1, $2, $3) RETURNING id`,
+        [req.body.firstName, req.body.registrationEmail, hash]
       );
     })
     .then(result => {
@@ -237,7 +240,85 @@ app.post("/api/customer", (req, res) => {
     .catch(error => res.json({ error: error.message }));
 }); // allows a comment to be added to DB. Returns new comment ID if success
 
-app.get("/api/user/:id/trip", function(req, res) {
+// route to accept logins
+app.post(
+  "/api/login",
+  //(req, res) => console.log("post login", req.body),
+  passport.authenticate("local", { session: true }),
+  function(req, res) {
+    console.log(req.user);
+    console.log("api login");
+    res.json(req.user).end();
+  }
+);
+
+// const users = {
+//   1: {
+//     id: 1,
+//     username: "dmitri",
+//     password: "supersecret"
+//   },
+//   2: {
+//     id: 2,
+//     username: "oliver",
+//     password: "evenmoresecret"
+//   }
+// };
+
+function getUserByUsername(username) {
+  return db
+    .one(`SELECT * FROM customer WHERE email = ($1)`, [username])
+    .catch(console.error);
+}
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+// deserialise user from session
+passport.deserializeUser(function(id, done) {
+  console.log({ deserialiseUser: id });
+  getUserById(id)
+    .then(user => done(null, user))
+    .catch(console.error);
+});
+
+function getUserById(id) {
+  return db
+    .one(`SELECT * FROM CUSTOMER WHERE id = ($1)`, [id])
+    .catch(console.error);
+}
+
+// configure passport to use local strategy
+// that is use locally stored credentials
+
+passport.use(
+  new LocalStrategy(function(username, password, done) {
+    getUserByUsername(username)
+      .then(user => {
+        if (!user) return done(null, false);
+
+        bcrypt
+          .compare(password, user.hash)
+          .then(matches => {
+            matches ? done(null, user) : done(null, false);
+          })
+          .catch(console.error);
+      })
+      .catch(console.error);
+  })
+);
+
+// middleware function to check user is logged in
+function isLoggedIn(req, res, next) {
+  if (req.user && req.user.id) {
+    next();
+  } else {
+    res.send(401);
+  }
+}
+
+app.get("/api/user/:id/trip", isLoggedIn, function(req, res) {
   const userId = req.params.id;
   // console.log(req.params)
   db.any(
@@ -299,6 +380,7 @@ app.post("/api/google", function(req, res) {
 });
 
 app.get("/api/google-photo/:reference", (req, res) => {
+  console.log("here");
   const { reference } = req.params;
   const url = `https://maps.googleapis.com/maps/api/place/photo?key=${api}&photoreference=${reference}&maxwidth=600`;
 
@@ -310,10 +392,7 @@ app.get("/api/google-photo/:reference", (req, res) => {
     });
 });
 
-app.get("*", (req, res) => res.sendFile(__dirname + "/index.html"));
-
 app.post("/api/flights", (req, res) => {
-  console.log(req.body);
   let request = req.body.flightObject;
   db.one(
     `INSERT INTO flight (
@@ -353,6 +432,10 @@ app.post("/api/flights", (req, res) => {
       res.json({ error: error.message });
     });
 }); // allows a flight to be added
+
+app.get("*", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 
 const port = process.env.PORT || 8080;
 

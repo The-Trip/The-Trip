@@ -90,7 +90,6 @@ function Login({
               type="email"
               onChange={event => handleChangeRegister(event)}
               name="registrationEmail"
-              value="to add"
               required
             />
             <span className="validity" />
