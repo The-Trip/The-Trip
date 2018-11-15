@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/components/TripCreation.scss";
 import cx from "classnames";
+import { AddIndivCommentContainer } from "../containers/SuggestionInputFinalContainer.js";
 
 class Comments extends React.Component {
   render() {
@@ -11,25 +12,33 @@ class Comments extends React.Component {
     );
 
     const commentsOpen = cx("comments", {
-      "tab-open": this.props.tabOpen,
-      "tab-closed": !this.props.tabOpen
+      "tab-open": this.props.clicked,
+      "tab-closed": !this.props.clicked
     });
 
     return (
       <ul>
-        {console.log(commentObj, "commentsObj")}
+        <AddIndivCommentContainer />
+
         {commentObj.length > 0 && (
           <React.Fragment>
-            <p onClick={event => this.props.setTabOpen()}>
+            <button
+              className="btn"
+              onClick={event => {
+                this.props.clicked
+                  ? this.props.removeClickedClass()
+                  : this.props.addClickedClass();
+              }}
+            >
               Comments {commentObj.length}
-            </p>
+            </button>
             {commentObj.map(comment => {
               return (
                 <React.Fragment key={comment.id}>
                   <section className={commentsOpen}>
                     <li>
                       {comment.comment}
-                      {comment.first_name}{" "}
+                      {comment.first_name}
                     </li>
                   </section>
                 </React.Fragment>

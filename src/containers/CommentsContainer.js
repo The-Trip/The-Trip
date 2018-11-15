@@ -1,18 +1,21 @@
 import { connect } from "react-redux";
 import Comments from "../components/Comments.js";
-import { setTabOpen } from "../actions/mel";
+import { addClickedClass, removeClickedClass } from "../actions/mel";
 
 const mapStateToProps = state => {
   return {
     comments: state.comments,
-    tabOpen: state.stylesSwitches.tabOpen
+    clicked: state.stylesSwitches.clicked
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setTabOpen: event => {
-      dispatch(setTabOpen());
+    addClickedClass: event => {
+      dispatch(addClickedClass());
+    },
+    removeClickedClass: event => {
+      dispatch(removeClickedClass());
     }
   };
 };
