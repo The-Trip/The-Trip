@@ -1,5 +1,11 @@
 @import "../base/_variables.scss";
 
+.flights {
+  &__searchform {
+    margin-bottom: $main-padding * 1.5;
+  }
+}
+
 .flights input {
   width: calc(100%);
 }
@@ -56,6 +62,10 @@
     background-color: $secondary-color;
     color: black;
   }
+}
+
+.flightsresults {
+  background: lighten($secondary-color, 10%);
 }
 
 // MEDIA QUERIES - post MVP

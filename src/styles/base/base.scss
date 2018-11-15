@@ -1,5 +1,6 @@
 @import "_normalize";
 @import "variables";
+@import "loader";
 
 /* ==== BASE ==== */
 html {
@@ -19,7 +20,7 @@ body {
   font-family: $body-font;
   margin: 0;
   padding: 0;
-  background: $light-color;
+  background: $white;
   line-height: 1.5;
   color: $primary-color;
   -webkit-font-smoothing: antialiased;
@@ -50,6 +51,7 @@ a {
 }
 main {
   margin-top: 4.6rem;
+  padding-bottom: $main-padding * 1.5;
 }
 img {
   max-width: 100%;

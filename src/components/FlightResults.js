@@ -59,8 +59,8 @@ function addFlightToDB(flightObject) {
 function FlightResults({ flightResults, isAPILoading, startDate, endDate }) {
   if (isAPILoading) {
     return (
-      <div>
-        <p>Results Loading...</p>
+      <div className="flightsresults__loading container">
+        <div className="loader">Results Loading&hellip;</div>
       </div>
     );
   }
@@ -70,13 +70,17 @@ function FlightResults({ flightResults, isAPILoading, startDate, endDate }) {
   if (flightResults.length === 0) {
     return (
       <div>
-        <p>No Flights for those days/aiports, please search again</p>
+        S<p>No Flights for those days/aiports, please search again</p>
       </div>
     );
   }
 
   return (
     <div>
+      <header className="flightsresults__header">
+        <h1 className="flightsresults__title container">Select flights</h1>
+      </header>
+
       {flightResults.map(function(flightDetail) {
         let arrivalTimeUTCOutbound = flightDetail.route[0].aTime;
         let departureTimeUTCOutbound = flightDetail.route[0].dTime;
@@ -89,65 +93,76 @@ function FlightResults({ flightResults, isAPILoading, startDate, endDate }) {
         let departureTimeReturn = new Date(departureTimeUTCReturn * 1000);
 
         return (
-          <article className="results" key={flightDetail.route[0].cityFrom}>
-            <table className="results__table">
-              <tbody>
-                <tr className="results__outbound">
-                  <td>Out</td>
-                  <td>{`${addZero(departureTimeOutbound.getHours())}:${addZero(
-                    departureTimeOutbound.getMinutes()
-                  )}:00`}</td>
-                  <td>
-                    <i className="fas fa-plane" />
-                  </td>
-                  <td>
-                    {" "}
-                    {`${addZero(arrivalTimeOutbound.getHours())}:${addZero(
-                      arrivalTimeOutbound.getMinutes()
-                    )}:00`}
-                  </td>
-                </tr>
-                <tr className="results__return">
-                  <td>Return</td>
-                  <td>
-                    {`${addZero(departureTimeReturn.getHours())}:${addZero(
-                      departureTimeReturn.getMinutes()
-                    )}:00`}
-                  </td>
-                  <td>
-                    <i className="fas fa-plane" />
-                  </td>
-                  <td>
-                    {`${addZero(arrivalTimeReturn.getHours())}:${addZero(
-                      arrivalTimeReturn.getMinutes()
-                    )}:00`}
-                  </td>
-                </tr>
-                <tr className="results__price">
-                  <td>Price</td>
-                  <td> £{flightDetail.price}</td>
-                  <td colSpan="2">
-                    <button
-                      type="button"
-                      className="results__btn"
-                      onClick={() =>
-                        handleClick(
-                          flightDetail,
-                          departureTimeReturn,
-                          arrivalTimeReturn,
-                          arrivalTimeOutbound,
-                          departureTimeOutbound,
-                          startDate,
-                          endDate
-                        )
-                      }
-                    >
-                      Pick this Flight!
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <article className="results">
+            <div className="results__display container">
+              <table className="results__table">
+                <tbody>
+                  <tr className="results__outbound">
+                    <td>{`${addZero(
+                      departureTimeOutbound.getHours()
+                    )}:${addZero(departureTimeOutbound.getMinutes())}`}</td>
+                    <td>
+                      <i className="fas fa-plane" />
+                    </td>
+                    <td>
+                      {" "}
+                      {`${addZero(arrivalTimeOutbound.getHours())}:${addZero(
+                        arrivalTimeOutbound.getMinutes()
+                      )}`}
+                    </td>
+                  </tr>
+
+                  <tr className="results__details details--out">
+                    <td>{flightDetail.route[0].flyFrom}</td>
+                    <td>Emirates</td>
+                    <td>{flightDetail.route[0].flyTo}</td>
+                  </tr>
+
+                  <tr className="results__return">
+                    <td>
+                      {`${addZero(departureTimeReturn.getHours())}:${addZero(
+                        departureTimeReturn.getMinutes()
+                      )}`}
+                    </td>
+                    <td>
+                      <i className="fas fa-plane" />
+                    </td>
+                    <td>
+                      {`${addZero(arrivalTimeReturn.getHours())}:${addZero(
+                        arrivalTimeReturn.getMinutes()
+                      )}`}
+                    </td>
+                  </tr>
+
+                  <tr className="results__details details--return">
+                    <td>{flightDetail.route[1].flyFrom}</td>
+                    <td>Emirates</td>
+                    <td>{flightDetail.route[1].flyTo}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="results__book">
+                £{flightDetail.price}
+                <button
+                  type="button"
+                  className="results__btn"
+                  onClick={() =>
+                    handleClick(
+                      flightDetail,
+                      departureTimeReturn,
+                      arrivalTimeReturn,
+                      arrivalTimeOutbound,
+                      departureTimeOutbound,
+                      startDate,
+                      endDate
+                    )
+                  }
+                >
+                  <i className="fas fa-plus" />
+                </button>
+              </div>
+            </div>
 
             {/* <p>
               Outbound: {flightDetail.route[0].cityFrom} -{" "}

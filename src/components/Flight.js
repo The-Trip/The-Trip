@@ -1,7 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import "../styles/base/datepicker.scss";
-import "../styles/components/Flights.scss";
+import "../styles/components/Flight.scss";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import FlightResultsWrapper from "../containers/FlightResultsWrapper";
 import cx from "classnames";
@@ -57,115 +57,119 @@ class Flight extends React.Component {
     });
 
     return (
-      <section className="flights container">
-        <header className="flights__header">
-          <h1 className="flights__title">Find a flight</h1>
-        </header>
-        <form onSubmit={this.handleSubmit} className="search__form">
-          <AsyncTypeahead
-            placeholder="From:"
-            isLoading={this.state.airportFromLoading}
-            onSearch={query => {
-              this.setState({ airportFromLoading: true });
-              this.promiseOptions(query).then(airports => {
-                this.setState({
-                  airportFromLoading: false,
-                  airportFromOptions: airports
+      <React.Fragment>
+        <section className="flights container">
+          <header className="flights__header">
+            <h1 className="flights__title">Find a flight</h1>
+          </header>
+
+          <form onSubmit={this.handleSubmit} className="flights__searchform">
+            <AsyncTypeahead
+              placeholder="From:"
+              isLoading={this.state.airportFromLoading}
+              onSearch={query => {
+                this.setState({ airportFromLoading: true });
+                this.promiseOptions(query).then(airports => {
+                  this.setState({
+                    airportFromLoading: false,
+                    airportFromOptions: airports
+                  });
                 });
-              });
-            }}
-            options={this.state.airportFromOptions}
-            onChange={selected => {
-              console.log("SELECTED:", selected);
-              this.setState({
-                selectedAirportFromIATA: selected[0] && selected[0].iata
-              });
-            }}
-          />
-          <AsyncTypeahead
-            placeholder="To:"
-            isLoading={this.state.airportToLoading}
-            onSearch={query => {
-              this.setState({ airportToLoading: true });
-              this.promiseOptions(query).then(airports => {
+              }}
+              options={this.state.airportFromOptions}
+              onChange={selected => {
+                console.log("SELECTED:", selected);
                 this.setState({
-                  airportToLoading: false,
-                  airportToOptions: airports
+                  selectedAirportFromIATA: selected[0] && selected[0].iata
                 });
-              });
-            }}
-            options={this.state.airportToOptions}
-            onChange={selected => {
-              console.log("SELECTED:", selected);
-              this.setState({
-                selectedAirportToIATA: selected[0] && selected[0].iata
-              });
-            }}
-          />
-          <h3>
-            Select Journey Dates&nbsp;
-            <i
+              }}
+            />
+            <AsyncTypeahead
+              placeholder="To:"
+              isLoading={this.state.airportToLoading}
+              onSearch={query => {
+                this.setState({ airportToLoading: true });
+                this.promiseOptions(query).then(airports => {
+                  this.setState({
+                    airportToLoading: false,
+                    airportToOptions: airports
+                  });
+                });
+              }}
+              options={this.state.airportToOptions}
+              onChange={selected => {
+                console.log("SELECTED:", selected);
+                this.setState({
+                  selectedAirportToIATA: selected[0] && selected[0].iata
+                });
+              }}
+            />
+            <h3
               onClick={event => {
                 this.props.clicked
                   ? this.props.removeClickedClass()
                   : this.props.addClickedClass();
               }}
-              className="fas fa-plus-square"
-            />
-          </h3>
+            >
+              Select Journey Dates&nbsp;
+              <i className="fas fa-plus" />
+            </h3>
 
-          <div className={datePickers}>
-            <h3>Outbound Date&nbsp;</h3>
+            <div className={datePickers}>
+              <h3>Outbound Date&nbsp;</h3>
 
-            <div className="myDatePickerContainer myDatePickerStart">
-              <DatePicker
-                selected={this.props.startDate}
-                selectsStart
-                startDate={this.props.startDate}
-                endDate={this.props.endDate}
-                onChange={date => this.props.setStartDate(date)}
-                locale="en-gb"
-                autoComplete="off"
-                placeholderText="Start date"
-                inline
-              />
+              <div className="myDatePickerContainer myDatePickerStart">
+                <DatePicker
+                  selected={this.props.startDate}
+                  selectsStart
+                  startDate={this.props.startDate}
+                  endDate={this.props.endDate}
+                  onChange={date => this.props.setStartDate(date)}
+                  locale="en-gb"
+                  autoComplete="off"
+                  placeholderText="Start date"
+                  inline
+                />
+              </div>
+
+              <h3>Return Date&nbsp;</h3>
+
+              <div className="myDatePickerContainer myDatePickerEnd">
+                <DatePicker
+                  selected={this.props.endDate}
+                  selectsEnd
+                  startDate={this.props.startDate}
+                  endDate={this.props.endDate}
+                  onChange={date => this.props.setEndDate(date)}
+                  placeholderText="End date"
+                  locale="en-gb"
+                  autoComplete="off"
+                  inline
+                  // popperPlacement="top-end"
+                  // popperModifiers={{
+                  //     offset: {
+                  //         enabled: true,
+                  //         offset: '5px, 1rem'
+                  //     },
+                  //     preventOverflow: {
+                  //         enabled: true,
+                  //         escapeWithReference: false,
+                  //         boundariesElement: 'viewport'
+                  //     }
+                  // }}
+                />
+              </div>
             </div>
 
-            <h3>Return Date&nbsp;</h3>
-
-            <div className="myDatePickerContainer myDatePickerEnd">
-              <DatePicker
-                selected={this.props.endDate}
-                selectsEnd
-                startDate={this.props.startDate}
-                endDate={this.props.endDate}
-                onChange={date => this.props.setEndDate(date)}
-                placeholderText="End date"
-                locale="en-gb"
-                autoComplete="off"
-                inline
-                // popperPlacement="top-end"
-                // popperModifiers={{
-                //     offset: {
-                //         enabled: true,
-                //         offset: '5px, 1rem'
-                //     },
-                //     preventOverflow: {
-                //         enabled: true,
-                //         escapeWithReference: false,
-                //         boundariesElement: 'viewport'
-                //     }
-                // }}
-              />
-            </div>
-          </div>
-
-          <button type="submit" className="btn btn-submit">
-            Search Flights
-          </button>
-        </form>
-        {this.state.flightSubmit ? <FlightResultsWrapper /> : null}
-      </section>
+            <button type="submit" className="btn btn-submit">
+              Search Flights
+            </button>
+          </form>
+        </section>
+        <section className="flightsresults">
+          {this.state.flightSubmit ? <FlightResultsWrapper /> : null}
+        </section>
+      </React.Fragment>
     );
   }
 }

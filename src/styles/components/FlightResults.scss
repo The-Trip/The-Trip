@@ -1,38 +1,72 @@
 @import "../base/_variables.scss";
 
+.flightsresults__header {
+  background: $white;
+}
+.flightsresults__loading {
+  background: $white;
+}
+
 .results {
-  table {
+  background: $white;
+  margin-bottom: $main-padding * 0.5;
+  // &:first-child {
+  //   margin-top: $main-padding * 1.5;
+  // }
+  &:last-child {
+    border-bottom: $main-padding * 0.5 solid lighten($secondary-color, 10%);
+    margin-bottom: $main-padding * 1.5;
+  }
+  &__display {
+    display: flex;
+  }
+  &__book {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-weight: 700;
+  }
+  &__table {
+    flex: 3;
+    justify-content: flex-start;
+  }
+
+  &__table {
+    border-collapse: collapse;
     width: 100%;
     margin: $main-padding auto;
     table-layout: fixed;
   }
 
-  &__table {
-    border-collapse: collapse;
-  }
-
   td {
     border-collapse: collapse;
     padding: $main-padding * 0.3;
-    text-align: center;
-    &:first-child {
-      text-align: left;
-      text-transform: uppercase;
-      padding-left: $main-padding * 0.3;
-    }
-  }
-  &__outbound {
-    border-top: 1px solid $secondary-color;
-  }
-  &__price {
-    border-bottom: 1px solid $secondary-color;
+    text-align: left;
   }
 
   &__outbound,
   &__return {
-    background: $light-color;
+    td:nth-child(2) {
+      text-align: center;
+      color: $secondary-color;
+    }
   }
-  &__price {
-    background: lighten($secondary-color, 20%);
+
+  &__outbound,
+  &__return,
+  &__details {
+    td:nth-child(1) {
+      text-transform: uppercase;
+      padding-left: $main-padding * 0.5;
+    }
+  }
+
+  &__details {
+    color: $grey;
+  }
+
+  &__btn {
+    color: $accent-color;
   }
 }
