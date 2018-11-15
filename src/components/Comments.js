@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/components/TripCreation.scss";
 import cx from "classnames";
+import { AddIndivCommentContainer } from "../containers/SuggestionInputFinalContainer.js";
 
 class Comments extends React.Component {
   render() {
@@ -17,7 +18,8 @@ class Comments extends React.Component {
 
     return (
       <ul>
-        {console.log(commentObj, "commentsObj")}
+        <AddIndivCommentContainer />
+
         {commentObj.length > 0 && (
           <React.Fragment>
             <button
@@ -36,7 +38,7 @@ class Comments extends React.Component {
                   <section className={commentsOpen}>
                     <li>
                       {comment.comment}
-                      {comment.first_name}{" "}
+                      {comment.first_name}
                     </li>
                   </section>
                 </React.Fragment>

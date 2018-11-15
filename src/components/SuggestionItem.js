@@ -22,6 +22,17 @@ function SuggestionItem({ suggestion, tripId, comments }) {
         {suggestion.comment}
       </p>
 
+      {/* REMOVE BACON PLACEHOLDER BEFORE LIVE */}
+      {suggestion.photo && (
+        <img
+          src={
+            `/api/google-photo/${suggestion.photo}` ||
+            `http://baconmockup.com/300/200`
+          }
+          alt={suggestion.place_name}
+        />
+      )}
+
       <footer className="suggestion__footer">
         Suggested by <span>{suggestion.first_name}</span>
         {/* <ul className="suggestion__voters menu--settings">
@@ -29,15 +40,13 @@ function SuggestionItem({ suggestion, tripId, comments }) {
                         return <li className="suggestion__voter" key={vote.voteId}>{vote.fname.charAt(0).toUpperCase()}</li>
                     })}
             </ul> */}
-        {comments && (
-          <React.Fragment>
-            <CommentsContainer
-              key={suggestion.id}
-              suggestionId={suggestion.id}
-              tripId={tripId}
-            />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          <CommentsContainer
+            key={suggestion.id}
+            suggestionId={suggestion.id}
+            tripId={tripId}
+          />
+        </React.Fragment>
       </footer>
     </article>
   );

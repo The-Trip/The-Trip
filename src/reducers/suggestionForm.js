@@ -4,6 +4,9 @@ function suggestionsForm(state = {}, action) {
       const formObj = Object.assign({}, state, { [action.name]: action.value });
       return formObj;
     }
+    case "CLEAR_SUGGESTION_INPUT": {
+      return [];
+    }
     default:
       return state;
   }
