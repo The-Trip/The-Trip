@@ -2,10 +2,12 @@ import { connect } from "react-redux";
 import Comments from "../components/Comments.js";
 import { setTabOpen } from "../actions/mel";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     comments: state.comments,
-    tabOpen: state.stylesSwitches.tabOpen
+    tabOpen: state.stylesSwitches.tabOpen,
+    tripId: ownProps.tripId,
+    suggestion: ownProps.suggestion
   };
 };
 
