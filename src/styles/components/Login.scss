@@ -1,0 +1,9 @@
+@import "../base/_variables.scss";
+
+.login {
+  padding-top: $main-padding * 0.5;
+}
+.login__title,
+.registration__title {
+  margin-bottom: $main-padding * 0.5;
+}

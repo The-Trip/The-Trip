@@ -6,7 +6,7 @@ function SuggestionItem({ suggestion, tripId, comments }) {
   return (
     <article className="suggestion__card">
       <header className="suggestion__header">
-        <h1 className="suggestion__title">{suggestion.place_name}</h1>
+        <h2 className="suggestion__title">{suggestion.place_name}</h2>
         {/* {votes.filter((vote)=>vote.customerId===customerId).length < 1 && (
                 <button className="btn btn__vote btn--small" onClick={(e)=>(addVote(suggestion.id))}><i className="fas fa-plus"></i></button>
                         )}
