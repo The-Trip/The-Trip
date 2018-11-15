@@ -379,11 +379,8 @@ app.post("/api/google", function(req, res) {
     .catch(console.error);
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
-
 app.get("/api/google-photo/:reference", (req, res) => {
+  console.log("here");
   const { reference } = req.params;
   const url = `https://maps.googleapis.com/maps/api/place/photo?key=${api}&photoreference=${reference}&maxwidth=600`;
 
@@ -435,6 +432,10 @@ app.post("/api/flights", (req, res) => {
       res.json({ error: error.message });
     });
 }); // allows a flight to be added
+
+app.get("*", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 
 const port = process.env.PORT || 8080;
 
