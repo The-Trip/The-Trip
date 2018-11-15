@@ -1,3 +1,5 @@
+import { fetchCommentsFromDB } from "./chris.js";
+
 export function suggestionInputToState(name, value) {
   return {
     type: "SET_SUGGESTION_INPUT",
@@ -71,6 +73,31 @@ export function addCommentToDB(id, tripId) {
         // TODO - Create response in server.js
         .then(() => {
           dispatch(fetchSuggestionsFromDB(tripId));
+        })
+    );
+  };
+}
+
+export function addIndivCommentToDB(suggestionId, tripId) {
+  console.log(suggestionId, tripId);
+  return function(dispatch, getState) {
+    return (
+      fetch("/api/comment", {
+        method: "post",
+        body: JSON.stringify({
+          suggest_id: suggestionId.id,
+          cust_id: getState().user.id,
+          comment: getState().suggestionComment
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(response => response.json())
+        // TODO - Create response in server.js
+        .then(() => {
+          dispatch(fetchSuggestionsFromDB(tripId));
+          dispatch(fetchCommentsFromDB(tripId));
         })
     );
   };

@@ -43,7 +43,7 @@ function SuggestionItem({ suggestion, tripId, comments }) {
         <React.Fragment>
           <CommentsContainer
             key={suggestion.id}
-            suggestionId={suggestion.id}
+            suggestion={suggestion}
             tripId={tripId}
           />
         </React.Fragment>

@@ -211,6 +211,7 @@ app.post("/api/suggestion", (req, res) => {
 }); // allows a suggestion to be made (will error if not logged in as needs id)
 
 app.post("/api/comment", (req, res) => {
+  console.log("calling", req);
   db.one(
     `INSERT INTO comment (suggestion_id, customer_id, comment)
             VALUES ($1, $2, $3) RETURNING id`,
@@ -350,13 +351,12 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
 
 app.get("/api/trip/:id/comments", function(req, res) {
   const tripId = req.params.id;
-  console.log(tripId, "comments fetch on server");
+
   db.any(
-    "SELECT comment.id, comment.suggestion_id, comment.customer_id,  comment.comment FROM suggestion, comment WHERE trip_id = ($1) AND suggestion.id = comment.suggestion_id",
+    "SELECT comment.id, comment.suggestion_id, comment.customer_id,  comment.comment, customer.first_name FROM suggestion, comment, customer WHERE trip_id = ($1) AND suggestion.id = comment.suggestion_id AND customer.id = comment.customer_id",
     [tripId]
   )
     .then(function(data) {
-      console.log(data);
       res.json(data);
     })
     .catch(error => {
