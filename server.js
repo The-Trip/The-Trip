@@ -324,8 +324,8 @@ app.get("/api/checklogin/", function(req, res) {
   res.send(req.user);
 });
 
-app.get("/api/user/:id/trip", isLoggedIn, function(req, res) {
-  const userId = req.params.id;
+app.get("/api/user/trip", isLoggedIn, function(req, res) {
+  const userId = req.user.id;
   // console.log(req.params)
   db.any(
     "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = ($1) AND trip.id = permission.trip_id",

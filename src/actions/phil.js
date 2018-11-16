@@ -216,7 +216,7 @@ function apiCall(path) {
 
 export function fetchTripsFromDB(userId) {
   return function(dispatch, getState) {
-    apiCall(`/user/${userId}/trip`)
+    apiCall(`/user/trip`)
       .then(result => {
         dispatch(receiveTrips(result));
       })
