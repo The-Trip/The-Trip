@@ -2,6 +2,7 @@ import React from "react";
 
 import "../styles/components/TripCreation.scss";
 
+
 class TripCreation extends React.Component {
   componentDidUpdate(newProps) {
     if (this.props.addedTripId) {
