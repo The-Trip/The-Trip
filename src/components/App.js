@@ -28,7 +28,7 @@ function App() {
         <Route path="/login/" component={LoginContainer} />
         <Route path="/flights/" component={FlightWrapper} />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

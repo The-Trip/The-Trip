@@ -323,7 +323,7 @@ app.get("/api/user/:id/trip", isLoggedIn, function(req, res) {
   const userId = req.params.id;
   // console.log(req.params)
   db.any(
-    "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = ($1) AND trip.id = permission.trip_id",
+    "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, trip.time, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id =1 AND trip.id = permission.trip_id ORDER BY trip.time DESC",
     [userId]
   )
     .then(function(data) {
@@ -432,6 +432,41 @@ app.post("/api/flights", (req, res) => {
       res.json({ error: error.message });
     });
 }); // allows a flight to be added
+
+
+app.get("/api/custlocations", (req, res) => {
+  // console.log(req.params)
+  db.any(
+    "SELECT trip.destination, trip.image, customer.first_name FROM trip, customer WHERE trip.customer_id = customer.id"
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+//splash page fetch from array (to complete post fri demo)
+
+app.get("/api/splash", function(req, res) {
+  const tripId = req.params.id;
+
+  const photoUrl = `https://api.unsplash.com/search/photos?page=1&query=${
+    req.body.trip.destination
+  }&client_id=${unsplashId}`;
+
+  fetch(photoUrl)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(data => {
+    return res.json(data.results);
+  })
+  .catch(console.error);
+});
+
+
 
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/index.html");

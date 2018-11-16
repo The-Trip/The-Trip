@@ -1,17 +1,20 @@
 import { connect } from "react-redux";
 import Home from "../components/Home.js";
 import { setView } from "../actions/phil";
+import { fetchCustomersDestinationsFromDB } from "../actions/chris";
 
 const mapStateToProps = state => {
+  const custDest = state.splashTripDestinations;
   return {
-    view: state.view
+    view: state.view,
+    splashImage: custDest[Math.floor(Math.random() * custDest.length)]
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleClick: view => {
-      dispatch(setView(view));
+    fetchImages: () => {
+      dispatch(fetchCustomersDestinationsFromDB());
     }
   };
 };
