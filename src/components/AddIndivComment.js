@@ -1,11 +1,11 @@
 import React from "react";
 
-function AddIndivComment({ handleSubmit, place, tripId, handleChange }) {
+function AddIndivComment({ handleCommentSubmit, place, tripId, handleChange }) {
   return (
     <div>
       <form
         className="suggestion-frm"
-        onSubmit={event => handleSubmit(place, tripId, event)}
+        onSubmit={event => handleCommentSubmit(place, tripId, event)}
       >
         <label className="suggestion-frm__commentlabel" htmlFor="comment">
           Add a comment

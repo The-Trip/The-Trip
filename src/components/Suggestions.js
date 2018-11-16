@@ -2,7 +2,7 @@ import React from "react";
 import SuggestionInputContainer from "../containers/SuggestionInputContainer.js";
 import SuggestionItem from "./SuggestionItem.js";
 import "../styles/components/Suggestions.scss";
-import { SuggestionInputFinalContainer } from "../containers/SuggestionInputFinalContainer.js";
+import SuggestionInputFinalContainer from "../containers/SuggestionInputFinalContainer.js";
 
 class Suggestions extends React.Component {
   componentDidMount() {
@@ -29,14 +29,13 @@ class Suggestions extends React.Component {
           photo: item.photo_reference
           // item.photos &&
         });
-        console.log(deDupedSuggest);
       }
     }
     return (
       <React.Fragment>
         <section className="suggestions container">
           <header className="suggestions__header">
-            {/* <h1 className="suggestions__title">{this.props.tripId}</h1> */}
+            <h1 className="suggestions__title">Where to go?</h1>
 
             {this.props.selectedPlace ? (
               <SuggestionInputFinalContainer tripId={this.props.tripId} />
@@ -50,7 +49,7 @@ class Suggestions extends React.Component {
               <SuggestionItem
                 key={suggestion.id}
                 suggestion={suggestion}
-                tripId={this.props.tripId}
+                tripId={suggestion.trip_id}
                 comments={this.props.comments}
               />
             );
