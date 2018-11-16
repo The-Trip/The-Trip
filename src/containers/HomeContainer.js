@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Home from "../components/Home.js";
-import { setView } from "../actions/phil";
+import { setView } from "../actions";
 
 export const mapStateToProps = state => {
   return {

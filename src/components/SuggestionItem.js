@@ -4,42 +4,30 @@ import CommentsContainer from "../containers/CommentsContainer";
 
 function SuggestionItem({ suggestion, tripId, comments }) {
   return (
-    <article className="suggestion__card">
-      <header className="suggestion__header">
-        <h1 className="suggestion__title">{suggestion.place_name}</h1>
-        {/* {votes.filter((vote)=>vote.customerId===customerId).length < 1 && (
-                <button className="btn btn__vote btn--small" onClick={(e)=>(addVote(suggestion.id))}><i className="fas fa-plus"></i></button>
-                        )}
-            {votes.filter((vote)=>vote.customerId===customerId).length > 0 && (
-                <button className="btn btn__vote btn--small" onClick={(e)=>(removeVote(suggestion.id))}><i className="fas fa-minus"></i></button>
-                        )} */}
+    <article className="suggestion">
+      <header className="suggestion__header container">
+        <h2 className="suggestion__title">
+          {suggestion.place_name}
+          <div className="suggestion__details">
+            {suggestion.place_category}&nbsp;
+            <span>Suggested by {suggestion.first_name}</span>
+          </div>
+        </h2>
       </header>
+      <div className="suggestion__body container">
+        {suggestion.photo && (
+          <figure
+            className="suggestion__figure"
+            style={{
+              backgroundImage: `url(/api/google-photo/${suggestion.photo}`
+            }}
+          />
+        )}
+        <p className="suggestion__address">{suggestion.place_address}</p>
+        <p className="suggestion__comment">{suggestion.comment}</p>
+      </div>
 
-      {/* IF Conditional content {!!suggestion.comment && } */}
-      <p className="suggestion__comments">
-        {suggestion.place_address}
-        {suggestion.place_category}
-        {suggestion.comment}
-      </p>
-
-      {/* REMOVE BACON PLACEHOLDER BEFORE LIVE */}
-      {suggestion.photo && (
-        <img
-          src={
-            `/api/google-photo/${suggestion.photo}` ||
-            `http://baconmockup.com/300/200`
-          }
-          alt={suggestion.place_name}
-        />
-      )}
-
-      <footer className="suggestion__footer">
-        Suggested by <span>{suggestion.first_name}</span>
-        {/* <ul className="suggestion__voters menu--settings">
-                    {votes.map(vote => {
-                        return <li className="suggestion__voter" key={vote.voteId}>{vote.fname.charAt(0).toUpperCase()}</li>
-                    })}
-            </ul> */}
+      <footer className="suggestion__footer container">
         <React.Fragment>
           <CommentsContainer
             key={suggestion.id}

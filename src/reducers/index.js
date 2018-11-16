@@ -18,6 +18,7 @@ import comments from "./comments";
 import stylesSwitches from "./stylesSwitches";
 import registerForm from "./registerForm";
 import receiveFlightsFromDB from "./receiveFlightsFromDB"
+import inviteCodeForm from "./inviteCodeForm";
 
 export default combineReducers({
   flightAPIResults: setFlightsAPIResults,
@@ -37,6 +38,7 @@ export default combineReducers({
   isAPILoading,
   comments,
   stylesSwitches,
+  registerForm,
+  inviteCodeForm,
   flightsFromDB: receiveFlightsFromDB,
-  registerForm
 });

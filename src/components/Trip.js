@@ -13,6 +13,7 @@ class Trip extends React.Component {
     }
   }
   render() {
+    const tripUrl = `/trips/${this.props.tripId}/`;
     const flightsUrl = `/trips/${this.props.tripId}/flights`;
     const suggestionsUrl = `/trips/${this.props.tripId}/suggestions`;
     const hotelsUrl = `/trips/${this.props.tripId}/hotels`;
@@ -24,16 +25,18 @@ class Trip extends React.Component {
     return (
       <React.Fragment>
         <section className="trip">
-          <figure
-            className="trip__figure"
-            style={{
-              backgroundImage: `url(${this.props.trip.image})`
-            }}
-          >
-            <h1 className="trip__destination">
-              <span>{this.props.trip.destination}</span>
-            </h1>
-          </figure>
+          <NavLink to={tripUrl} className="trip-toggle">
+            <figure
+              className="trip__figure"
+              style={{
+                backgroundImage: `url(${this.props.trip.image})`
+              }}
+            >
+              <h1 className="trip__destination">
+                <span>{this.props.trip.destination}</span>
+              </h1>
+            </figure>
+          </NavLink>
           <div className="tabs tabs-style-topline">
             <nav className="tabs__nav">
               <ul className="tabs__navlist">
@@ -64,6 +67,22 @@ class Trip extends React.Component {
               </ul>
             </nav>
 
+            <Route
+              exact
+              path="/trips/:id/"
+              render={() => (
+                <section className="tripview container">
+                  <header className="tripview__header">
+                    <h1 className="tripview__title">Your trip</h1>
+                    <h2 className="tripview__subtitle">
+                      {this.props.trip.name}
+                    </h2>
+                  </header>
+                  <p>{this.props.trip.details}</p>
+                </section>
+              )}
+            />
+
             <div className="tabs__content">
               <Switch>
                 <Route path="/trips/:id/flights" component={FlightWrapper} />
@@ -76,24 +95,6 @@ class Trip extends React.Component {
             </div>
           </div>
         </section>
-
-        {/* <div className="content-wrap">
-          <section id="section-topline-1">
-            <p>1</p>
-          </section>
-          <section id="section-topline-2">
-            <p>2</p>
-          </section>
-          <section id="section-topline-3">
-            <p>3</p>
-          </section>
-          <section id="section-topline-4">
-            <p>4</p>
-          </section>
-          <section id="section-topline-5">
-            <p>5</p>
-          </section>
-        </div> */}
       </React.Fragment>
     );
   }

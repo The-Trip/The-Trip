@@ -33,8 +33,8 @@ class Suggestions extends React.Component {
     }
     return (
       <React.Fragment>
-        <section className="suggestions container">
-          <header className="suggestions__header">
+        <section className="suggestions">
+          <header className="suggestions__header container">
             <h1 className="suggestions__title">Where to go?</h1>
 
             {this.props.selectedPlace ? (
