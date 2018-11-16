@@ -433,6 +433,31 @@ app.post("/api/flights", (req, res) => {
     });
 }); // allows a flight to be added
 
+app.post("/api/invite", isLoggedIn, (req, res) => {
+  console.log("invite");
+  db.one(`SELECT * FROM trip WHERE auth_code_suggest = ($1)`, [
+    req.body.inviteCode
+  ])
+    .then(trip => {
+      console.log(trip.id);
+      console.log(req.user);
+
+      db.one(
+        `INSERT INTO permission (trip_id, customer_id, permission)
+            VALUES ($1, $2, $3) RETURNING id`,
+        [trip.id, req.user.id, "suggester"]
+      )
+        .then(id => {
+          return res.json({ tripId: trip.id });
+        })
+        .catch(error => {
+          console.error(error.stack);
+          res.json({ error: error.message });
+        });
+    })
+    .catch(console.error);
+}); // al
+
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });

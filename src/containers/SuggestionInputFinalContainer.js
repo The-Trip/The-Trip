@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import SuggestionInputFinal from "../components/SuggestionInputFinal.js";
-import { addSuggestionToDB, commentInputToState } from "../actions/phil";
+import { addSuggestionToDB, commentInputToState } from "../actions";
 import AddIndivComment from "../components/AddIndivComment.js";
 
 const mapStateToProps = state => {
