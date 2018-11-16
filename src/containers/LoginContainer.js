@@ -5,7 +5,7 @@ import {
   registerToState,
   addUserToDB,
   loginUser
-} from "../actions/phil";
+} from "../actions";
 
 const mapStateToProps = state => {
   return {};

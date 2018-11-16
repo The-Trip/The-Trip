@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Suggestions from "../components/Suggestions.js";
-import { fetchSuggestionsFromDB } from "../actions/phil";
-import { fetchCommentsFromDB } from "../actions/chris";
+import { fetchSuggestionsFromDB } from "../actions";
+import { fetchCommentsFromDB } from "../actions";
 
 const mapStateToProps = (state, ownProps) => {
   const trips = state.trips;
