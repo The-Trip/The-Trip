@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/components/SuggestionItem.scss";
 import CommentsContainer from "../containers/CommentsContainer";
 
-function SuggestionItem({ suggestion, tripId }) {
+function SuggestionItem({ suggestion, tripId, comments }) {
   return (
     <article className="suggestion__card">
       <header className="suggestion__header">
@@ -22,6 +22,17 @@ function SuggestionItem({ suggestion, tripId }) {
         {suggestion.comment}
       </p>
 
+      {/* REMOVE BACON PLACEHOLDER BEFORE LIVE */}
+      {suggestion.photo && (
+        <img
+          src={
+            `/api/google-photo/${suggestion.photo}` ||
+            `http://baconmockup.com/300/200`
+          }
+          alt={suggestion.place_name}
+        />
+      )}
+
       <footer className="suggestion__footer">
         Suggested by <span>{suggestion.first_name}</span>
         {/* <ul className="suggestion__voters menu--settings">
@@ -29,12 +40,13 @@ function SuggestionItem({ suggestion, tripId }) {
                         return <li className="suggestion__voter" key={vote.voteId}>{vote.fname.charAt(0).toUpperCase()}</li>
                     })}
             </ul> */}
-        <p>more info</p>
-        <CommentsContainer
-          key={suggestion.id}
-          suggestionId={suggestion.id}
-          tripId={tripId}
-        />
+        <React.Fragment>
+          <CommentsContainer
+            key={suggestion.id}
+            suggestionId={suggestion.id}
+            tripId={tripId}
+          />
+        </React.Fragment>
       </footer>
     </article>
   );

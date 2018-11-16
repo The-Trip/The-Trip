@@ -1,9 +1,12 @@
 import { connect } from "react-redux";
 import SuggestionInput from "../components/SuggestionInput.js";
-import { suggestionInputToState } from "../actions/phil";
+import {
+  suggestionInputToState,
+  suggestionInputClearState
+} from "../actions/phil";
 import { googleFetch } from "../actions/chris";
 
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
   return {
     suggestionInput: state.suggestionInput,
     tripId: ownProps.tripId
@@ -19,6 +22,10 @@ const mapDispatchToProps = dispatch => {
     handleSubmit: (event, tripId) => {
       event.preventDefault();
       dispatch(googleFetch(tripId));
+    },
+
+    suggestionInputClearState: () => {
+      dispatch(suggestionInputClearState);
     }
   };
 };

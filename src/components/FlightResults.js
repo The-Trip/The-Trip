@@ -7,9 +7,10 @@ function addZero(i){
     return i;
 }
 
-function handleClick(flightDetail,departureTimeReturn,arrivalTimeReturn,arrivalTimeOutbound,departureTimeOutbound,startDate,endDate){
+function handleClick(flightDetail,departureTimeReturn,arrivalTimeReturn,arrivalTimeOutbound,departureTimeOutbound,startDate,endDate, tripId){
 
     let flightDetailsObject = {
+        tripId: tripId,
         flightCombinationID: flightDetail.route[0].combination_id,
         outboundFlightDate: startDate.toISOString(),
         returnFlightDate: endDate.toISOString(),
@@ -42,7 +43,7 @@ function addFlightToDB(flightObject) {
         );
 }
 
-function FlightResults({flightResults, isAPILoading, startDate, endDate}){
+function FlightResults({flightResults, isAPILoading, startDate, endDate, tripId}){
 
 
         if (isAPILoading){
@@ -52,7 +53,7 @@ function FlightResults({flightResults, isAPILoading, startDate, endDate}){
             return null
         }
         if (flightResults.length===0){
-            return(<div><p>No Flights for those days/aiports, please search again</p></div>)
+            return(<div><p>No Flights for those days/airports, please search again</p></div>)
         }
 
         return   (
@@ -81,6 +82,7 @@ function FlightResults({flightResults, isAPILoading, startDate, endDate}){
                                 <button type="button"
                                         onClick={() => handleClick(
                                             flightDetail,
+                                            tripId,
                                             departureTimeReturn,
                                             arrivalTimeReturn,
                                             arrivalTimeOutbound,

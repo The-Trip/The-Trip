@@ -7,7 +7,7 @@ const pgp = require("pg-promise")();
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const db = pgp({
-  host: "localhost",
+  host: process.env.DB_HOST,
   port: 5432,
   database: process.env.DB_NAME,
   user: process.env.DB_USERNAME,
@@ -112,6 +112,12 @@ app.post("/api/trip", (req, res) => {
   const randomURLString = `${
     req.body.user.name
   }-${destinationJoin}-${randomArrayValue}`;
+  const suggest_code = `${randomNum}_${
+    req.body.trip.destination.split(" ")[0]
+  }_${req.body.user.id}_suggest`;
+  const collaborate_code = `${randomNum}_${
+    req.body.trip.destination.split(" ")[0]
+  }_${req.body.user.id}_collarborate`;
 
   const photoUrl = `https://api.unsplash.com/search/photos?page=1&query=${
     req.body.trip.destination
@@ -123,10 +129,12 @@ app.post("/api/trip", (req, res) => {
     .then(unSplashData => unSplashData.results[0].urls.regular)
     .then(unsplashImage => {
       db.one(
-        `INSERT INTO trip (url, name, origin, destination, details, image, customer_id)
-                VALUES($1,$2,$3,$4,$5, $6, $7) RETURNING id`,
+        `INSERT INTO trip (url, auth_code_suggest, auth_code_collaborate, name, origin, destination, details, image, customer_id)
+                VALUES($1,$2,$3,$4,$5, $6, $7, $8, $9) RETURNING id`,
         [
           randomURLString,
+          suggest_code,
+          collaborate_code,
           req.body.trip.tripName,
           req.body.trip.origin,
           req.body.trip.destination,
@@ -135,13 +143,23 @@ app.post("/api/trip", (req, res) => {
           req.body.user.id
         ]
       )
-        .then(trip => {
-          const response = {
-            id: trip.id,
-            fname: req.body.fname,
-            destination: req.body.destination
-          };
-          return res.json(response);
+        .then(tripId => {
+          return db
+            .none(
+              `INSERT INTO permission (trip_id, customer_id, permission)
+                VALUES ($1, $2, 'owner')`,
+              [tripId.id, req.body.user.id, req.body.permission]
+            )
+            .then(permission => {
+              console.log(permission);
+              const response = {
+                id: tripId.id,
+                fname: req.body.fname,
+                destination: req.body.destination
+              };
+              console.log("trip creation response " + response.id);
+              return res.json(response);
+            });
         })
         .catch(error => {
           // console.log(error.stack)
@@ -151,18 +169,33 @@ app.post("/api/trip", (req, res) => {
     .catch(error => console.error(error));
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
-app.post("/api/suggestion", (req, res) => {
-
+app.post("/api/permission", (req, res) => {
   db.one(
-    `INSERT INTO suggestion (place_name, place_address, place_id, place_category, trip_id, customer_id)
-            VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+    `INSERT INTO permission (trip_id, customer_id, permission)
+            VALUES ($1, $2, 'owner') RETURNING trip_id`,
+    [req.body_trip_id, req.body.cust_id, req.body.permission]
+  )
+    .then(id => {
+      return res.json({ permission: id });
+    })
+    .catch(error => {
+      console.error(error.stack);
+      res.json({ error: error.message });
+    });
+}); // al
+
+app.post("/api/suggestion", (req, res) => {
+  db.one(
+    `INSERT INTO suggestion (place_name, place_address, place_id, place_category, trip_id, customer_id, photo_reference)
+            VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
     [
       req.body.place.name,
       req.body.place.formatted_address,
       req.body.place.place_id,
       req.body.place.types[0],
       req.body.trip,
-      req.body.user
+      req.body.user,
+      req.body.place.photos[0].photo_reference
     ]
   )
     .then(suggestion => {
@@ -207,7 +240,10 @@ app.post("/api/customer", (req, res) => {
 app.get("/api/user/:id/trip", function(req, res) {
   const userId = req.params.id;
   // console.log(req.params)
-  db.any("SELECT * FROM trip WHERE customer_id = ($1)", [userId])
+  db.any(
+    "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = ($1) AND trip.id = permission.trip_id",
+    [userId]
+  )
     .then(function(data) {
       res.json(data);
     })
@@ -220,7 +256,7 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
   const tripId = req.params.id;
 
   db.any(
-    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
     [tripId]
   )
     .then(function(data) {
@@ -262,13 +298,23 @@ app.post("/api/google", function(req, res) {
     .catch(console.error);
 });
 
-app.get("*", (req, res) => res.sendFile(__dirname + "/index.html"));
+app.get("/api/google-photo/:reference", (req, res) => {
+  const { reference } = req.params;
+  const url = `https://maps.googleapis.com/maps/api/place/photo?key=${api}&photoreference=${reference}&maxwidth=600`;
+
+  fetch(url)
+    .then(response => response.body.pipe(res))
+    .catch(error => {
+      console.log("Error fetching photo from Google API", error.message);
+      res.json(500, { error: error.message });
+    });
+});
 
 app.post("/api/flights", (req, res) => {
-    console.log(req.body);
-    let request = req.body.flightObject;
-    db.one(
-        `INSERT INTO flight (
+  console.log(req.body);
+  let request = req.body.flightObject;
+  db.one(
+    `INSERT INTO flight (
         airport_from, 
         airport_to, 
         city_from, 
@@ -282,29 +328,51 @@ app.post("/api/flights", (req, res) => {
         return_local_arrival_time, 
         return_local_departure_time)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
-        [
-            request.airportFrom,
-            request.airportTo,
-            request.cityFrom,
-            request.cityTo,
-            request.flightCombinationID,
-            request.outboundFlightDate,
-            request.outboundLocalDepartureTime,
-            request.outboundLocalArrivalTime,
-            request.price,
-            request.returnFlightDate,
-            request.returnLocalArrivalTime,
-            request.returnLocalDepartureTime
-        ])
-        .then(flight => {
-            return res.json({flightID: flight.id });
-        })
-        .catch(error => {
-            console.error(error);
-            res.json({ error: error.message });
-        });
+    [
+      request.airportFrom,
+      request.airportTo,
+      request.cityFrom,
+      request.cityTo,
+      request.flightCombinationID,
+      request.outboundFlightDate,
+      request.outboundLocalDepartureTime,
+      request.outboundLocalArrivalTime,
+      request.price,
+      request.returnFlightDate,
+      request.returnLocalArrivalTime,
+      request.returnLocalDepartureTime
+    ]
+  )
+    .then(flight => {
+      return res.json({ flightID: flight.id });
+    })
+    .catch(error => {
+      console.error(error);
+      res.json({ error: error.message });
+    });
 }); // allows a flight to be added
 
-server.listen(8080, function() {
+app.get("/api/trip/:id/flights", function(req, res) {
+    console.log(req.params);
+    const tripId = req.params.id;
+    console.log(tripId, "flights fetch on server");
+    db.any(
+        "SELECT * FROM flight WHERE trip_id = ($1)",
+        [tripId]
+    )
+        .then(function(data) {
+            console.log(data);
+            res.json(data);
+        })
+        .catch(error => {
+            console.error(`${error}`);
+        });
+});
+
+app.get("*", (req, res) => res.sendFile(__dirname + "/index.html"));
+
+const port = process.env.PORT || 8080;
+
+server.listen(port, function() {
   console.log("Listening on port 8080");
 });

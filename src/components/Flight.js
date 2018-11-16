@@ -3,6 +3,9 @@ import DatePicker from "react-datepicker";
 import '../styles/base/datepicker.scss';
 import {AsyncTypeahead} from 'react-bootstrap-typeahead';
 import FlightResultsWrapper from '../containers/FlightResultsWrapper'
+import SelectedTripFlightsContainer from "../containers/SelectedTripFlightsContainer";
+import LoginContainer from "../containers/LoginContainer";
+import {Route} from "react-router-dom";
 
 class Flight extends React.Component{
     constructor(){
@@ -129,6 +132,7 @@ class Flight extends React.Component{
                         />
                         <button type="submit" className="Submit-button">Search Flights</button>
                     </form>
+                    <Route path="/trips/:id/flights" component={SelectedTripFlightsContainer} />
                     {
                         this.state.flightSubmit ? <FlightResultsWrapper /> : null
                     }

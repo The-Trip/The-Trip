@@ -19,22 +19,6 @@ $headline-font: "bureau-grot-condensed", sans-serif;
 /* ---- Padding ---- */
 $main-padding: 1rem;
 
-/* ---- Visibility ---- */
-.show-for-sr,
-.show-on-focus {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  -webkit-clip-path: inset(50%);
-  clip-path: inset(50%);
-  border: 0;
-}
-/* ---- x ---- */
-
 /* ---- DatePicker ---- */
 $datepicker__background-color: #f0f0f0 !default;
 $datepicker__border-color: #aeaeae !default;
@@ -56,11 +40,3 @@ $datepicker__item-size: 1.7rem !default;
 $datepicker__margin: 0.4rem !default;
 $datepicker__navigation-size: 0.45rem !default;
 $datepicker__triangle-size: 8px !default;
-
-/* ---- Tabs ---- */
-$default-checked-selector: ":checked";
-$default-nested-selectors: null;
-
-$toggle-attribute: id;
-$title-attribute: for;
-$content-attribute: class;

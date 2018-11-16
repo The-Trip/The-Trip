@@ -12,7 +12,8 @@ const mapStateToProps = (state, ownProps) => {
     suggestions: state.suggestions,
     tripId,
     trip,
-    selectedPlace: state.selectedPlace
+    selectedPlace: state.selectedPlace,
+    comments: state.comments
   };
 };
 

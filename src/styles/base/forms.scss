@@ -1,80 +1,91 @@
-@import '../base/_variables.scss';
-@import '../base/_button.scss';
+@import "../base/_variables.scss";
+@import "../base/_button.scss";
 
 form {
-    margin: 0 auto;
-    }
-input, textarea {
-    background-color: lighten($secondary-color, 15% );
-    display: inline-block;
-    transition: 300ms ease;
-    // border-radius: 7px;
-    border: 0;
-    margin: 0.3rem 0;
-    padding: $main-padding * 0.7;
-    overflow: hidden;
-    outline: 0;
-	width: calc(100% - 2.5rem);
+  margin: 0 auto;
 }
-input[type=date], input[type=time] {
-    padding: $main-padding * 0.5;
+input,
+textarea {
+  background-color: lighten($secondary-color, 15%);
+  display: inline-block;
+  transition: 300ms ease;
+  // border-radius: 7px;
+  border: 0;
+  margin: 0.3rem 0;
+  padding: $main-padding * 0.7;
+  overflow: hidden;
+  outline: 0;
+  width: calc(100% - 2.5rem);
+}
+input[type="date"],
+input[type="time"] {
+  padding: $main-padding * 0.5;
 }
 textarea {
-    background-color: lighten($secondary-color, 15% );
-    height: 100px;
+  background-color: lighten($secondary-color, 15%);
+  height: 100px;
 }
 
 form div {
-    position: relative;
-    .validity {
-        position: absolute;
-        top: 50%;
-        right: 10px;
-    }
+  position: relative;
+  .validity {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+  }
 }
 
 input:invalid + span.validity:after {
-    content: '✖';
-    color: $accent-color;
+  content: "✖";
+  color: $accent-color;
 }
 
 input:valid + span.validity:after {
-    content: '✓';
-    color: #26b72b;
+  content: "✓";
+  color: #26b72b;
 }
 
 label {
-    text-align: left;
-    font-family: $headline-font;
-    font-size: .85rem;
-	display: inline-block;
-    // padding: 0.5rem 0;
-    width: 100%;
-	color: $primary-color;
-	-webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  text-align: left;
+  font-family: $headline-font;
+  font-size: 0.85rem;
+  display: inline-block;
+  // padding: 0.5rem 0;
+  width: 100%;
+  color: $primary-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $primary-color;
+  opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: $primary-color;
+}
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: $primary-color;
 }
 
 // MEDIA QUERIES
 @media (min-width: 768px) {
-    form {
-        max-width: 80%;
-    }
+  form {
+    max-width: 80%;
+  }
 }
 
 @media (min-width: 960px) {
-    
 }
 
 @media (min-width: 1200px) {
-    form {
-        max-width: 50%;
-    }
+  form {
+    max-width: 50%;
+  }
 }
 
 @media (min-width: 1440px) {
-}    
-    
-  
-  
-
+}

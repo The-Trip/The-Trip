@@ -1,62 +1,58 @@
-// TODO .trip.details - add details field to DB
-
 import React from "react";
 import { Link } from "react-router-dom";
 
 import "../styles/components/TripsListItem.scss";
 
-function TripItem({ trip }) {
+function TripsListItem({ trip, tripId }) {
   const to = `/trips/${trip.id}/`;
 
   return (
     <div>
       <React.Fragment>
         <article className="card">
-          <figure className="card__figure">
-            <h1 className="card__destination">
-              <span>{trip.destination}</span>
-            </h1>
-            <img src={trip.image} alt="newyork" />
-          </figure>
-
-          <header className="card__header container">
-            <h2 className="card__title">
-              {/* [array of trip members by {fname}]
+          <Link to={to} className="card__link">
+            <figure
+              className="card__figure"
+              style={{
+                backgroundImage: `url(${trip.image})`
+              }}
+            >
+              <h1 className="card__destination">
+                <span>{trip.destination}</span>
+              </h1>
+            </figure>
+            <header className="card__header container">
+              <h2 className="card__title">
+                {/* [array of trip members by {fname}]
                                 last in array to be prepended by "and" , appended by 's */}
-              {trip.name}
-            </h2>
-          </header>
-
-          {/* IF Conditional content {!!tripdetails && } */}
-          <section className="card__details container">
-            <p>{trip.details}</p>
-          </section>
-
-          <footer className="card__footer">
-            <section className="card__itinerary">
-              <Link to={to}>
-                <i className="fas fa-clipboard-list" /> Itinerary{" "}
-              </Link>
+                {trip.name}
+              </h2>
+            </header>
+            {/* IF Conditional content {!!tripdetails && } */}
+            <section className="card__details container">
+              <p>{trip.details}</p>
             </section>
+            <footer className="card__footer">
+              <section className="card__itinerary">
+                Trip details&nbsp;
+                <i className="fas fa-arrow-alt-circle-right fa-lg" />
+              </section>
 
-            <section className="card__suggestions">
-              <Link to={to} className="card__suggestions--title">
+              <section className="card__suggestions">
                 Suggestions
-              </Link>
-              <Link to={to}>
                 <ul className="card__suggestors menu--settings">
                   <li className="card__suggestor">M</li>
                   <li className="card__suggestor">C</li>
                   <li className="card__suggestor">P</li>
                   <li className="card__suggestor">T</li>
                 </ul>
-              </Link>
-            </section>
-          </footer>
+              </section>
+            </footer>
+          </Link>
         </article>
       </React.Fragment>
     </div>
   );
 }
 
-export default TripItem;
+export default TripsListItem;

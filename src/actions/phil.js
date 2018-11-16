@@ -123,7 +123,6 @@ export function fetchSuggestionsFromDB(tripId) {
       .then(response => response.json())
       .then(result => {
         dispatch(receiveSuggestions(result));
-        console.log("calling!");
       })
       .catch(function(error) {});
   };
@@ -140,5 +139,12 @@ export function receiveSuggestions(suggestions) {
   return {
     type: "RECEIVE_SUGGESTIONS",
     suggestions
+  };
+}
+
+export function suggestionInputClearState() {
+  console.log("suggestion input clear action");
+  return {
+    type: "CLEAR_SUGGESTION_INPUT"
   };
 }

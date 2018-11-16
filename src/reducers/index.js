@@ -13,24 +13,28 @@ import suggestionForm from "./suggestionForm";
 import addedTripId from "./addedTripId";
 import setFlightsAPIResults from "./setFlightsAPIResults";
 import googlePlaceInfo from "./googlePlaceInfo";
-import isAPILoading from './isAPILoading'
+import isAPILoading from "./isAPILoading";
 import comments from "./comments";
+import stylesSwitches from "./stylesSwitches";
+import receiveFlightsFromDB from "./receiveFlightsFromDB"
 
 export default combineReducers({
-    flightAPIResults: setFlightsAPIResults,
-    tripForm,
-    suggestionForm,
-    user,
-    googlePlaceInfo,
-    suggestions,
-    trips,
-    addedTripId,
-    view,
-    selectedPlace,
-    loginForm,
-    suggestionComment,
-    startDate,
-    endDate,
-    isAPILoading,
-    comments
+  flightAPIResults: setFlightsAPIResults,
+  tripForm,
+  suggestionForm,
+  user,
+  googlePlaceInfo,
+  suggestions,
+  trips,
+  addedTripId,
+  view,
+  selectedPlace,
+  loginForm,
+  suggestionComment,
+  startDate,
+  endDate,
+  isAPILoading,
+  comments,
+  stylesSwitches,
+  flightsFromDB: receiveFlightsFromDB
 });

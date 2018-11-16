@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import Trip from "../components/Trip";
 import { fetchTripsFromDB } from "../actions/phil";
 
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
   const trips = state.trips;
   const tripId = parseInt(ownProps.match.params.id, 10);
   const trip = trips.find(trip => trip.id === tripId);
