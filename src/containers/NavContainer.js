@@ -1,9 +1,12 @@
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import Nav from "../components/Nav.js";
 import { checkLogin } from "../actions";
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    user: state.user.id
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -17,4 +20,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Nav);
+)(withRouter(Nav));
