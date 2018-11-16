@@ -26,7 +26,6 @@ function App() {
         <Route path="/trips/:id/" component={TripContainer} />
         <Route path="/create-trip/" component={TripCreationContainer} />
         <Route path="/login/" component={LoginContainer} />
-        <Route path="/flights/" component={FlightWrapper} />
       </main>
       <Footer />
     </div>

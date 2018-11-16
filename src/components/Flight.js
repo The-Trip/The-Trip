@@ -168,10 +168,12 @@ class Flight extends React.Component {
               Search Flights
             </button>
           </form>
-            <Route path="/trips/:id/flights" component={SelectedTripFlightsContainer} />
+          <div className="selectedTripFlightsContainer">
+            <SelectedTripFlightsContainer tripId={this.props.tripId} />
+          </div>
         </section>
         <section className="flightsresults">
-          {this.state.flightSubmit ? <FlightResultsWrapper /> : null}
+          {this.state.flightSubmit ? <FlightResultsWrapper tripId={this.props.tripId} /> : null}
         </section>
       </React.Fragment>
     );

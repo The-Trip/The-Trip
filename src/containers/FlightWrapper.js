@@ -8,7 +8,8 @@ import {
 } from "../actions/tomactions";
 import { addClickedClass, removeClickedClass } from "../actions/mel";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
+  const tripId = parseInt(ownProps.match.params.id, 10);
   return {
     flightResults: state.flightAPIResults.data,
     startDate: state.startDate,
@@ -16,7 +17,8 @@ const mapStateToProps = state => {
     isAPILoading: state.isAPILoading,
     cityFrom: state.cityFrom,
     cityTo: state.cityTo,
-    clicked: state.stylesSwitches.clicked
+    clicked: state.stylesSwitches.clicked,
+    tripId,
   };
 };
 

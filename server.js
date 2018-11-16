@@ -396,6 +396,7 @@ app.post("/api/flights", (req, res) => {
   let request = req.body.flightObject;
   db.one(
     `INSERT INTO flight (
+        trip_id,
         airport_from, 
         airport_to, 
         city_from, 
@@ -408,8 +409,9 @@ app.post("/api/flights", (req, res) => {
         return_flight_date, 
         return_local_arrival_time, 
         return_local_departure_time)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id`,
     [
+      request.tripId,
       request.airportFrom,
       request.airportTo,
       request.cityFrom,
@@ -449,6 +451,23 @@ app.get("/api/trip/:id/flights", function(req, res) {
             console.error(`${error}`);
         });
 });
+
+app.delete("/api/flights/:flightId", (req, res) => {
+    console.log("trying to remove");
+    let flight = req.params.flightId;
+    db.none(
+        `DELETE FROM flight
+            WHERE id = ($1)`,
+            [flight]
+    )
+        .then(() => {
+            return res.json({ flightRemovedID: flight });
+        })
+        .catch(error => {
+            console.error(error);
+            res.json({ error: error.message });
+        });
+}); // allows a flight to be deleted
 
 app.get("*", (req, res) => res.sendFile(__dirname + "/index.html"));
 

@@ -1,18 +1,17 @@
 import { connect } from 'react-redux';
 import SelectedTripFlights from '../components/SelectedTripFlights';
-import {fetchFlightsFromDB} from "../actions/tomactions";
+import {fetchFlightsFromDB, receiveFlightsFromDB} from "../actions/tomactions";
 
-export const mapStateToProps = (state, ownProps) => {
-    const tripId = parseInt(ownProps.match.params.id, 10);
+export const mapStateToProps = state => {
 
     return {
-        tripId,
         flightsFromDB: state.flightsFromDB
     }
 };
 
 const mapDispatchToProps = {
-    fetchFlightsFromDB
+    fetchFlightsFromDB,
+    receiveFlightsFromDB
 };
 
 export default connect(
