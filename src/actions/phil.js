@@ -125,7 +125,7 @@ export function addUserToDB() {
       .then(userData => {
         console.log(userData);
         console.log("register");
-        dispatch(loginUser(userData));
+        dispatch(setUser(userData));
       });
   };
 }
@@ -150,6 +150,7 @@ export function loginUser() {
         .then(user => {
           dispatch(setUser(user));
         })
+        .catch(console.error)
     );
   };
 }

@@ -8,6 +8,12 @@ class Nav extends React.Component {
     this.props.checkLogin();
   }
 
+  componentDidUpdate(oldProps) {
+    if (this.props.user && !oldProps.user) {
+      this.props.history.push(`/trips/`);
+    }
+  }
+
   render() {
     return (
       <header className="sitehead shrink">
