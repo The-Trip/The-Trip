@@ -21,13 +21,13 @@ class Home extends React.Component {
 
             <nav className="splash__nav">
               <h3>
-                <NavLink
+                {/* <NavLink
                   to="/trips/"
                   activeClassName="active"
                   className="nav__item"
                 >
                   Trips
-                </NavLink>
+                </NavLink> */}
               </h3>
               <h3>
                 <NavLink

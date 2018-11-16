@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Socket from "../components/Socket.js";
-import { setView } from "../actions/phil";
+import { setView } from "../actions";
 
 const mapStateToProps = state => {
   return {

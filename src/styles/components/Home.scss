@@ -23,6 +23,17 @@
     align-items: flex-end;
     justify-content: center;
     color: white;
+    background: #333; /* For browsers that don't support RGBA */
+    background: rgba(0, 0, 0, 0.18);
+    padding: 4px 8px;
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: space-around;
+    // flex-direction: row;
+    align-items: center;
+    // align-items: flex-end;
   }
 }
 

@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import Nav from "../components/Nav.js";
+import { checkLogin } from "../actions";
 
 const mapStateToProps = state => {
   return {};
@@ -7,8 +8,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleClick: event => {
-      console.log(event.target.name);
+    checkLogin: () => {
+      dispatch(checkLogin());
     }
   };
 };

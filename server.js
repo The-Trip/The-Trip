@@ -319,8 +319,13 @@ function isLoggedIn(req, res, next) {
   }
 }
 
-app.get("/api/user/:id/trip", isLoggedIn, function(req, res) {
-  const userId = req.params.id;
+app.get("/api/checklogin/", function(req, res) {
+  console.log("check logged in");
+  res.send(req.user);
+});
+
+app.get("/api/user/trip", isLoggedIn, function(req, res) {
+  const userId = req.user.id;
   // console.log(req.params)
   db.any(
     "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, trip.time, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id =1 AND trip.id = permission.trip_id ORDER BY trip.time DESC",
@@ -433,9 +438,8 @@ app.post("/api/flights", (req, res) => {
     });
 }); // allows a flight to be added
 
-
+// fetches all trips and their owner info for homepage
 app.get("/api/custlocations", (req, res) => {
-  // console.log(req.params)
   db.any(
     "SELECT trip.destination, trip.image, customer.first_name FROM trip, customer WHERE trip.customer_id = customer.id"
   )
@@ -448,7 +452,6 @@ app.get("/api/custlocations", (req, res) => {
 });
 
 //splash page fetch from array (to complete post fri demo)
-
 app.get("/api/splash", function(req, res) {
   const tripId = req.params.id;
 
@@ -457,16 +460,39 @@ app.get("/api/splash", function(req, res) {
   }&client_id=${unsplashId}`;
 
   fetch(photoUrl)
-  .then(function(response) {
-    return response.json();
-  })
-  .then(data => {
-    return res.json(data.results);
-  })
-  .catch(console.error);
+    .then(function(response) {
+      return response.json();
+    })
+    .then(data => {
+      return res.json(data.results);
+    })
+    .catch(console.error);
 });
 
+app.post("/api/invite", isLoggedIn, (req, res) => {
+  console.log("invite");
+  db.one(`SELECT * FROM trip WHERE auth_code_suggest = ($1)`, [
+    req.body.inviteCode
+  ])
+    .then(trip => {
+      console.log(trip.id);
+      console.log(req.user);
 
+      db.one(
+        `INSERT INTO permission (trip_id, customer_id, permission)
+            VALUES ($1, $2, $3) RETURNING id`,
+        [trip.id, req.user.id, "suggester"]
+      )
+        .then(id => {
+          return res.json({ tripId: trip.id });
+        })
+        .catch(error => {
+          console.error(error.stack);
+          res.json({ error: error.message });
+        });
+    })
+    .catch(console.error);
+}); // al
 
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/index.html");
