@@ -7,14 +7,14 @@ function Nav() {
     <header className="sitehead shrink">
       <nav className="sitehead__nav">
         <NavLink to="/trips/" activeClassName="active" className="nav__item">
-          <i className="fas fa-home fa-lg" />
+          <i className="fas fa-home fa-lg" aria-hidden="true" />
         </NavLink>
         <NavLink
           to="/create-trip/"
           activeClassName="active"
           className="nav__item"
         >
-          <i className="fas fa-plus-circle fa-lg" />
+          <i className="fas fa-plus fa-lg" aria-hidden="true" />
         </NavLink>
       </nav>
 
@@ -23,8 +23,11 @@ function Nav() {
       </h1>
 
       <div className="sitehead__logout">
+        <NavLink to="/invite/" activeClassName="active" className="nav__item">
+          <i className="fas fa-envelope fa-lg" aria-hidden="true" />
+        </NavLink>
         <NavLink to="/login/" activeClassName="active" className="nav__item">
-          <i className="fas fa-sign-in-alt fa-lg" />
+          <i className="fas fa-sign-in-alt fa-lg" aria-hidden="true" />
         </NavLink>
       </div>
     </header>

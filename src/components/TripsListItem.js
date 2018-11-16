@@ -28,10 +28,12 @@ function TripsListItem({ trip, tripId }) {
                 {trip.name}
               </h2>
             </header>
-            {/* IF Conditional content {!!tripdetails && } */}
+            
+            {!!trip.details &&  
             <section className="card__details container">
               <p>{trip.details}</p>
             </section>
+            }
             <footer className="card__footer">
               <section className="card__itinerary">
                 Trip details&nbsp;
