@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import TripsList from "../components/TripsList";
-import { fetchTripsFromDB, setView } from "../actions/phil";
+import { fetchTripsFromDB, setView } from "../actions";
 
 const mapStateToProps = state => {
   return {

@@ -5,8 +5,8 @@ import {
   isAPILoading,
   setEndDate,
   setStartDate
-} from "../actions/tomactions";
-import { addClickedClass, removeClickedClass } from "../actions/mel";
+} from "../actions";
+import { addClickedClass, removeClickedClass } from "../actions";
 
 const mapStateToProps = state => {
   return {
