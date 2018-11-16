@@ -532,13 +532,13 @@
 
 .myDatePickerStart {
   margin-right: 1rem;
-  border: 1px solid #aeaeae;
+  // border: 1px solid #aeaeae;
   outline: 0;
   border-radius: 5px;
 }
 
 .myDatePickerEnd {
-  border: 1px solid #aeaeae;
+  // border: 1px solid #aeaeae;
   outline: 0;
   border-radius: 5px;
 }
@@ -612,4 +612,10 @@
       cursor: default;
     }
   }
+}
+
+.myDatePickerContainer .react-datepicker,
+.myDatePickerContainer .react-datepicker__header,
+.myDatePickerContainer .react-datepicker__month-container {
+  width: 100%;
 }

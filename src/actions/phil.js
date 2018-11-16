@@ -1,3 +1,5 @@
+import { fetchCommentsFromDB } from "./chris.js";
+
 export function suggestionInputToState(name, value) {
   return {
     type: "SET_SUGGESTION_INPUT",
@@ -76,9 +78,35 @@ export function addCommentToDB(id, tripId) {
   };
 }
 
-export function addUserToDB() {
+export function addIndivCommentToDB(suggestionId, tripId) {
+  console.log(suggestionId, tripId);
   return function(dispatch, getState) {
-    return fetch("/api/suggestion", {
+    return (
+      fetch("/api/comment", {
+        method: "post",
+        body: JSON.stringify({
+          suggest_id: suggestionId.id,
+          cust_id: getState().user.id,
+          comment: getState().suggestionComment
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(response => response.json())
+        // TODO - Create response in server.js
+        .then(() => {
+          dispatch(fetchSuggestionsFromDB(tripId));
+          dispatch(fetchCommentsFromDB(tripId));
+        })
+    );
+  };
+}
+
+export function addUserToDB() {
+  console.log("start of addUserToDB action");
+  return function(dispatch, getState) {
+    return fetch("/api/customer", {
       method: "post",
       body: JSON.stringify(getState().registerForm),
       headers: {
@@ -86,9 +114,42 @@ export function addUserToDB() {
       }
     })
       .then(response => response.json())
-      .then(data => {
-        dispatch(suggestionsFromDB(data));
+      .then(userData => {
+        console.log(userData);
+        console.log("register");
+        dispatch(loginUser(userData));
       });
+  };
+}
+
+export function loginUser() {
+  return function(dispatch, getState) {
+    console.log("login user");
+    console.log(getState().loginForm);
+    return (
+      fetch("/api/login", {
+        method: "post",
+        body: JSON.stringify({
+          username: getState().loginForm.loginEmail,
+          password: getState().loginForm.loginPassword
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(response => response.json())
+        // TODO - Create response in server.js
+        .then(user => {
+          dispatch(setUser(user));
+        })
+    );
+  };
+}
+
+export function setUser(user) {
+  return {
+    type: "SET_USER",
+    user: user
   };
 }
 
@@ -106,10 +167,15 @@ export function setView(view) {
   };
 }
 
+function apiCall(path) {
+  return fetch(`/api${path}`, { credentials: "same-origin" }).then(res =>
+    res.json()
+  );
+}
+
 export function fetchTripsFromDB(userId) {
   return function(dispatch, getState) {
-    fetch(`/api/user/${userId}/trip`)
-      .then(response => response.json())
+    apiCall(`/user/${userId}/trip`)
       .then(result => {
         dispatch(receiveTrips(result));
       })

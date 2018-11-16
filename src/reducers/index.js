@@ -16,6 +16,7 @@ import googlePlaceInfo from "./googlePlaceInfo";
 import isAPILoading from "./isAPILoading";
 import comments from "./comments";
 import stylesSwitches from "./stylesSwitches";
+import registerForm from "./registerForm";
 import receiveFlightsFromDB from "./receiveFlightsFromDB"
 
 export default combineReducers({
@@ -36,5 +37,6 @@ export default combineReducers({
   isAPILoading,
   comments,
   stylesSwitches,
-  flightsFromDB: receiveFlightsFromDB
+  flightsFromDB: receiveFlightsFromDB,
+  registerForm
 });
