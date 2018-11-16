@@ -30,7 +30,7 @@ function App() {
         <Route path="/flights/" component={FlightWrapper} />
         <Route path="/invite/" component={UserInviteContainer} />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
