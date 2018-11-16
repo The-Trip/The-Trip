@@ -11,13 +11,13 @@ class Comments extends React.Component {
       comment => comment.suggestion_id === suggestionId.id
     );
 
-    const commentsOpen = cx("comments", {
+    const commentsOpen = cx("viewcomments__item", {
       "tab-open": this.props.clicked,
       "tab-closed": !this.props.clicked
     });
 
     return (
-      <ul>
+      <React.Fragment>
         <AddIndivCommentContainer
           suggestionId={suggestionId}
           tripId={this.props.tripId}
@@ -25,9 +25,9 @@ class Comments extends React.Component {
         />
 
         {commentObj.length > 0 && (
-          <React.Fragment>
+          <section className="viewcomments">
             <button
-              className="btn"
+              className="viewcomments__btn"
               onClick={event => {
                 this.props.clicked
                   ? this.props.removeClickedClass()
@@ -36,21 +36,20 @@ class Comments extends React.Component {
             >
               Comments {commentObj.length}
             </button>
-            {commentObj.map(comment => {
-              return (
-                <React.Fragment key={comment.id}>
-                  <section className={commentsOpen}>
-                    <li>
-                      {comment.comment}
-                      {comment.first_name}
-                    </li>
-                  </section>
-                </React.Fragment>
-              );
-            })}
-          </React.Fragment>
+
+            <ul className="viewcomments__list">
+              {commentObj.map(comment => {
+                return (
+                  <li key={comment.id} className={commentsOpen}>
+                    {comment.comment}
+                    {comment.first_name}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
         )}
-      </ul>
+      </React.Fragment>
     );
   }
 }
