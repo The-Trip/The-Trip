@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Comments from "../components/Comments.js";
-import { addClickedClass, removeClickedClass } from "../actions/mel";
+import { addClickedClass, removeClickedClass } from "../actions";
 
 const mapStateToProps = (state, ownProps) => {
   return {

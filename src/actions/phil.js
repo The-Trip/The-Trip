@@ -24,6 +24,14 @@ export function loginToState(name, value) {
   };
 }
 
+export function inviteCodeToState(name, value) {
+  return {
+    type: "SET_INVITE_INPUT",
+    name,
+    value
+  };
+}
+
 export function registerToState(name, value) {
   return {
     type: "SET_REGISTER_INPUT",
@@ -146,6 +154,39 @@ export function loginUser() {
   };
 }
 
+export function checkInviteCode() {
+  return function(dispatch, getState) {
+    console.log("checkInvite");
+    console.log(getState().inviteCodeForm);
+    return (
+      fetch("/api/invite", {
+        method: "post",
+        body: JSON.stringify({
+          inviteCode: getState().inviteCodeForm.inviteCode
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(response => response.json())
+        // TODO - Create response in server.js
+        .then(tripId => {
+          dispatch(setAddedTripId(tripId));
+        })
+    );
+  };
+}
+
+export function checkLogin() {
+  return function(dispatch, getState) {
+    apiCall(`/checklogin/`)
+      .then(user => {
+        dispatch(setUser(user));
+      })
+      .catch(function(error) {});
+  };
+}
+
 export function setUser(user) {
   return {
     type: "SET_USER",
@@ -175,7 +216,7 @@ function apiCall(path) {
 
 export function fetchTripsFromDB(userId) {
   return function(dispatch, getState) {
-    apiCall(`/user/${userId}/trip`)
+    apiCall(`/user/trip`)
       .then(result => {
         dispatch(receiveTrips(result));
       })
@@ -212,5 +253,12 @@ export function suggestionInputClearState() {
   console.log("suggestion input clear action");
   return {
     type: "CLEAR_SUGGESTION_INPUT"
+  };
+}
+
+export function setAddedTripId(tripId) {
+  return {
+    type: "SET_ADDED_TRIP_ID",
+    tripId
   };
 }

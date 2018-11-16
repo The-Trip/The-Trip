@@ -3,8 +3,8 @@ import SuggestionInput from "../components/SuggestionInput.js";
 import {
   suggestionInputToState,
   suggestionInputClearState
-} from "../actions/phil";
-import { googleFetch } from "../actions/chris";
+} from "../actions";
+import { googleFetch } from "../actions";
 
 const mapStateToProps = (state, ownProps) => {
   return {
