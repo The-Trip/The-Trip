@@ -12,7 +12,6 @@ CREATE TABLE customer (
 id serial,
 first_name varchar(50) NOT NULL,
 email VARCHAR(50) NOT NULL UNIQUE,
-password VARCHAR(15) NOT NULL,
 hash VARCHAR(72),
 PRIMARY KEY (id)
 );
