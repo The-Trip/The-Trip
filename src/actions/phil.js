@@ -177,6 +177,16 @@ export function checkInviteCode() {
   };
 }
 
+export function checkLogin() {
+  return function(dispatch, getState) {
+    apiCall(`/checklogin/`)
+      .then(user => {
+        dispatch(setUser(user));
+      })
+      .catch(function(error) {});
+  };
+}
+
 export function setUser(user) {
   return {
     type: "SET_USER",

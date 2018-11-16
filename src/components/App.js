@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
-import Nav from "../components/Nav";
+import NavContainer from "../containers/NavContainer";
 import Footer from "../components/Footer";
 
 import HomeContainer from "../containers/HomeContainer";
@@ -20,7 +20,7 @@ function App() {
   return (
     <div>
       {/* <SocketContainer /> */}
-      <Nav />
+      <NavContainer />
       <main>
         <Route path="/" exact component={HomeContainer} />
         <Route path="/trips/" exact component={TripsListContainer} />

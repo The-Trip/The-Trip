@@ -319,6 +319,11 @@ function isLoggedIn(req, res, next) {
   }
 }
 
+app.get("/api/checklogin/", function(req, res) {
+  console.log("check logged in");
+  res.send(req.user);
+});
+
 app.get("/api/user/:id/trip", isLoggedIn, function(req, res) {
   const userId = req.params.id;
   // console.log(req.params)
