@@ -1,5 +1,6 @@
 import React from "react";
 import socketIOClient from "socket.io-client";
+import "../styles/components/Socket.scss";
 
 class Socket extends React.Component {
   constructor() {
@@ -19,13 +20,13 @@ class Socket extends React.Component {
   render() {
     const { response } = this.state;
     return (
-      <div style={{ textAlign: "center" }}>
+      <header className="sockets__loader">
         {response ? (
           <p>The temperature in Florence is: {response} °F</p>
         ) : (
           <p>Loading...</p>
         )}
-      </div>
+      </header>
     );
   }
 }

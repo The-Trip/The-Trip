@@ -20,6 +20,7 @@ export function addNewTrip() {
     })
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         dispatch(setAddedTripId(data));
       });
   };
@@ -56,6 +57,24 @@ export function setSelectedPlace(place) {
   return {
     type: "STORE_PLACE",
     selectedPlaceID: place
+  };
+}
+
+export function fetchCommentsFromDB(tripId) {
+  return function(dispatch) {
+    fetch(`/api/trip/${tripId}/comments`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveComments(result));
+      })
+      .catch(function(error) {});
+  };
+}
+
+export function receiveComments(results) {
+  return {
+    type: "STORE_COMMENTS",
+    comments: results
   };
 }
 

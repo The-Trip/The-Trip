@@ -1,5 +1,5 @@
 import React from "react";
-// import '../styles/components/Login.scss';
+import "../styles/components/Login.scss";
 
 function Login({
   handleChangeRegister,
@@ -10,7 +10,7 @@ function Login({
   return (
     <React.Fragment>
       {/* LOGIN FORM */}
-      <section className="login">
+      <section className="login container">
         <header className="login__header">
           <h1 className="login__title">Login</h1>
         </header>
@@ -20,11 +20,15 @@ function Login({
           onSubmit={event => handleSubmitLogin(event)}
         >
           <div>
-            <label className="login-frm__emaillabel" htmlFor="loginEmail">
+            <label
+              className="login-frm__emaillabel show--screenreaders"
+              htmlFor="loginEmail"
+            >
               Email
             </label>
             <input
               className="login-frm__email"
+              placeholder="Email"
               type="email"
               onChange={event => handleChangeLogin(event)}
               name="loginEmail"
@@ -34,11 +38,15 @@ function Login({
           </div>
 
           <div>
-            <label className="login-frm__passwordlabel" htmlFor="loginPassword">
+            <label
+              className="login-frm__passwordlabel show--screenreaders"
+              htmlFor="loginPassword"
+            >
               Password
             </label>
             <input
               className="login-frm__password"
+              placeholder="Password"
               type="password"
               onChange={event => handleChangeLogin(event)}
               name="loginPassword"
@@ -54,9 +62,9 @@ function Login({
       </section>
 
       {/* REGISTRATION FORM */}
-      <section className="registration">
+      <section className="registration container">
         <header className="registration__header">
-          <h2 className="registration__title">Register</h2>
+          <h1 className="registration__title">Register</h1>
         </header>
 
         <form
@@ -64,11 +72,15 @@ function Login({
           onSubmit={event => handleSubmitRegister(event)}
         >
           <div>
-            <label className="registration-frm__namelabel" htmlFor="firstName">
+            <label
+              className="registration-frm__namelabel show--screenreaders"
+              htmlFor="firstName"
+            >
               Name
             </label>
             <input
               className="registration-frm__name"
+              placeholder="Name"
               onChange={event => handleChangeRegister(event)}
               type="text"
               name="firstName"
@@ -80,17 +92,17 @@ function Login({
 
           <div>
             <label
-              className="registration-frm__emaillabel"
+              className="registration-frm__emaillabel show--screenreaders"
               htmlFor="registrationEmail"
             >
               Email
             </label>
             <input
               className="registration-frm__email"
+              placeholder="Email"
               type="email"
               onChange={event => handleChangeRegister(event)}
               name="registrationEmail"
-              value="to add"
               required
             />
             <span className="validity" />
@@ -98,13 +110,14 @@ function Login({
 
           <div>
             <label
-              className="registration-frm__passwordlabel"
+              className="registration-frm__passwordlabel show--screenreaders"
               htmlFor="registrationPassword"
             >
               Password
             </label>
             <input
               className="registration-frm__password"
+              placeholder="Password"
               type="password"
               onChange={event => handleChangeRegister(event)}
               name="registrationPassword"

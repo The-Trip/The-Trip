@@ -2,34 +2,49 @@ import React from "react";
 import "../styles/components/Nav.scss";
 import { NavLink } from "react-router-dom";
 
-function Nav() {
-  return (
-    <header className="sitehead shrink">
-      <nav className="sitehead__nav">
-        <NavLink
-          to="/create-trip/"
-          activeClassName="active"
-          className="nav__item"
-        >
-          Create Trip
-        </NavLink>
+class Nav extends React.Component {
+  componentDidMount() {
+    console.log("nav");
+    this.props.checkLogin();
+  }
 
-        <NavLink to="/trips/" activeClassName="active" className="nav__item">
-          Trips
-        </NavLink>
-      </nav>
+  componentDidUpdate(oldProps) {
+    if (this.props.user && !oldProps.user) {
+      this.props.history.push(`/trips/`);
+    }
+  }
 
-      <h1 className="sitehead__title">
-        <NavLink to="/">The Trip</NavLink>
-      </h1>
+  render() {
+    return (
+      <header className="sitehead shrink">
+        <nav className="sitehead__nav">
+          <NavLink to="/trips/" activeClassName="active" className="nav__item">
+            <i className="fas fa-home fa-lg" aria-hidden="true" />
+          </NavLink>
+          <NavLink
+            to="/create-trip/"
+            activeClassName="active"
+            className="nav__item"
+          >
+            <i className="fas fa-plus fa-lg" aria-hidden="true" />
+          </NavLink>
+        </nav>
 
-      <div className="sitehead__logout">
-        <NavLink to="/login/" activeClassName="active" className="nav__item">
-          <i className="fas fa-sign-in-alt" />
-        </NavLink>
-      </div>
-    </header>
-  );
+        <h1 className="sitehead__title">
+          <NavLink to="/">The Trip</NavLink>
+        </h1>
+
+        <div className="sitehead__logout">
+          <NavLink to="/invite/" activeClassName="active" className="nav__item">
+            <i className="fas fa-envelope fa-lg" aria-hidden="true" />
+          </NavLink>
+          <NavLink to="/login/" activeClassName="active" className="nav__item">
+            <i className="fas fa-sign-in-alt fa-lg" aria-hidden="true" />
+          </NavLink>
+        </div>
+      </header>
+    );
+  }
 }
 
 export default Nav;

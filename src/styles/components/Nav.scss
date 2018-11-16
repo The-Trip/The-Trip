@@ -1,58 +1,58 @@
-@import '../base/_variables.scss';
+@import "../base/_variables.scss";
 
 // Shrink - need .shrink class added
 // https://codepen.io/tomdurkin/pen/nvAjd
 // https://code.oursky.com/should-you-use-sticky-header/
 
-
 .sitehead {
-    width: 100%;
-    padding: $main-padding*0.8 $main-padding *1.5;;     
-    margin: 0 auto;
-    background: $primary-color;
+  width: 100%;
+  padding: $main-padding * 0.8 $main-padding * 1.5;
+  margin: 0 auto;
+  background: $primary-color;
+  color: $light-color;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  z-index: 9999;
+  top: 0;
+  position: fixed;
+  text-align: center;
+  display: flex;
+
+  a.nav__item {
+    display: inline-block;
     color: $light-color;
-    transition: all 0.4s ease-in-out;
-    -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    z-index: 9999;
-    top: 0;
-    position: fixed;
-    text-align: center;
+    margin-right: 5px;
+    padding: 5px;
+  }
+
+  &__nav {
+    flex: 1;
     display: flex;
-    
-    a.nav__item {
-        display: inline-block;
-        color: $light-color;
-        margin-right: 5px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  &__title {
+    font-weight: 800;
+    font-style: normal;
+    margin: 0;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $light-color;
+    a {
+      color: $light-color;
+      text-decoration: none;
     }
-
-    &__nav {
-        flex: 1;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }   
-    &__title {
-        font-weight: 800;
-        font-style: normal;
-        margin: 0;
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        a {
-            color: $white;
-            text-decoration: none;
-        }
-
-    }
-    &__logout {
-        flex: 1;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-    // &.shrink {
-    //     padding: $main-padding*0.5 $main-padding *1.5;;  
-    // }
+  }
+  &__logout {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  // &.shrink {
+  //     padding: $main-padding*0.5 $main-padding *1.5;;
+  // }
 }

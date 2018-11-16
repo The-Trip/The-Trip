@@ -1,43 +1,38 @@
-import { connect } from 'react-redux';
-import Flight from '../components/Flight';
-import {fetchFlights, setCityFrom, setCityTo, setEndDate, setStartDate} from '../actions/tomactions';
+import { connect } from "react-redux";
+import Flight from "../components/Flight";
+import {
+  fetchFlights,
+  isAPILoading,
+  setEndDate,
+  setStartDate
+} from "../actions";
+import { addClickedClass, removeClickedClass } from "../actions";
 
 const mapStateToProps = state => {
-    return {
-        flightResults: state.flightAPIResults,
-        startDate: state.startDate,
-        endDate: state.endDate,
-        cityFrom : state.cityFrom,
-        cityTo: state.cityTo
-    }
+  return {
+    flightResults: state.flightAPIResults.data,
+    startDate: state.startDate,
+    endDate: state.endDate,
+    isAPILoading: state.isAPILoading,
+    cityFrom: state.cityFrom,
+    cityTo: state.cityTo,
+    clicked: state.stylesSwitches.clicked
+  };
 };
 
-//Currently only one way flights, need to do round trip
-
-// price is in .price
-//departure time is in .dTime
-//arrival time is in .aTime
-//flight duration is in .fly_duration
-// city from is .cityFrom
-//city to is .cityTo
-// bags price is an object in .bags_price. Numbered 1 and 2.
-
-//UTC timezones.
-//Need list of timezone deviance from UTC
-//Need number of seconds in an hour (3600)
-
-
 const mapDispatchToProps = dispatch => {
-    return {
-        fetchFlights: () => dispatch(fetchFlights()),
-        setStartDate: (date) => dispatch(setStartDate(date)),
-        setEndDate: (date) => dispatch(setEndDate(date)),
-        // setFlightsCityFrom: (city) => dispatch(setCityFrom(city)),
-        // setFlightsCityTo: (city) => dispatch(setCityTo(city)),
-    };
+  return {
+    fetchFlights: (flyFrom, flyTo, dateFrom, dateTo) =>
+      dispatch(fetchFlights(flyFrom, flyTo, dateFrom, dateTo)),
+    setStartDate: date => dispatch(setStartDate(date)),
+    setEndDate: date => dispatch(setEndDate(date)),
+    isAPILoading: () => dispatch(isAPILoading()),
+    addClickedClass: event => dispatch(addClickedClass()),
+    removeClickedClass: event => dispatch(removeClickedClass())
+  };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Flight);

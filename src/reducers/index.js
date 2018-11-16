@@ -9,12 +9,15 @@ import suggestions from "./suggestions";
 import suggestionComment from "./suggestionComment";
 import startDate from "./startDate";
 import endDate from "./endDate";
-import flightsToCity from "./flightsToCity";
-import flightsFromCity from "./flightsFromCity";
 import suggestionForm from "./suggestionForm";
 import addedTripId from "./addedTripId";
 import setFlightsAPIResults from "./setFlightsAPIResults";
 import googlePlaceInfo from "./googlePlaceInfo";
+import isAPILoading from "./isAPILoading";
+import comments from "./comments";
+import stylesSwitches from "./stylesSwitches";
+import registerForm from "./registerForm";
+import inviteCodeForm from "./inviteCodeForm";
 
 export default combineReducers({
   flightAPIResults: setFlightsAPIResults,
@@ -31,6 +34,9 @@ export default combineReducers({
   suggestionComment,
   startDate,
   endDate,
-  cityFrom: flightsFromCity,
-  cityTo: flightsToCity
+  isAPILoading,
+  comments,
+  stylesSwitches,
+  registerForm,
+  inviteCodeForm
 });

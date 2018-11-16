@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import PlaceResults from "../components/PlaceResults.js";
-import { setSelectedPlace } from "../actions/chris";
+import { setSelectedPlace } from "../actions";
 
 const mapStateToProps = state => {
   return {

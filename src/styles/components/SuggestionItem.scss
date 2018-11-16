@@ -1,1 +1,30 @@
-@import '../base/_variables.scss';
+@import "../base/_variables.scss";
+.suggestion {
+  background: $light-color;
+  padding: $main-padding 0;
+  &__title {
+    position: relative;
+    padding-top: 1.5rem;
+  }
+
+  &__details {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    position: absolute;
+    top: 0;
+    left: 0;
+    span {
+      color: $secondary-color;
+    }
+  }
+
+  &__figure {
+    position: relative;
+    margin: 0;
+    background-color: $secondary-color;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding-top: 56%;
+    background-size: cover;
+  }
+}

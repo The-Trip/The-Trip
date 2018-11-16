@@ -2,6 +2,7 @@ import React from "react";
 
 import "../styles/components/TripCreation.scss";
 
+
 class TripCreation extends React.Component {
   componentDidUpdate(newProps) {
     if (this.props.addedTripId) {
@@ -24,7 +25,10 @@ class TripCreation extends React.Component {
             onSubmit={event => this.props.handleSubmit(event)}
           >
             <div>
-              <label className="trip-frm__tripnamelabel" htmlFor="tripName">
+              <label
+                className="trip-frm__tripnamelabel show--screenreaders"
+                htmlFor="tripName"
+              >
                 Title of Trip
               </label>
               <input
@@ -32,20 +36,7 @@ class TripCreation extends React.Component {
                 id="trip-name"
                 type="text"
                 name="tripName"
-                onChange={event => this.props.handleChange(event)}
-                required
-              />
-              <span className="validity" />
-            </div>
-            <div>
-              <label className="trip-frm__originlabel" htmlFor="origin">
-                Origin
-              </label>
-              <input
-                className="trip-frm__origin"
-                type="text"
-                id="origin"
-                name="origin"
+                placeholder="Enter trip title"
                 onChange={event => this.props.handleChange(event)}
                 required
               />
@@ -53,7 +44,25 @@ class TripCreation extends React.Component {
             </div>
             <div>
               <label
-                className="trip-frm__destinationlabel"
+                className="trip-frm__originlabel show--screenreaders"
+                htmlFor="origin"
+              >
+                Origin
+              </label>
+              <input
+                className="trip-frm__origin"
+                type="text"
+                id="origin"
+                name="origin"
+                placeholder="Starting from&hellip;"
+                onChange={event => this.props.handleChange(event)}
+                required
+              />
+              <span className="validity" />
+            </div>
+            <div>
+              <label
+                className="trip-frm__destinationlabel show--screenreaders"
                 htmlFor="destination"
               >
                 Destination
@@ -63,6 +72,7 @@ class TripCreation extends React.Component {
                 type="text"
                 id="destination"
                 name="destination"
+                placeholder="Destination"
                 onChange={event => this.props.handleChange(event)}
                 required
               />
@@ -70,13 +80,17 @@ class TripCreation extends React.Component {
             </div>
 
             <div>
-              <label className="trip-frm__detailslabel" htmlFor="details">
+              <label
+                className="trip-frm__detailslabel show--screenreaders"
+                htmlFor="details"
+              >
                 About the trip
               </label>
               <textarea
                 className="trip-frm__details"
                 id="trip-details"
                 name="details"
+                placeholder="About this trip"
                 onChange={event => this.props.handleChange(event)}
               />
             </div>
