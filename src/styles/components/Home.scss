@@ -30,16 +30,17 @@
 
   &__nav {
     display: flex;
-    justify-content: space-around;
-    // flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    // align-items: flex-end;
+    flex: 1;
+    margin-top: 20rem;
   }
 }
 
-.nav {
-  //   color: white;
-}
+// .nav {
+//   //   color: white;
+// }
 // img.animated {
 //     -webkit-animation: filter-animation 5s infinite;
 //   }

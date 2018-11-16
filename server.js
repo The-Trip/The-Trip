@@ -328,7 +328,7 @@ app.get("/api/user/trip", isLoggedIn, function(req, res) {
   const userId = req.user.id;
   // console.log(req.params)
   db.any(
-    "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, trip.time, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id =1 AND trip.id = permission.trip_id ORDER BY trip.time DESC",
+    "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, trip.time, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = $1 AND trip.id = permission.trip_id ORDER BY trip.time DESC",
     [userId]
   )
     .then(function(data) {

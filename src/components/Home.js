@@ -29,7 +29,7 @@ class Home extends React.Component {
                   Trips
                 </NavLink> */}
               </h3>
-              <h3>
+              <button className="btn btn--large">
                 <NavLink
                   to="/create-trip/"
                   activeClassName="active btn"
@@ -37,7 +37,7 @@ class Home extends React.Component {
                 >
                   Create a trip
                 </NavLink>
-              </h3>
+              </button>
             </nav>
             <div className="splash__trip-info">
               <h3>
