@@ -6,16 +6,16 @@ function SuggestionInputFinal({ handleSubmit, place, tripId, handleChange }) {
 
   return (
     <section className="add-suggestion">
-      <h2>{place.name}</h2>
-      <p>{place.formatted_address}</p>
+      <h2 className="add-suggestion__title">{place.name}</h2>
+      <p className="add-suggestion__address">{place.formatted_address}</p>
 
       <p className="add-suggestion__rating">
         {rating.map(item => {
           return <i key={tripId} className="fas fa-star" />;
         })}
       </p>
-      <h3>{place.rating}</h3>
-      <h3>{place.types[0]}</h3>
+      {/* <h3>{place.rating}</h3>
+      <h3>{place.types[0]}</h3> */}
       <form
         className="add-suggestion__frm"
         onSubmit={event => handleSubmit(place, tripId, event)}
@@ -33,7 +33,7 @@ function SuggestionInputFinal({ handleSubmit, place, tripId, handleChange }) {
           type="submit"
           className="add-suggestion__submit btn btn__submit"
         >
-          Submitting
+          Add this suggestion
         </button>
       </form>
     </section>
