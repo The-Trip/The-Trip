@@ -18,12 +18,6 @@ class Comments extends React.Component {
 
     return (
       <React.Fragment>
-        <AddIndivCommentContainer
-          suggestionId={suggestionId}
-          tripId={this.props.tripId}
-          suggestion={this.props.suggestion}
-        />
-
         {commentObj.length > 0 && (
           <section className="viewcomments">
             <button
@@ -49,6 +43,12 @@ class Comments extends React.Component {
             </ul>
           </section>
         )}
+
+        <AddIndivCommentContainer
+          suggestionId={suggestionId}
+          tripId={this.props.tripId}
+          suggestion={this.props.suggestion}
+        />
       </React.Fragment>
     );
   }

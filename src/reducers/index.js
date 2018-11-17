@@ -18,6 +18,7 @@ import comments from "./comments";
 import stylesSwitches from "./stylesSwitches";
 import registerForm from "./registerForm";
 import registered from "./registered";
+import splashTripDestinations from "./splashTripDestinations";
 import inviteCodeForm from "./inviteCodeForm";
 
 export default combineReducers({
@@ -41,4 +42,5 @@ export default combineReducers({
   registerForm,
   inviteCodeForm,
   registered
+  splashTripDestinations,
 });
