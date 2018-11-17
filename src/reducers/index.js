@@ -41,6 +41,6 @@ export default combineReducers({
   stylesSwitches,
   registerForm,
   inviteCodeForm,
-  registered
-  splashTripDestinations,
+  registered,
+  splashTripDestinations
 });
