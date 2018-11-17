@@ -13,9 +13,9 @@ class Comments extends React.Component {
     const commentsArr = commentObj.slice(1);
     const commentsNumber = commentObj.length - 1;
 
-    const commentsOpen = cx("viewcomments__list menu--settings", {
-      "tab-open": this.props.clicked,
-      "tab-closed": !this.props.clicked
+    const commentsOpen = cx("viewcomments__controls", {
+      "tab--open": this.props.clicked,
+      "tab--closed": !this.props.clicked
     });
 
     return (
@@ -34,27 +34,30 @@ class Comments extends React.Component {
                   : this.props.addClickedClass();
               }}
             >
-              Comments {`(${commentsNumber})`}
+              {commentsNumber > 0
+                ? `Comments (${commentsNumber})`
+                : `Add a comment`}
             </button>
 
-            <ul className={commentsOpen}>
-              {commentsArr.map(comment => {
-                return (
-                  <li key={comment.id} className="viewcomments__item">
-                    {comment.comment}
-                    <span>{comment.first_name}</span>
-                  </li>
-                );
-              })}
-            </ul>
+            <div className={commentsOpen}>
+              <ul className="viewcomments__list menu--settings">
+                {commentsArr.map(comment => {
+                  return (
+                    <li key={comment.id} className="viewcomments__item">
+                      <em>{comment.comment}</em>
+                      <span>&nbsp;&ndash;&nbsp;{comment.first_name}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+              <AddIndivCommentContainer
+                suggestionId={suggestionId}
+                tripId={this.props.tripId}
+                suggestion={this.props.suggestion}
+              />
+            </div>
           </section>
         )}
-
-        <AddIndivCommentContainer
-          suggestionId={suggestionId}
-          tripId={this.props.tripId}
-          suggestion={this.props.suggestion}
-        />
       </React.Fragment>
     );
   }

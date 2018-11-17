@@ -2,7 +2,7 @@
 .suggestion {
   background: $light-color;
   padding: $main-padding * 0.5 0;
-  border-bottom: $main-padding solid $secondary-color;
+  border-bottom: $main-padding * 1.5 solid lighten($secondary-color, 10%);
   &__title {
     position: relative;
     padding-top: 1.5rem;
@@ -18,8 +18,9 @@
     position: absolute;
     top: 0;
     left: 0;
+    color: $secondary-color;
     span {
-      color: $secondary-color;
+      color: $primary-color;
     }
   }
 

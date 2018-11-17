@@ -9,8 +9,8 @@ function SuggestionItem({ suggestion, tripId, comments }) {
         <h2 className="suggestion__title">
           {suggestion.place_name}
           <div className="suggestion__details">
-            {suggestion.place_category}&nbsp;
-            <span>Suggested by {suggestion.first_name}</span>
+            {suggestion.place_category}&nbsp;Suggested by&nbsp;
+            <span>{suggestion.first_name}</span>
           </div>
         </h2>
         <p className="suggestion__address">{suggestion.place_address}</p>
