@@ -19,10 +19,6 @@ class TripsList extends React.Component {
           {/* <TripCreationContainer /> */}
 
           <section className="trips">
-            {/* <header className="trips__header container">
-              <h1 className="trips__title">Your trips</h1>
-            </header> */}
-
             <div className="tabs tabs-style-topline">
               <nav className="tabs__nav">
                 <ul className="tabs__navlist">
@@ -70,10 +66,6 @@ class TripsList extends React.Component {
                 </Switch>
               </div>
             </div>
-
-            {/* {this.props.trips.map(trip => {
-              return <TripsListItem key={trip.id} trip={trip} />;
-            })} */}
           </section>
         </React.Fragment>
       </div>
