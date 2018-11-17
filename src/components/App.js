@@ -25,7 +25,18 @@ function App() {
       <NavContainer />
       <main>
         <Route path="/" exact component={HomeContainer} />
-        <Route path="/trips/" exact component={TripsListContainer} />
+        <Route
+          path="/trips/friends/"
+          whosTrips={"friends"}
+          exact
+          component={TripsListContainer}
+        />
+        <Route
+          path="/trips/"
+          whosTrips={"yours"}
+          exact
+          component={TripsListContainer}
+        />
         <Route path="/trips/:id/" component={TripContainer} />
         <Route path="/create-trip/" component={TripCreationContainer} />
         <Route path="/login/" component={LoginContainer} />
