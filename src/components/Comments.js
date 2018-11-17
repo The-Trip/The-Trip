@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/components/TripCreation.scss";
+import "../styles/components/Comments.scss";
 import cx from "classnames";
 import AddIndivCommentContainer from "../containers/AddIndivCommentContainer.js";
 
@@ -10,8 +10,10 @@ class Comments extends React.Component {
     const commentObj = comments.filter(
       comment => comment.suggestion_id === suggestionId.id
     );
+    const commentsArr = commentObj.slice(1);
+    const commentsNumber = commentObj.length - 1;
 
-    const commentsOpen = cx("viewcomments__item", {
+    const commentsOpen = cx("viewcomments__list menu--settings", {
       "tab-open": this.props.clicked,
       "tab-closed": !this.props.clicked
     });
@@ -20,6 +22,10 @@ class Comments extends React.Component {
       <React.Fragment>
         {commentObj.length > 0 && (
           <section className="viewcomments">
+            <p className="viewcomments__first">
+              <em>{commentObj[0].comment}</em>
+            </p>
+
             <button
               className="viewcomments__btn"
               onClick={event => {
@@ -28,15 +34,15 @@ class Comments extends React.Component {
                   : this.props.addClickedClass();
               }}
             >
-              Comments {commentObj.length}
+              Comments {`(${commentsNumber})`}
             </button>
 
-            <ul className="viewcomments__list">
-              {commentObj.map(comment => {
+            <ul className={commentsOpen}>
+              {commentsArr.map(comment => {
                 return (
-                  <li key={comment.id} className={commentsOpen}>
+                  <li key={comment.id} className="viewcomments__item">
                     {comment.comment}
-                    {comment.first_name}
+                    <span>{comment.first_name}</span>
                   </li>
                 );
               })}

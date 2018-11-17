@@ -13,6 +13,7 @@ function SuggestionItem({ suggestion, tripId, comments }) {
             <span>Suggested by {suggestion.first_name}</span>
           </div>
         </h2>
+        <p className="suggestion__address">{suggestion.place_address}</p>
       </header>
       <div className="suggestion__body container">
         {suggestion.photo && (
@@ -23,19 +24,13 @@ function SuggestionItem({ suggestion, tripId, comments }) {
             }}
           />
         )}
-        <p className="suggestion__address">{suggestion.place_address}</p>
-        <p className="suggestion__comment">{suggestion.comment}</p>
-      </div>
 
-      <footer className="suggestion__footer container">
-        <React.Fragment>
-          <CommentsContainer
-            key={suggestion.id}
-            suggestion={suggestion}
-            tripId={tripId}
-          />
-        </React.Fragment>
-      </footer>
+        <CommentsContainer
+          key={suggestion.id}
+          suggestion={suggestion}
+          tripId={tripId}
+        />
+      </div>
     </article>
   );
 }
