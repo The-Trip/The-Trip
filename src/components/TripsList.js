@@ -6,6 +6,7 @@ import "../styles/base/tabs.scss";
 
 class TripsList extends React.Component {
   componentDidMount() {
+    console.log(this.props.trips);
     this.props.fetchTripsFromDB(this.props.userId);
   }
 
@@ -45,11 +46,14 @@ class TripsList extends React.Component {
                 <Switch>
                   <Route
                     path="/trips/"
+                    exact
                     render={() => (
                       <section className="myView">
-                        {this.props.trips.map(trip => {
-                          return <TripsListItem key={trip.id} trip={trip} />;
-                        })}
+                        {this.props.trips
+                          .filter(trip => trip.permission === "owner")
+                          .map(trip => {
+                            return <TripsListItem key={trip.id} trip={trip} />;
+                          })}
                       </section>
                     )}
                   />
@@ -57,9 +61,16 @@ class TripsList extends React.Component {
                     path="/trips/friends"
                     render={() => (
                       <section className="friendsView">
-                        {this.props.trips.map(trip => {
-                          return <TripsListItem key={trip.id} trip={trip} />;
-                        })}
+                        {console.log(
+                          this.props.trips.filter(
+                            trip => trip.permission === "suggester"
+                          )
+                        )}
+                        {this.props.trips
+                          .filter(trip => trip.permission === "suggester")
+                          .map(trip => {
+                            return <TripsListItem key={trip.id} trip={trip} />;
+                          })}
                       </section>
                     )}
                   />

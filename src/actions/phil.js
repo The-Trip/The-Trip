@@ -134,24 +134,22 @@ export function loginUser() {
   return function(dispatch, getState) {
     console.log("login user");
     console.log(getState().loginForm);
-    return (
-      fetch("/api/login", {
-        method: "post",
-        body: JSON.stringify({
-          username: getState().loginForm.loginEmail,
-          password: getState().loginForm.loginPassword
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
+    return fetch("/api/login", {
+      method: "post",
+      body: JSON.stringify({
+        username: getState().loginForm.loginEmail,
+        password: getState().loginForm.loginPassword
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(user => {
+        dispatch(setUser({ id: null }));
+        dispatch(setUser(user));
       })
-        .then(response => response.json())
-        // TODO - Create response in server.js
-        .then(user => {
-          dispatch(setUser(user));
-        })
-        .catch(console.error)
-    );
+      .catch(console.error);
   };
 }
 
