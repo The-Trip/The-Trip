@@ -9,6 +9,8 @@ import TripsListContainer from "../containers/TripsListContainer";
 import TripContainer from "../containers/TripContainer";
 import TripCreationContainer from "../containers/TripCreationContainer";
 import LoginContainer from "../containers/LoginContainer";
+import RegisterContainer from "../containers/RegisterContainer";
+
 import SocketContainer from "../containers/SocketContainer";
 import UserInviteContainer from "../containers/UserInviteContainer";
 
@@ -27,6 +29,8 @@ function App() {
         <Route path="/trips/:id/" component={TripContainer} />
         <Route path="/create-trip/" component={TripCreationContainer} />
         <Route path="/login/" component={LoginContainer} />
+        <Route path="/register/" component={RegisterContainer} />
+
         <Route path="/flights/" component={FlightWrapper} />
         <Route path="/invite/" component={UserInviteContainer} />
       </main>

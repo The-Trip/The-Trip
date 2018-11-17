@@ -125,7 +125,7 @@ export function addUserToDB() {
       .then(userData => {
         console.log(userData);
         console.log("register");
-        dispatch(setUser(userData));
+        dispatch(setRegistered(true));
       });
   };
 }
@@ -192,6 +192,13 @@ export function setUser(user) {
   return {
     type: "SET_USER",
     user: user
+  };
+}
+
+export function setRegistered(trueOrNull) {
+  return {
+    type: "SET_REGISTERED",
+    registered: trueOrNull
   };
 }
 
