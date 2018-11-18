@@ -1,0 +1,87 @@
+@import "../base/_variables.scss";
+
+.viewcomments {
+  display: flex;
+  flex-flow: row wrap;
+
+  &__btn {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    background: none !important;
+    color: inherit;
+    border: none;
+    padding: 0 !important;
+    font: inherit;
+    cursor: pointer;
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+  &__btn,
+  &__first {
+    margin: 0;
+  }
+
+  &__list {
+    margin-top: $main-padding;
+    flex: 3;
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+  }
+  &__item {
+    width: 100%;
+    padding-top: $main-padding * 0.5;
+    span {
+      color: $secondary-color;
+    }
+  }
+  &__controls {
+    width: 100%;
+    display: none;
+    &.tab--open {
+      display: block;
+    }
+  }
+
+  &__likes {
+    color: $white;
+    padding: $main-padding 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__likeslist {
+    display: flex;
+    flex-direction: row;
+  }
+
+  /* generate range of colors for link-list */
+  $bgColors: $primary-color, lighten($primary-color, 10%);
+
+  @for $i from 1 through length($bgColors) {
+    $bgColors: append($bgColors, lighten(nth($bgColors, $i), 25%));
+  }
+  $bgColorsLength: length($bgColors);
+
+  &__likesitem {
+    width: 1.5rem;
+    border-radius: 50%;
+    font-size: 1rem;
+    padding: 0.75rem 0;
+    text-align: center;
+    line-height: 0;
+    position: relative;
+    // background:$primary-color;
+    margin-left: -10px;
+
+    @for $i from 1 through $bgColorsLength {
+      &:nth-of-type(#{$bgColorsLength}n + #{$i}) {
+        background-color: nth($bgColors, $i);
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/components/AddIndivComment.scss";
 
 function AddIndivComment({ handleCommentSubmit, place, tripId, handleChange }) {
   return (
@@ -19,20 +20,6 @@ function AddIndivComment({ handleCommentSubmit, place, tripId, handleChange }) {
         Add
       </button>
     </form>
-
-    /* <form>
-<div>
-    <label className="suggestion-frm__commentlabel" htmlFor="comment">Why should we go there????????</label>
-    <textarea 
-        className="suggestion-frm__comment"
-        id="suggestion-comment"
-        name="comment"
-        onChange={event => handleChange(event)} >
-    </textarea>
-</div>
-
-<button type="submit" className="suggestion-frm__submit btn btn__submit">Submit</button>
-</form>     */
   );
 }
 
