@@ -14,11 +14,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addClickedClass: event => {
-      dispatch(addClickedClass());
+    addClickedClass: id => {
+      dispatch(addClickedClass(id));
     },
-    removeClickedClass: event => {
-      dispatch(removeClickedClass());
+    removeClickedClass: id => {
+      dispatch(removeClickedClass(id));
     }
   };
 };
