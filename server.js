@@ -494,6 +494,28 @@ app.post("/api/invite", isLoggedIn, (req, res) => {
     .catch(console.error);
 }); // al
 
+
+app.post("/api/like", (req, res) => {
+  console.log("like");
+
+      db.one(
+        `INSERT INTO permission (trip_id, customer_id, permission)
+            VALUES ($1, $2, $3) RETURNING id`,
+        [trip.id, req.user.id, "suggester"]
+      )
+        .then(id => {
+          return res.json({ tripId: trip.id });
+        })
+        .catch(error => {
+          console.error(error.stack);
+          res.json({ error: error.message });
+        });
+    })
+
+
+
+
+
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });

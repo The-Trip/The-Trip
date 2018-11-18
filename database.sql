@@ -73,6 +73,7 @@ CREATE TABLE permission (
 id serial,
 trip_id INT NOT NULL,
 customer_id INT NOT NULL,
+favourite BOOLEAN,
 permission VARCHAR(20) NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (trip_id) REFERENCES trip (id),
@@ -86,6 +87,17 @@ suggestion_id INT NOT NULL,
 customer_id INT NOT NULL,
 comment VARCHAR(500) NOT NULL,
 time timestamptz default current_timestamp NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (suggestion_id) REFERENCES suggestion (id),
+FOREIGN KEY (customer_id) REFERENCES customer (id)
+);
+
+-- LIKES
+CREATE TABLE likes (
+id serial,
+suggestion_id INT NOT NULL,
+customer_id INT NOT NULL,
+like INT NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (suggestion_id) REFERENCES suggestion (id),
 FOREIGN KEY (customer_id) REFERENCES customer (id)
@@ -120,6 +132,6 @@ INSERT INTO permission VALUES (3,2, 3, 'suggester');
 INSERT INTO permission VALUES (4, 2, 4, 'suggester');
 INSERT INTO permission VALUES (5, 2, 1, 'suggester');
 
-
+INSERT INTO likes VALUES (1, 1, 1, 0);
 
 ALTER SEQUENCE permission_id_seq RESTART WITH 6 INCREMENT BY 1;
