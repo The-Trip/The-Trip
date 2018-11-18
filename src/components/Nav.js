@@ -4,14 +4,10 @@ import { NavLink } from "react-router-dom";
 
 class Nav extends React.Component {
   componentDidMount() {
-    console.log("nav");
     this.props.checkLogin();
   }
 
   componentDidUpdate(oldProps) {
-    console.log(this.props.registered);
-    console.log(oldProps.registered);
-
     if (this.props.user && !oldProps.user) {
       this.props.history.push(`/trips/`);
     }

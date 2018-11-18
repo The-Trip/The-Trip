@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(
   expressSession({
-    secret: "some random text #^*%!!", // used to generate session ids
+    secret: "hello goodevening welcome and goodbye. carter usm", // used to generate session ids
     resave: false,
     saveUninitialized: false
   })

@@ -1,6 +1,9 @@
 import React from "react";
 import { Route, NavLink, Switch } from "react-router-dom";
 import TripsListItem from "./TripsListItem.js";
+import TripCreationContainer from "../containers/TripCreationContainer.js";
+import UserInviteContainer from "../containers/UserInviteContainer.js";
+
 import "../styles/components/TripsList.scss";
 import "../styles/base/tabs.scss";
 
@@ -54,6 +57,14 @@ class TripsList extends React.Component {
                           .map(trip => {
                             return <TripsListItem key={trip.id} trip={trip} />;
                           })}
+                        {this.props.trips.filter(
+                          trip => trip.permission === "owner"
+                        ).length === 0 ? (
+                          <Route
+                            path="/trips/"
+                            component={TripCreationContainer}
+                          />
+                        ) : null}
                       </section>
                     )}
                   />
@@ -71,6 +82,14 @@ class TripsList extends React.Component {
                           .map(trip => {
                             return <TripsListItem key={trip.id} trip={trip} />;
                           })}
+                        {this.props.trips.filter(
+                          trip => trip.permission === "suggester"
+                        ).length === 0 ? (
+                          <Route
+                            path="/trips/"
+                            component={UserInviteContainer}
+                          />
+                        ) : null}
                       </section>
                     )}
                   />
