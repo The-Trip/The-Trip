@@ -1,4 +1,4 @@
-import { fetchCommentsFromDB } from "./chris.js";
+import { fetchCommentsFromDB, addNewTrip } from "./chris.js";
 
 export function suggestionInputToState(name, value) {
   return {
@@ -148,6 +148,11 @@ export function loginUser() {
       .then(user => {
         dispatch(setUser({ id: null }));
         dispatch(setUser(user));
+        if (getState().setNewUserTrip === true) {
+          console.log("add new trip should happen next");
+          dispatch(addNewTrip());
+        }
+        dispatch(clearRegistrationStates());
       })
       .catch(console.error);
   };
@@ -197,6 +202,12 @@ export function setRegistered(trueOrNull) {
   return {
     type: "SET_REGISTERED",
     registered: trueOrNull
+  };
+}
+
+export function clearRegistrationStates() {
+  return {
+    type: "CLEAR_REGISTRATION_STATES"
   };
 }
 
