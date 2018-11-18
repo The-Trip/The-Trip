@@ -3,7 +3,6 @@ import { Route, NavLink, Switch } from "react-router-dom";
 import TripsListItem from "./TripsListItem.js";
 import TripCreationContainer from "../containers/TripCreationContainer.js";
 import UserInviteContainer from "../containers/UserInviteContainer.js";
-
 import "../styles/components/TripsList.scss";
 import "../styles/base/tabs.scss";
 

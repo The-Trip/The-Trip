@@ -22,7 +22,6 @@
   }
 
   &__figure {
-    // position: relative;
     margin: 0;
     background-color: $secondary-color;
     background-repeat: no-repeat;
@@ -37,18 +36,13 @@
 
   &__likebtn {
     position: absolute;
-    width: 100%;
     top: 0;
-    left: 0;
     right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
+
     background: none !important;
     color: inherit;
     border: none;
-    padding: $main-padding * 0.5 !important;
+    padding: $main-padding * 1 !important;
     font: inherit;
     cursor: pointer;
     &:active,
@@ -56,11 +50,12 @@
       outline: none;
     }
     i {
-      height: 100%;
-      height: -moz-available;
-      height: -webkit-fill-available;
-      height: fill-available;
       color: $accent-color;
     }
+  }
+  &__address {
+    margin-top: $main-padding * 0.5;
+    padding-bottom: $main-padding * 0.5;
+    border-bottom: 1px solid $secondary-color;
   }
 }

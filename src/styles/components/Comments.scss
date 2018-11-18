@@ -3,11 +3,20 @@
 .viewcomments {
   display: flex;
   flex-flow: row wrap;
+  align-items: flex-start;
+
+  &__first {
+    flex: 2;
+    display: flex;
+    justify-content: flex-start;
+    padding-right: $main-padding * 0.5;
+  }
 
   &__btn {
     flex: 1;
     display: flex;
     justify-content: flex-end;
+    font-weight: 700;
     background: none !important;
     color: inherit;
     border: none;
@@ -40,9 +49,17 @@
   }
   &__controls {
     width: 100%;
-    display: none;
+    overflow-y: hidden;
+    max-height: 0;
+
     &.tab--open {
-      display: block;
+      max-height: 500px;
+      transition: all 500ms ease-in;
+    }
+    &.tab--closed {
+      max-height: 0;
+      overflow-y: hidden;
+      transition: all 250ms ease-in;
     }
   }
 

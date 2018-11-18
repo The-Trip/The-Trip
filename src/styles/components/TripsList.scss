@@ -1,7 +1,9 @@
 @import "../base/_variables.scss";
 
 .trips {
-  background: lighten($secondary-color, 20%);
+  // background: lighten($secondary-color, 20%);
+  background: $white;
+
   .tabs {
     &__navitem {
       a {
@@ -9,7 +11,8 @@
           color: $primary-color;
           box-shadow: inset 0 3px 0 $secondary-color;
           border-top-color: $secondary-color;
-          background: lighten($secondary-color, 20%);
+          // background: lighten($secondary-color, 20%);
+          background: $white;
         }
         &:hover,
         &:focus {

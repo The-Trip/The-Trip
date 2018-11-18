@@ -13,13 +13,9 @@ class Comments extends React.Component {
     const commentsArr = commentObj.slice(1);
     const commentsNumber = commentObj.length - 1;
 
-    // state for classes
-    const id = this.props.id; // array of ids
-    const clicked = this.props.clicked;
-
     const commentsOpen = cx("viewcomments__controls", {
-      "tab--open": clicked,
-      "tab--closed": !clicked
+      "tab--open": this.props.clicked,
+      "tab--closed": !this.props.clicked
     });
 
     return (
@@ -32,15 +28,16 @@ class Comments extends React.Component {
 
             <button
               className="viewcomments__btn"
+              value={this.props.suggestion.id}
               onClick={event => {
                 this.props.clicked
-                  ? this.props.removeClickedClass(id)
-                  : this.props.addClickedClass(id);
+                  ? this.props.removeClickedClass(event.target.value)
+                  : this.props.addClickedClass(event.target.value);
               }}
             >
               {commentsNumber > 0
                 ? `Comments (${commentsNumber})`
-                : `Add a comment`}
+                : `Comment +`}
             </button>
 
             <div className={commentsOpen}>
