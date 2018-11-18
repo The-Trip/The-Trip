@@ -28,6 +28,7 @@ class TripsList extends React.Component {
                 <ul className="tabs__navlist">
                   <li className="tabs__navitem">
                     <NavLink
+                      exact
                       to={myTripsUrl}
                       className="mytrips-toggle icon icon-user"
                     >
@@ -36,6 +37,7 @@ class TripsList extends React.Component {
                   </li>
                   <li className="tabs__navitem">
                     <NavLink
+                      exact
                       to={friendsTripsUrl}
                       className="friendstrips-toggle icon icon-userfriends"
                     >
@@ -70,6 +72,7 @@ class TripsList extends React.Component {
                   />
                   <Route
                     path="/trips/friends"
+                    exact
                     render={() => (
                       <section className="friendsView">
                         {console.log(
