@@ -2,7 +2,8 @@ import { connect } from "react-redux";
 import TripsList from "../components/TripsList";
 import { fetchTripsFromDB, setView } from "../actions";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
+  console.log(ownProps);
   return {
     trips: state.trips,
     userId: state.user.id
