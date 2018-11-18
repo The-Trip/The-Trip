@@ -13,9 +13,13 @@ class Comments extends React.Component {
     const commentsArr = commentObj.slice(1);
     const commentsNumber = commentObj.length - 1;
 
+    // state for classes
+    const id = this.props.id; // array of ids
+    const clicked = this.props.clicked;
+
     const commentsOpen = cx("viewcomments__controls", {
-      "tab--open": this.props.clicked,
-      "tab--closed": !this.props.clicked
+      "tab--open": clicked,
+      "tab--closed": !clicked
     });
 
     return (
@@ -30,8 +34,8 @@ class Comments extends React.Component {
               className="viewcomments__btn"
               onClick={event => {
                 this.props.clicked
-                  ? this.props.removeClickedClass()
-                  : this.props.addClickedClass();
+                  ? this.props.removeClickedClass(id)
+                  : this.props.addClickedClass(id);
               }}
             >
               {commentsNumber > 0
@@ -56,6 +60,18 @@ class Comments extends React.Component {
                 suggestion={this.props.suggestion}
               />
             </div>
+
+            {/* LIKES OUTPUT - USER INTIAL OF LIKER */}
+            <section className="viewcomments__likes">
+              Suggestions
+              <ul className="viewcomments__likeslist menu--settings">
+                <li className="viewcomments__likesitem">M</li>
+                <li className="viewcomments__likesitem">C</li>
+                <li className="viewcomments__likesitem">P</li>
+                <li className="viewcomments__likesitem">T</li>
+                <li className="viewcomments__likesitem">M</li>
+              </ul>
+            </section>
           </section>
         )}
       </React.Fragment>
