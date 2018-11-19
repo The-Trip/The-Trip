@@ -4,15 +4,16 @@ export function setNavActive() {
   };
 }
 
-export function addClickedClass() {
+export function addClickedClass(id) {
   return {
-    type: "ADD_CLICKED_CLASS"
+    type: "ADD_CLICKED_CLASS",
+    id
   };
 }
 
-export function removeClickedClass() {
+export function removeClickedClass(id) {
   return {
-    type: "REMOVE_CLICKED_CLASS"
+    type: "REMOVE_CLICKED_CLASS",
+    id
   };
 }
-

@@ -17,7 +17,10 @@ import isAPILoading from "./isAPILoading";
 import comments from "./comments";
 import stylesSwitches from "./stylesSwitches";
 import registerForm from "./registerForm";
+import registered from "./registered";
+import splashTripDestinations from "./splashTripDestinations";
 import inviteCodeForm from "./inviteCodeForm";
+import setNewUserTrip from "./setNewUserTrip";
 
 export default combineReducers({
   flightAPIResults: setFlightsAPIResults,
@@ -38,5 +41,8 @@ export default combineReducers({
   comments,
   stylesSwitches,
   registerForm,
-  inviteCodeForm
+  inviteCodeForm,
+  registered,
+  splashTripDestinations,
+  setNewUserTrip
 });
