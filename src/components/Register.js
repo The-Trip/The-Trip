@@ -4,7 +4,6 @@ import "../styles/components/Login.scss";
 function Register({ handleChangeRegister, handleSubmitRegister }) {
   return (
     <React.Fragment>
-      {/* REGISTRATION FORM */}
       <section className="registration container">
         <header className="registration__header">
           <h1 className="registration__title">Register</h1>

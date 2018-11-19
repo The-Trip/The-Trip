@@ -4,6 +4,23 @@ import cx from "classnames";
 import AddIndivCommentContainer from "../containers/AddIndivCommentContainer.js";
 
 class Comments extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      clickedstate: false
+    };
+    this.removeClicked = this.removeClicked.bind(this);
+    this.addClicked = this.addClicked.bind(this);
+  }
+
+  addClicked(id) {
+    this.setState({ clickedstate: true });
+  }
+
+  removeClicked(id) {
+    this.setState({ clickedstate: false });
+  }
+
   render() {
     const comments = this.props.comments;
     const suggestionId = this.props.suggestion;
@@ -13,13 +30,9 @@ class Comments extends React.Component {
     const commentsArr = commentObj.slice(1);
     const commentsNumber = commentObj.length - 1;
 
-    // state for classes
-    const id = this.props.id; // array of ids
-    const clicked = this.props.clicked;
-
     const commentsOpen = cx("viewcomments__controls", {
-      "tab--open": clicked,
-      "tab--closed": !clicked
+      "tab--open": this.state.clickedstate,
+      "tab--closed": !this.state.clickedstate
     });
 
     return (
@@ -32,15 +45,17 @@ class Comments extends React.Component {
 
             <button
               className="viewcomments__btn"
+              value={this.props.suggestion.id}
               onClick={event => {
-                this.props.clicked
-                  ? this.props.removeClickedClass(id)
-                  : this.props.addClickedClass(id);
+                console.log(this.state.clickedstate);
+                this.state.clickedstate
+                  ? this.removeClicked(event.target.value)
+                  : this.addClicked(event.target.value);
               }}
             >
               {commentsNumber > 0
                 ? `Comments (${commentsNumber})`
-                : `Add a comment`}
+                : `Comment +`}
             </button>
 
             <div className={commentsOpen}>

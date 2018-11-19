@@ -1,7 +1,10 @@
 @import "../base/_variables.scss";
 
-.trip-create {
+.invite {
   padding-top: $main-padding * 0.5;
+  &__title {
+    margin-bottom: $main-padding * 0.5;
+  }
   &__intro {
     font-weight: 700;
   }

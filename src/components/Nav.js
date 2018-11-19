@@ -43,9 +43,9 @@ class Nav extends React.Component {
         </h1>
 
         <div className="sitehead__logout">
-          <NavLink to="/invite/" activeClassName="active" className="nav__item">
+          {/* <NavLink to="/invite/" activeClassName="active" className="nav__item">
             <i className="fas fa-envelope fa-lg" aria-hidden="true" />
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/login/" activeClassName="active" className="nav__item">
             <i className="fas fa-sign-in-alt fa-lg" aria-hidden="true" />
           </NavLink>
