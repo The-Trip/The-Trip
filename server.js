@@ -343,7 +343,7 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
   const tripId = req.params.id;
 
   db.any(
-    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
     [tripId]
   )
     .then(function(data) {
@@ -494,27 +494,107 @@ app.post("/api/invite", isLoggedIn, (req, res) => {
     .catch(console.error);
 }); // al
 
+//Likes
 
-app.post("/api/like", (req, res) => {
-  console.log("like");
+app.post("/api/addlike", (req, res) => {
+  const { suggestionId, customerId, tripId } = req.body;
 
-      db.one(
-        `INSERT INTO permission (trip_id, customer_id, permission)
-            VALUES ($1, $2, $3) RETURNING id`,
-        [trip.id, req.user.id, "suggester"]
+  db.none(
+    `INSERT INTO likes (suggestion_id, customer_id)
+        VALUES ($1, $2)`,
+    [suggestionId, customerId]
+  )
+    .then(() => {
+      db.any(
+        `SELECT likes.id, likes.suggestion_id, likes.customer_id FROM likes, suggestion WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id`,
+        [tripId]
       )
-        .then(id => {
-          return res.json({ tripId: trip.id });
+        .then(likes => {
+          return res.json(likes);
         })
         .catch(error => {
           console.error(error.stack);
           res.json({ error: error.message });
         });
     })
+    .catch(console.error);
+});
 
+app.post("/api/removelike", (req, res) => {
+  console.log("removing");
+  const { suggestionId, customerId, tripId } = req.body;
 
+  db.none(`DELETE FROM likes WHERE suggestion_id = $1 AND customer_id = $2`, [
+    suggestionId,
+    customerId
+  ])
+    .then(() => {
+      db.any(
+        `SELECT likes.id, likes.suggestion_id, likes.customer_id FROM likes, suggestion WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id`,
+        [tripId]
+      )
+        .then(likes => {
+          return res.json(likes);
+        })
+        .catch(error => {
+          console.error(error.stack);
+          res.json({ error: error.message });
+        });
+    })
+    .catch(console.error);
+});
 
+app.get("/api/:tripId/likefetch", function(req, res) {
+  const { tripId } = req.params;
+  console.log(tripId);
+  db.any(
+    "SELECT likes.id, likes.suggestion_id, likes.customer_id FROM likes, suggestion WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id",
+    [tripId]
+  )
+    .then(function(likes) {
+      res.json(likes);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
 
+//ADD TO favourites
+app.post("/api/add-favourite", (req, res) => {
+  const { suggestionId, customerId } = req.body;
+
+  db.none(
+    `UPDATE suggestion
+    SET favourite = true
+    WHERE suggestion.id = $1 AND customer_id = $2`,
+    [suggestionId, customerId]
+  )
+    .then(() => {
+      return res.send(204);
+    })
+    .catch(error => {
+      console.error(error.stack);
+      res.json({ error: error.message });
+    });
+});
+
+app.post("/api/remove-favourite", (req, res) => {
+  const { suggestionId, customerId } = req.body;
+
+  db.none(
+    `UPDATE suggestion
+    SET favourite = false
+    WHERE suggestion.id = $1 AND customer_id = $2`,
+    [suggestionId, customerId]
+  )
+    .then(() => {
+      return res.json(204);
+    })
+    .catch(error => {
+      console.error(error.stack);
+      res.json({ error: error.message });
+    });
+});
 
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/index.html");

@@ -2,11 +2,30 @@ import React from "react";
 import "../styles/components/SuggestionItem.scss";
 import CommentsContainer from "../containers/CommentsContainer";
 
-function SuggestionItem({ suggestion, tripId, comments }) {
+function SuggestionItem({
+  suggestion,
+  tripId,
+  addLike,
+  removeLike,
+  clickedLike,
+  tripLike,
+  removeFavourites,
+  addFavourites,
+  clickedFav
+}) {
+  // const likes = tripLike ? tripLike : null;
+
   return (
     <article className="suggestion">
       <header className="suggestion__header container">
-        <h2 className="suggestion__title">
+        <h2
+          className="suggestion__title"
+          onClick={() => {
+            clickedFav
+              ? removeFavourites(suggestion.id, tripId)
+              : addFavourites(suggestion.id, tripId);
+          }}
+        >
           {suggestion.place_name}
           <div className="suggestion__details">
             {suggestion.place_category}
@@ -14,6 +33,11 @@ function SuggestionItem({ suggestion, tripId, comments }) {
               &nbsp;Suggested by&nbsp;
               {suggestion.first_name}
             </span>
+          </div>
+
+          {/* <div key={likes ? likes.id : 0}>{likes ? likes.length : 0}</div> */}
+          <div key={tripLike ? tripLike.id : 0}>
+            {tripLike ? tripLike.length : 0}
           </div>
         </h2>
       </header>
@@ -27,7 +51,14 @@ function SuggestionItem({ suggestion, tripId, comments }) {
               }}
             />
           )}
-          <button className="suggestion__likebtn">
+          <button
+            className="suggestion__likebtn"
+            onClick={() => {
+              clickedLike
+                ? removeLike(suggestion.id, tripId)
+                : addLike(suggestion.id, tripId);
+            }}
+          >
             <i className="fas fa-heart fa-2x" />
           </button>
         </div>

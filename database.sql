@@ -1,11 +1,13 @@
 --CREATE DATABASE thetrip
 -- ORIGIN TABLE (to amend use drop as below)
+DROP TABLE IF EXISTS likes;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS suggestion;
 DROP TABLE IF EXISTS flight;
 DROP TABLE IF EXISTS permission;
 DROP TABLE IF EXISTS trip;
 DROP TABLE IF EXISTS customer;
+
 
 -- IMMUTABLE BASE TABLE FOR customer(S) (ONE-)
 CREATE TABLE customer (
@@ -97,7 +99,6 @@ CREATE TABLE likes (
 id serial,
 suggestion_id INT NOT NULL,
 customer_id INT NOT NULL,
-like INT NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (suggestion_id) REFERENCES suggestion (id),
 FOREIGN KEY (customer_id) REFERENCES customer (id)
@@ -132,6 +133,8 @@ INSERT INTO permission VALUES (3,2, 3, 'suggester');
 INSERT INTO permission VALUES (4, 2, 4, 'suggester');
 INSERT INTO permission VALUES (5, 2, 1, 'suggester');
 
-INSERT INTO likes VALUES (1, 1, 1, 0);
+INSERT INTO likes VALUES (1, 1, 1);
+ALTER SEQUENCE comment_id_seq RESTART WITH 2 INCREMENT BY 1;
+
 
 ALTER SEQUENCE permission_id_seq RESTART WITH 6 INCREMENT BY 1;

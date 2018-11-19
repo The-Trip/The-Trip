@@ -7,11 +7,11 @@ import SuggestionInputFinalContainer from "../containers/SuggestionInputFinalCon
 class Suggestions extends React.Component {
   componentDidMount() {
     this.props.fetchSuggestionsFromDB(this.props.tripId);
+    // this.props.likeFetch(this.props.tripId);
   }
 
   render() {
     const deDupedSuggest = [];
-    console.log(this.props.suggestions);
     const map = new Map();
     for (const item of this.props.suggestions) {
       if (!map.has(item.place_id)) {
@@ -26,7 +26,8 @@ class Suggestions extends React.Component {
           customer_id: item.customer_id,
           place_id: item.place_id,
           trip_id: item.trip_id,
-          photo: item.photo_reference
+          photo: item.photo_reference,
+          favourite: item.favourite
           // item.photos &&
         });
       }
@@ -45,12 +46,27 @@ class Suggestions extends React.Component {
           </header>
 
           {deDupedSuggest.map(suggestion => {
+            console.log(this.props.tripLikes);
+            const tripLike = this.props.tripLikes
+              ? this.props.tripLikes.filter(
+                  like => like.suggestion_id === suggestion.id
+                )
+              : null;
+            console.log(tripLike);
             return (
               <SuggestionItem
                 key={suggestion.id}
                 suggestion={suggestion}
                 tripId={suggestion.trip_id}
-                comments={this.props.comments}
+                // comments={this.props.comments}
+                addLike={this.props.addLike}
+                removeLike={this.props.removeLike}
+                clickedLike={this.props.clickedLike}
+                tripLike={tripLike ? tripLike : null}
+                tripFavourites={this.props.tripFavourites}
+                removeFavourites={this.props.removeFavourites}
+                addFavourites={this.props.addFavourites}
+                clickedFav={this.props.clickedFav}
               />
             );
           })}

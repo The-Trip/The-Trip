@@ -1,4 +1,4 @@
-import { fetchCommentsFromDB } from "./chris.js";
+import { fetchCommentsFromDB, likeFetch } from "./chris.js";
 
 export function suggestionInputToState(name, value) {
   return {
@@ -236,6 +236,7 @@ export function fetchSuggestionsFromDB(tripId) {
       .then(response => response.json())
       .then(result => {
         dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
       })
       .catch(function(error) {});
   };

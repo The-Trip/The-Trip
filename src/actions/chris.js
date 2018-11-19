@@ -1,3 +1,5 @@
+import { fetchSuggestionsFromDB } from "./phil.js";
+
 export function setTripState(name, value) {
   return {
     type: "SET_TRIP_STATE",
@@ -67,7 +69,7 @@ export function fetchCommentsFromDB(tripId) {
       .then(result => {
         dispatch(receiveComments(result));
       })
-      .catch(function(error) {});
+      .catch(console.error);
   };
 }
 
@@ -92,7 +94,7 @@ export function fetchCustomersDestinationsFromDB() {
       .then(destinations => {
         dispatch(setCustomerDestinations(destinations));
       })
-      .catch(function(error) {});
+      .catch(console.error);
   };
 }
 
@@ -100,5 +102,126 @@ export function setCustomerDestinations(destinations) {
   return {
     type: "SET_SPLASH_IMAGE",
     destinations
+  };
+}
+
+export function addUserToDB() {
+  console.log("start of addUserToDB action");
+  return function(dispatch, getState) {
+    return fetch("/api/customer", {
+      method: "post",
+      body: JSON.stringify(getState().registerForm),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(userData => {
+        console.log(userData);
+        console.log("register");
+        dispatch(setRegistered(true));
+      });
+  };
+}
+
+export function addLike(suggestionId, tripId) {
+  return function(dispatch, getState) {
+    fetch(`/api/addlike`, {
+      method: "post",
+      body: JSON.stringify({
+        suggestionId: suggestionId,
+        customerId: getState().user.id,
+        tripId: tripId
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(tripLikes => {
+        dispatch(setLikes(tripLikes));
+      })
+      .catch(console.error);
+  };
+}
+
+export function removeLike(suggestionId, tripId) {
+  return function(dispatch, getState) {
+    fetch(`/api/removelike`, {
+      method: "post",
+      body: JSON.stringify({
+        suggestionId: suggestionId,
+        customerId: getState().user.id,
+        tripId: tripId
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(tripLikes => {
+        dispatch(setLikes(tripLikes));
+      })
+      .catch(console.error);
+  };
+}
+
+export function likeFetch(tripId) {
+  console.log("likefetch");
+  return function(dispatch, getState) {
+    fetch(`/api/${tripId}/likefetch`)
+      .then(response => response.json())
+      .then(tripLikes => {
+        console.log(tripLikes);
+        dispatch(setLikes(tripLikes));
+      })
+      .catch(console.error);
+  };
+}
+
+export function setLikes(tripLikes) {
+  return {
+    type: "SET_TRIP_LIKES",
+    tripLikes
+  };
+}
+
+export function addFavourite(suggestionId, tripId) {
+  return function(dispatch, getState) {
+    fetch(`/api/add-favourite`, {
+      method: "post",
+      body: JSON.stringify({
+        suggestionId: suggestionId,
+        customerId: getState().user.id
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(() => {
+        // fetchSuggestions includes favourites
+        fetchSuggestionsFromDB(tripId);
+      })
+      .catch(console.error);
+  };
+}
+
+export function removeFavourite(suggestionId, tripId) {
+  return function(dispatch, getState) {
+    fetch(`/api/remove-favourite`, {
+      method: "post",
+      body: JSON.stringify({
+        suggestionId: suggestionId,
+        customerId: getState().user.id
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(() => {
+        // fetchSuggestions includes favourites
+        fetchSuggestionsFromDB(tripId);
+      })
+      .catch(console.error);
   };
 }
