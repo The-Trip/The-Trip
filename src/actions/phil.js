@@ -160,6 +160,10 @@ export function loginUser() {
           console.log("add new trip should happen next");
           dispatch(addNewTrip());
         }
+        if (getState().newUserInvite === true) {
+          console.log("add new trip should happen next");
+          dispatch(checkInviteCode());
+        }
         dispatch(clearRegistrationStates());
       })
       .catch(console.error);
@@ -170,22 +174,32 @@ export function checkInviteCode() {
   return function(dispatch, getState) {
     console.log("checkInvite");
     console.log(getState().inviteCodeForm);
-    return (
-      fetch("/api/invite", {
-        method: "post",
-        body: JSON.stringify({
-          inviteCode: getState().inviteCodeForm.inviteCode
-        }),
-        headers: {
-          "Content-Type": "application/json"
+    return fetch("/api/invite", {
+      method: "post",
+      body: JSON.stringify({
+        inviteCode: getState().inviteCodeForm.inviteCode
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (response.status === 401) {
+          console.log("not logged in - check invite");
+          dispatch(setNewUserInvite(true));
         }
+        response.json();
       })
-        .then(response => response.json())
-        // TODO - Create response in server.js
-        .then(tripId => {
-          dispatch(setAddedTripId(tripId));
-        })
-    );
+      .then(tripId => {
+        dispatch(setAddedTripId(tripId));
+      });
+  };
+}
+
+export function setNewUserInvite(isTrue) {
+  return {
+    type: "SET_NEW_USER_INVITE",
+    isTrue
   };
 }
 
