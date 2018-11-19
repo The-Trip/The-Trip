@@ -14,6 +14,12 @@ class Nav extends React.Component {
     if (this.props.registered && !oldProps.registered) {
       this.props.history.push(`/login/`);
     }
+    if (this.props.setNewUserTrip && !oldProps.setNewUserTrip) {
+      this.props.history.push(`/register/`);
+    }
+    if (this.props.newUserInvite && !oldProps.newUserInvite) {
+      this.props.history.push(`/register/`);
+    }
   }
 
   render() {

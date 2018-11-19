@@ -1,4 +1,9 @@
-import { fetchCommentsFromDB } from "./chris.js";
+import {
+  fetchCommentsFromDB,
+  addNewTrip,
+  setSelectedPlace,
+  storeGoogleFetch
+} from "./chris.js";
 
 export function suggestionInputToState(name, value) {
   return {
@@ -58,6 +63,8 @@ export function addSuggestionToDB(place, tripId) {
         // TODO - Create response in server.js
         .then(id => {
           dispatch(addCommentToDB(id, tripId));
+          dispatch(setSelectedPlace(null));
+          dispatch(storeGoogleFetch([]));
         })
     );
   };
@@ -81,6 +88,7 @@ export function addCommentToDB(id, tripId) {
         // TODO - Create response in server.js
         .then(() => {
           dispatch(fetchSuggestionsFromDB(tripId));
+          dispatch(fetchCommentsFromDB(tripId));
         })
     );
   };
@@ -148,6 +156,15 @@ export function loginUser() {
       .then(user => {
         dispatch(setUser({ id: null }));
         dispatch(setUser(user));
+        if (getState().setNewUserTrip === true) {
+          console.log("add new trip should happen next");
+          dispatch(addNewTrip());
+        }
+        if (getState().newUserInvite === true) {
+          console.log("add new trip should happen next");
+          dispatch(checkInviteCode());
+        }
+        dispatch(clearRegistrationStates());
       })
       .catch(console.error);
   };
@@ -157,22 +174,32 @@ export function checkInviteCode() {
   return function(dispatch, getState) {
     console.log("checkInvite");
     console.log(getState().inviteCodeForm);
-    return (
-      fetch("/api/invite", {
-        method: "post",
-        body: JSON.stringify({
-          inviteCode: getState().inviteCodeForm.inviteCode
-        }),
-        headers: {
-          "Content-Type": "application/json"
+    return fetch("/api/invite", {
+      method: "post",
+      body: JSON.stringify({
+        inviteCode: getState().inviteCodeForm.inviteCode
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (response.status === 401) {
+          console.log("not logged in - check invite");
+          dispatch(setNewUserInvite(true));
         }
+        response.json();
       })
-        .then(response => response.json())
-        // TODO - Create response in server.js
-        .then(tripId => {
-          dispatch(setAddedTripId(tripId));
-        })
-    );
+      .then(tripId => {
+        dispatch(setAddedTripId(tripId));
+      });
+  };
+}
+
+export function setNewUserInvite(isTrue) {
+  return {
+    type: "SET_NEW_USER_INVITE",
+    isTrue
   };
 }
 
@@ -197,6 +224,12 @@ export function setRegistered(trueOrNull) {
   return {
     type: "SET_REGISTERED",
     registered: trueOrNull
+  };
+}
+
+export function clearRegistrationStates() {
+  return {
+    type: "CLEAR_REGISTRATION_STATES"
   };
 }
 

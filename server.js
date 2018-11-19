@@ -107,7 +107,7 @@ app.get("/api/airports", function(req, res) {
   res.json(results);
 });
 
-app.post("/api/trip", (req, res) => {
+app.post("/api/trip", isLoggedIn, (req, res) => {
   const randomNum = Math.floor(Math.random() * tripWordsArray.length);
   const randomArrayValue = tripWordsArray[randomNum];
   const destinationSplit = req.body.trip.destination.split(" ");
@@ -172,7 +172,7 @@ app.post("/api/trip", (req, res) => {
     .catch(error => console.error(error));
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
-app.post("/api/permission", (req, res) => {
+app.post("/api/permission", isLoggedIn, (req, res) => {
   db.one(
     `INSERT INTO permission (trip_id, customer_id, permission)
             VALUES ($1, $2, 'owner') RETURNING trip_id`,
@@ -326,6 +326,8 @@ app.get("/api/checklogin/", function(req, res) {
 
 app.get("/api/user/trip", isLoggedIn, function(req, res) {
   const userId = req.user.id;
+  console.log("trip get");
+  console.log(userId);
   // console.log(req.params)
   db.any(
     "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, trip.time, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = $1 AND trip.id = permission.trip_id ORDER BY trip.time DESC",
