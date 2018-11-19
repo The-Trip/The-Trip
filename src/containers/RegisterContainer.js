@@ -1,11 +1,6 @@
 import { connect } from "react-redux";
-import Login from "../components/Login";
-import {
-  loginToState,
-  registerToState,
-  addUserToDB,
-  loginUser
-} from "../actions";
+import Register from "../components/Register";
+import { registerToState, addUserToDB } from "../actions";
 
 const mapStateToProps = state => {
   return {};
@@ -13,16 +8,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleChangeLogin: event => {
-      dispatch(loginToState(event.target.name, event.target.value));
-    },
-
-    handleSubmitLogin: event => {
-      event.preventDefault();
-      dispatch(loginUser());
-    },
-
     handleChangeRegister: event => {
+      console.log(event.target.name);
+      console.log(event.target.value);
       dispatch(registerToState(event.target.name, event.target.value));
     },
 
@@ -36,4 +24,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(Register);

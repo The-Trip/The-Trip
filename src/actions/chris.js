@@ -7,6 +7,7 @@ export function setTripState(name, value) {
 }
 
 export function addNewTrip() {
+  console.log("add new trip");
   return function(dispatch, getState) {
     return fetch("/api/trip", {
       method: "post",
@@ -18,11 +19,25 @@ export function addNewTrip() {
         "Content-Type": "application/json"
       }
     })
-      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        if (response.status === 401) {
+          console.log("not logged in - add new trip");
+          dispatch(setNewUserTrip(true));
+        }
+        return response.json();
+      })
       .then(data => {
         console.log(data);
         dispatch(setAddedTripId(data));
       });
+  };
+}
+
+export function setNewUserTrip(isTrue) {
+  return {
+    type: "SET_NEW_USER_TRIP",
+    isTrue
   };
 }
 
@@ -82,5 +97,23 @@ export function setAddedTripId(tripId) {
   return {
     type: "SET_ADDED_TRIP_ID",
     tripId
+  };
+}
+
+export function fetchCustomersDestinationsFromDB() {
+  return function(dispatch) {
+    fetch(`/api/custlocations`)
+      .then(response => response.json())
+      .then(destinations => {
+        dispatch(setCustomerDestinations(destinations));
+      })
+      .catch(function(error) {});
+  };
+}
+
+export function setCustomerDestinations(destinations) {
+  return {
+    type: "SET_SPLASH_IMAGE",
+    destinations
   };
 }

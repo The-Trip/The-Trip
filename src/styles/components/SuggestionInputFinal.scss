@@ -1,1 +1,24 @@
 @import "../base/_variables.scss";
+
+.add-suggestion {
+  margin-bottom: $main-padding;
+  &__title {
+    margin-bottom: 0;
+  }
+  &__rating {
+    color: $accent-color;
+    margin-top: $main-padding * 0.5;
+  }
+  &__address {
+    margin-top: $main-padding * 0.5;
+    margin-bottom: $main-padding * 0.5;
+  }
+  &__comment {
+    overflow: hidden;
+  }
+  &__commentlabel {
+    font-family: $body-font;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+}
