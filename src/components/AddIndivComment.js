@@ -16,7 +16,10 @@ function AddIndivComment({ handleCommentSubmit, place, tripId, handleChange }) {
         name="comment"
         onChange={event => handleChange(event)}
       />
-      <button type="submit" className="comment-frm__submit btn btn__submit">
+      <button
+        type="submit"
+        className="comment-frm__submit btn btn__add btn--hidetext"
+      >
         Add
       </button>
     </form>

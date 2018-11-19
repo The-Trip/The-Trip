@@ -1,22 +1,30 @@
 import React from "react";
-// import '../styles/components/Login.scss';
+import "../styles/components/UserInvite.scss";
 
 function UserInvite({ handleChange, handleSubmit }) {
   return (
     <React.Fragment>
-      {/* LOGIN FORM */}
-      <section className="login">
-        <header className="login__header">
-          <h1 className="login__title">Invite</h1>
+      {/* INVITE FORM */}
+      <section className="invite container">
+        <header className="invite__header">
+          <h1 className="invite__title">Ready to Trip?</h1>
+          <p className="invite__intro">
+            Enter your invite code to share and discover travel tips and secrets
+            you won&rsquo;t find anywhere else, from the experts &ndash; your
+            mates.
+          </p>
         </header>
 
-        <form className="login-frm" onSubmit={event => handleSubmit(event)}>
+        <form className="invite-frm" onSubmit={event => handleSubmit(event)}>
           <div>
-            <label className="login-frm__emaillabel" htmlFor="loginEmail">
-              Invite Code
+            <label
+              className="invite-frm__codelabel show--screenreaders"
+              htmlFor="inviteCode"
+            >
+              Invite code
             </label>
             <input
-              className="login-frm__email"
+              className="invite-frm__code"
               type="text"
               onChange={event => handleChange(event)}
               name="inviteCode"
@@ -25,7 +33,7 @@ function UserInvite({ handleChange, handleSubmit }) {
             <span className="validity" />
           </div>
 
-          <button type="submit" className="login-frm__submit btn btn__submit">
+          <button type="submit" className="invite-frm__submit btn btn__submit">
             Submit
           </button>
         </form>
