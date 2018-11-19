@@ -22,6 +22,7 @@ import registered from "./registered";
 import splashTripDestinations from "./splashTripDestinations";
 import inviteCodeForm from "./inviteCodeForm";
 import setNewUserTrip from "./setNewUserTrip";
+import newUserInvite from "./newUserInvite";
 
 export default combineReducers({
   flightAPIResults: setFlightsAPIResults,
@@ -46,5 +47,6 @@ export default combineReducers({
   inviteCodeForm,
   registered,
   splashTripDestinations,
-  setNewUserTrip
+  setNewUserTrip,
+  newUserInvite
 });

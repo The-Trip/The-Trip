@@ -172,7 +172,7 @@ app.post("/api/trip", isLoggedIn, (req, res) => {
     .catch(error => console.error(error));
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
-app.post("/api/permission", (req, res) => {
+app.post("/api/permission", isLoggedIn, (req, res) => {
   db.one(
     `INSERT INTO permission (trip_id, customer_id, permission)
             VALUES ($1, $2, 'owner') RETURNING trip_id`,
