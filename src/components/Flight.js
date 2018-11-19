@@ -5,6 +5,9 @@ import "../styles/components/Flight.scss";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import FlightResultsWrapper from "../containers/FlightResultsWrapper";
 import cx from "classnames";
+import SelectedTripFlightsContainer from "../containers/SelectedTripFlightsContainer";
+import LoginContainer from "../containers/LoginContainer";
+import {Route} from "react-router-dom";
 
 class Flight extends React.Component {
   constructor() {
@@ -50,6 +53,17 @@ class Flight extends React.Component {
     return fetch(`/api/airports?query=${inputValue}`).then(data => data.json());
   }
 
+  sentenceCase(str) {
+    return str
+      .split(" ")
+      .map(item => {
+          const word = item.split("");
+          word[0] = word[0].toUpperCase();
+          return word.join("");
+      })
+      .join(" ");
+  }
+
   render() {
     const datePickers = cx("flights__datePickers", {
       "item--open": this.props.clicked,
@@ -68,8 +82,9 @@ class Flight extends React.Component {
               placeholder="From:"
               isLoading={this.state.airportFromLoading}
               onSearch={query => {
+                let fromInput = this.sentenceCase(query);
                 this.setState({ airportFromLoading: true });
-                this.promiseOptions(query).then(airports => {
+                this.promiseOptions(fromInput).then(airports => {
                   this.setState({
                     airportFromLoading: false,
                     airportFromOptions: airports
@@ -88,8 +103,9 @@ class Flight extends React.Component {
               placeholder="To:"
               isLoading={this.state.airportToLoading}
               onSearch={query => {
+                let toInput = this.sentenceCase(query);
                 this.setState({ airportToLoading: true });
-                this.promiseOptions(query).then(airports => {
+                this.promiseOptions(toInput).then(airports => {
                   this.setState({
                     airportToLoading: false,
                     airportToOptions: airports
@@ -165,9 +181,12 @@ class Flight extends React.Component {
               Search Flights
             </button>
           </form>
+          <div className="selectedTripFlightsContainer">
+            <SelectedTripFlightsContainer tripId={this.props.tripId} />
+          </div>
         </section>
         <section className="flightsresults">
-          {this.state.flightSubmit ? <FlightResultsWrapper /> : null}
+          {this.state.flightSubmit ? <FlightResultsWrapper tripId={this.props.tripId} /> : null}
         </section>
       </React.Fragment>
     );

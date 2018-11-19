@@ -119,7 +119,4 @@ INSERT INTO permission VALUES (2,2, 2, 'owner');
 INSERT INTO permission VALUES (3,2, 3, 'suggester');
 INSERT INTO permission VALUES (4, 2, 4, 'suggester');
 INSERT INTO permission VALUES (5, 2, 1, 'suggester');
-
-
-
 ALTER SEQUENCE permission_id_seq RESTART WITH 6 INCREMENT BY 1;

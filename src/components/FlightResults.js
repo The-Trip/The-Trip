@@ -1,62 +1,72 @@
 import React from "react";
 import "../styles/components/FlightResults.scss";
 
-function addZero(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
-}
+function FlightResults({ flightResults, isAPILoading, startDate, endDate, tripId, fetchFlightsFromDB }) {
 
-function handleClick(
-  flightDetail,
-  departureTimeReturn,
-  arrivalTimeReturn,
-  arrivalTimeOutbound,
-  departureTimeOutbound,
-  startDate,
-  endDate
-) {
-  let flightDetailsObject = {
-    flightCombinationID: flightDetail.route[0].combination_id,
-    outboundFlightDate: startDate.toISOString(),
-    returnFlightDate: endDate.toISOString(),
-    cityFrom: flightDetail.route[0].cityFrom,
-    cityTo: flightDetail.route[0].cityTo,
-    airportFrom: flightDetail.route[0].flyFrom,
-    airportTo: flightDetail.route[0].flyTo,
-    outboundLocalArrivalTime: `${addZero(
-      arrivalTimeOutbound.getHours()
-    )}:${addZero(arrivalTimeOutbound.getMinutes())}:00`,
-    outboundLocalDepartureTime: `${addZero(
-      departureTimeOutbound.getHours()
-    )}:${addZero(departureTimeOutbound.getMinutes())}:00`,
-    returnLocalDepartureTime: `${addZero(
-      departureTimeReturn.getHours()
-    )}:${addZero(departureTimeReturn.getMinutes())}:00`,
-    returnLocalArrivalTime: `${addZero(arrivalTimeReturn.getHours())}:${addZero(
-      arrivalTimeReturn.getMinutes()
-    )}:00`,
-    price: flightDetail.price
-  };
-
-  addFlightToDB(flightDetailsObject);
-}
-
-function addFlightToDB(flightObject) {
-  console.log("add flight to DB running");
-  return fetch("/api/flights", {
-    method: "post",
-    body: JSON.stringify({ flightObject }),
-    headers: {
-      "Content-Type": "application/json"
+  function addZero(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
     }
-  })
-    .then(response => response.json())
-    .then(data => console.log("Response data", data));
-}
 
-function FlightResults({ flightResults, isAPILoading, startDate, endDate }) {
+    function handleClick(
+        flightDetail,
+        departureTimeReturn,
+        arrivalTimeReturn,
+        arrivalTimeOutbound,
+        departureTimeOutbound,
+        startDate,
+        endDate,
+        tripId
+    ) {
+
+        let flightDetailsObject = {
+            tripId: tripId,
+            flightCombinationID: flightDetail.route[0].combination_id,
+            outboundFlightDate: startDate.toISOString(),
+            returnFlightDate: endDate.toISOString(),
+            cityFrom: flightDetail.route[0].cityFrom,
+            cityTo: flightDetail.route[0].cityTo,
+            airportFrom: flightDetail.route[0].flyFrom,
+            airportTo: flightDetail.route[0].flyTo,
+            outboundLocalArrivalTime: `${addZero(
+                arrivalTimeOutbound.getHours()
+            )}:${addZero(arrivalTimeOutbound.getMinutes())}:00`,
+            outboundLocalDepartureTime: `${addZero(
+                departureTimeOutbound.getHours()
+            )}:${addZero(departureTimeOutbound.getMinutes())}:00`,
+            returnLocalDepartureTime: `${addZero(
+                departureTimeReturn.getHours()
+            )}:${addZero(departureTimeReturn.getMinutes())}:00`,
+            returnLocalArrivalTime: `${addZero(arrivalTimeReturn.getHours())}:${addZero(
+                arrivalTimeReturn.getMinutes()
+            )}:00`,
+            price: flightDetail.price
+        };
+
+
+        addFlightToDB(flightDetailsObject)
+            .then(() => {
+                fetchFlightsFromDB(tripId)
+            })
+
+    }
+
+    function addFlightToDB(flightObject) {
+        console.log("add flight to DB running");
+        return fetch("/api/flights", {
+            method: "post",
+            body: JSON.stringify({ flightObject }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => response.json())
+            .then(data => console.log("Response data", data));
+    }
+
+
   if (isAPILoading) {
     return (
       <div className="flightsresults__loading container">
@@ -70,7 +80,7 @@ function FlightResults({ flightResults, isAPILoading, startDate, endDate }) {
   if (flightResults.length === 0) {
     return (
       <div>
-        S<p>No Flights for those days/aiports, please search again</p>
+        <p>No Flights for those days/aiports, please search again</p>
       </div>
     );
   }
@@ -155,7 +165,8 @@ function FlightResults({ flightResults, isAPILoading, startDate, endDate }) {
                       arrivalTimeOutbound,
                       departureTimeOutbound,
                       startDate,
-                      endDate
+                      endDate,
+                      tripId,
                     )
                   }
                 >
