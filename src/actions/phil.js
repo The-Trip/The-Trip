@@ -1,4 +1,9 @@
-import { fetchCommentsFromDB, addNewTrip } from "./chris.js";
+import {
+  fetchCommentsFromDB,
+  addNewTrip,
+  setSelectedPlace,
+  storeGoogleFetch
+} from "./chris.js";
 
 export function suggestionInputToState(name, value) {
   return {
@@ -58,6 +63,8 @@ export function addSuggestionToDB(place, tripId) {
         // TODO - Create response in server.js
         .then(id => {
           dispatch(addCommentToDB(id, tripId));
+          dispatch(setSelectedPlace(null));
+          dispatch(storeGoogleFetch([]));
         })
     );
   };
@@ -81,6 +88,7 @@ export function addCommentToDB(id, tripId) {
         // TODO - Create response in server.js
         .then(() => {
           dispatch(fetchSuggestionsFromDB(tripId));
+          dispatch(fetchCommentsFromDB(tripId));
         })
     );
   };
