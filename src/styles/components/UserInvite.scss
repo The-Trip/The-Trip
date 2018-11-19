@@ -1,0 +1,11 @@
+@import "../base/_variables.scss";
+
+.invite {
+  padding-top: $main-padding * 0.5;
+  &__title {
+    margin-bottom: $main-padding * 0.5;
+  }
+  &__intro {
+    font-weight: 700;
+  }
+}

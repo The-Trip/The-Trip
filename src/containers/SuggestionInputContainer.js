@@ -6,7 +6,7 @@ import {
 } from "../actions";
 import { googleFetch } from "../actions";
 
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
   return {
     suggestionInput: state.suggestionInput,
     tripId: ownProps.tripId

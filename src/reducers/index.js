@@ -17,10 +17,13 @@ import isAPILoading from "./isAPILoading";
 import comments from "./comments";
 import stylesSwitches from "./stylesSwitches";
 import registerForm from "./registerForm";
+import receiveFlightsFromDB from "./receiveFlightsFromDB";
 import registered from "./registered";
 import splashTripDestinations from "./splashTripDestinations";
 import inviteCodeForm from "./inviteCodeForm";
 import tripLikes from "./tripLikes";
+import setNewUserTrip from "./setNewUserTrip";
+import newUserInvite from "./newUserInvite";
 
 export default combineReducers({
   flightAPIResults: setFlightsAPIResults,
@@ -41,8 +44,11 @@ export default combineReducers({
   comments,
   stylesSwitches,
   registerForm,
+  flightsFromDB: receiveFlightsFromDB,
   inviteCodeForm,
   registered,
   splashTripDestinations,
-  tripLikes
+  tripLikes,
+  setNewUserTrip,
+  newUserInvite
 });

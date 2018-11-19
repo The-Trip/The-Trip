@@ -2,4 +2,7 @@
 
 .trip-create {
   padding-top: $main-padding * 0.5;
+  &__intro {
+    font-weight: 700;
+  }
 }

@@ -35,3 +35,23 @@ export function isAPILoading() {
         type: 'IS_LOADING'
     }
 }
+
+
+export function fetchFlightsFromDB(tripId) {
+    console.log(tripId);
+    return function(dispatch) {
+        fetch(`/api/trip/${tripId}/flights`)
+            .then(response => response.json())
+            .then(result => {
+                dispatch(receiveFlightsFromDB(result));
+            })
+            .catch(function(error) {});
+    };
+}
+
+export function receiveFlightsFromDB(databaseResults) {
+    return {
+        type: "FLIGHTS_FROM_DB",
+        flights: databaseResults
+    };
+}

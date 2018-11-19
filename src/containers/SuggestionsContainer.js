@@ -17,6 +17,7 @@ import {
 const mapStateToProps = (state, ownProps) => {
   const trips = state.trips;
   const tripId = parseInt(ownProps.match.params.id, 10);
+  const contentType = ownProps.match.params.contentType;
   const trip = trips.find(trip => trip.id === tripId);
   const clickedLike = state.stylesSwitches.clicked;
   const clickedFav = state.stylesSwitches.clicked;
@@ -31,7 +32,8 @@ const mapStateToProps = (state, ownProps) => {
     comments: state.comments,
     clickedLike,
     tripLikes: state.tripLikes,
-    clickedFav
+    clickedFav,
+    contentType
   };
 };
 

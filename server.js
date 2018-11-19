@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(
   expressSession({
-    secret: "some random text #^*%!!", // used to generate session ids
+    secret: "hello goodevening welcome and goodbye. carter usm", // used to generate session ids
     resave: false,
     saveUninitialized: false
   })
@@ -107,7 +107,7 @@ app.get("/api/airports", function(req, res) {
   res.json(results);
 });
 
-app.post("/api/trip", (req, res) => {
+app.post("/api/trip", isLoggedIn, (req, res) => {
   const randomNum = Math.floor(Math.random() * tripWordsArray.length);
   const randomArrayValue = tripWordsArray[randomNum];
   const destinationSplit = req.body.trip.destination.split(" ");
@@ -172,7 +172,7 @@ app.post("/api/trip", (req, res) => {
     .catch(error => console.error(error));
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
-app.post("/api/permission", (req, res) => {
+app.post("/api/permission", isLoggedIn, (req, res) => {
   db.one(
     `INSERT INTO permission (trip_id, customer_id, permission)
             VALUES ($1, $2, 'owner') RETURNING trip_id`,
@@ -326,6 +326,8 @@ app.get("/api/checklogin/", function(req, res) {
 
 app.get("/api/user/trip", isLoggedIn, function(req, res) {
   const userId = req.user.id;
+  console.log("trip get");
+  console.log(userId);
   // console.log(req.params)
   db.any(
     "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, trip.time, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = $1 AND trip.id = permission.trip_id ORDER BY trip.time DESC",
@@ -401,6 +403,7 @@ app.post("/api/flights", (req, res) => {
   let request = req.body.flightObject;
   db.one(
     `INSERT INTO flight (
+        trip_id,
         airport_from, 
         airport_to, 
         city_from, 
@@ -413,8 +416,9 @@ app.post("/api/flights", (req, res) => {
         return_flight_date, 
         return_local_arrival_time, 
         return_local_departure_time)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id`,
     [
+      request.tripId,
       request.airportFrom,
       request.airportTo,
       request.cityFrom,
@@ -437,6 +441,40 @@ app.post("/api/flights", (req, res) => {
       res.json({ error: error.message });
     });
 }); // allows a flight to be added
+
+app.get("/api/trip/:id/flights", function(req, res) {
+    console.log(req.params);
+    const tripId = req.params.id;
+    console.log(tripId, "flights fetch on server");
+    db.any(
+        "SELECT * FROM flight WHERE trip_id = ($1)",
+        [tripId]
+    )
+        .then(function(data) {
+            console.log(data);
+            res.json(data);
+        })
+        .catch(error => {
+            console.error(`${error}`);
+        });
+});
+
+app.delete("/api/flights/:flightId", (req, res) => {
+    console.log("trying to remove");
+    let flight = req.params.flightId;
+    db.none(
+        `DELETE FROM flight
+            WHERE id = ($1)`,
+            [flight]
+    )
+        .then(() => {
+            return res.json({ flightRemovedID: flight });
+        })
+        .catch(error => {
+            console.error(error);
+            res.json({ error: error.message });
+        });
+}); // allows a flight to be deleted
 
 // fetches all trips and their owner info for homepage
 app.get("/api/custlocations", (req, res) => {

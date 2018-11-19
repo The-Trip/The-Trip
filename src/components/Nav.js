@@ -4,19 +4,21 @@ import { NavLink } from "react-router-dom";
 
 class Nav extends React.Component {
   componentDidMount() {
-    console.log("nav");
     this.props.checkLogin();
   }
 
   componentDidUpdate(oldProps) {
-    console.log(this.props.registered);
-    console.log(oldProps.registered);
-
     if (this.props.user && !oldProps.user) {
       this.props.history.push(`/trips/`);
     }
     if (this.props.registered && !oldProps.registered) {
       this.props.history.push(`/login/`);
+    }
+    if (this.props.setNewUserTrip && !oldProps.setNewUserTrip) {
+      this.props.history.push(`/register/`);
+    }
+    if (this.props.newUserInvite && !oldProps.newUserInvite) {
+      this.props.history.push(`/register/`);
     }
   }
 
@@ -41,9 +43,9 @@ class Nav extends React.Component {
         </h1>
 
         <div className="sitehead__logout">
-          <NavLink to="/invite/" activeClassName="active" className="nav__item">
+          {/* <NavLink to="/invite/" activeClassName="active" className="nav__item">
             <i className="fas fa-envelope fa-lg" aria-hidden="true" />
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/login/" activeClassName="active" className="nav__item">
             <i className="fas fa-sign-in-alt fa-lg" aria-hidden="true" />
           </NavLink>

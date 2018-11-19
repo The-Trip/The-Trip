@@ -3,11 +3,27 @@ import { NavLink } from "react-router-dom";
 import "../styles/components/Home.scss";
 
 class Home extends React.Component {
+  getData() {
+    this.interval = setInterval(() => this.props.fetchImages(), 6000);
+  }
+
   componentDidMount() {
     this.props.fetchImages();
+    this.getData();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
+    const wordsArr = [
+      " ...woo",
+      " ...Oh la la",
+      " ...lucky them",
+      " ...so not jealous"
+    ];
+    var randomWords = wordsArr[Math.floor(Math.random() * wordsArr.length)];
     return (
       <React.Fragment>
         {this.props.splashImage && (
@@ -17,8 +33,6 @@ class Home extends React.Component {
               backgroundImage: `url(${this.props.splashImage.image})`
             }}
           >
-            {/* <h2>SPLASH</h2> */}
-
             <nav className="splash__nav">
               <h3>
                 {/* <NavLink
@@ -39,14 +53,17 @@ class Home extends React.Component {
                 </NavLink>
               </button>
             </nav>
+
             <div className="splash__trip-info">
-              <h3>
-                {this.props.splashImage.first_name.charAt(0).toUpperCase()}
-                {this.props.splashImage.first_name.slice(1)} is going to{" "}
-                {this.props.splashImage.destination.charAt(0).toUpperCase()}
-                {this.props.splashImage.destination.slice(1)}
-                ...Oh la la
-              </h3>
+              <Fade in>
+                <h3>
+                  {this.props.splashImage.first_name.charAt(0).toUpperCase()}
+                  {this.props.splashImage.first_name.slice(1)} is going to{" "}
+                  {this.props.splashImage.destination.charAt(0).toUpperCase()}
+                  {this.props.splashImage.destination.slice(1)}
+                  {randomWords}
+                </h3>
+              </Fade>
             </div>
 
             {/* <button
