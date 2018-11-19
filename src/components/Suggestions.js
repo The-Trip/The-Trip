@@ -10,10 +10,23 @@ class Suggestions extends React.Component {
   }
 
   render() {
+    let filteredSuggestions = [];
+    if (this.props.contentType === "hotels") {
+      console.log("if hotels");
+      filteredSuggestions = this.props.suggestions.filter(
+        suggestion => suggestion.place_category === "lodging"
+      );
+    } else {
+      filteredSuggestions = this.props.suggestions.filter(
+        suggestion => suggestion.place_category !== "lodging"
+      );
+    }
+    console.log(filteredSuggestions);
+    console.log(this.props.contentType);
+
     const deDupedSuggest = [];
-    console.log(this.props.suggestions);
     const map = new Map();
-    for (const item of this.props.suggestions) {
+    for (const item of filteredSuggestions) {
       if (!map.has(item.place_id)) {
         map.set(item.place_id, true); // set any value to Map
         deDupedSuggest.push({

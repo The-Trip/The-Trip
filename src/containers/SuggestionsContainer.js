@@ -6,6 +6,7 @@ import { fetchCommentsFromDB } from "../actions";
 const mapStateToProps = (state, ownProps) => {
   const trips = state.trips;
   const tripId = parseInt(ownProps.match.params.id, 10);
+  const contentType = ownProps.match.params.contentType;
   const trip = trips.find(trip => trip.id === tripId);
 
   return {
@@ -13,7 +14,8 @@ const mapStateToProps = (state, ownProps) => {
     tripId,
     trip,
     selectedPlace: state.selectedPlace,
-    comments: state.comments
+    comments: state.comments,
+    contentType
   };
 };
 

@@ -85,10 +85,13 @@ class Trip extends React.Component {
 
             <div className="tabs__content">
               <Switch>
-                <Route path="/trips/:id/flights" component={FlightWrapper} />
-                <Route path="/trips/:id/hotels" component={HotelsContainer} />
                 <Route
-                  path="/trips/:id/suggestions"
+                  path="/trips/:id/flights"
+                  exact
+                  component={FlightWrapper}
+                />
+                <Route
+                  path="/trips/:id/:contentType"
                   component={SuggestionsContainer}
                 />
               </Switch>
