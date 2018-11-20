@@ -45,6 +45,7 @@ place_category VARCHAR(50) NOT NULL,
 trip_id INT NOT NULL,
 customer_id INT NOT NULL,
 photo_reference VARCHAR(200),
+time timestamptz default current_timestamp NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (trip_id) REFERENCES trip (id),
 FOREIGN KEY (customer_id) REFERENCES customer (id)
@@ -132,12 +133,11 @@ INSERT INTO permission VALUES (2,2, 2, 'owner');
 INSERT INTO permission VALUES (3,2, 3, 'suggester');
 INSERT INTO permission VALUES (4, 2, 4, 'suggester');
 INSERT INTO permission VALUES (5, 2, 1, 'suggester');
-<<<<<<< HEAD
+ALTER SEQUENCE permission_id_seq RESTART WITH 6 INCREMENT BY 1;
+
 
 INSERT INTO likes VALUES (1, 1, 1);
 ALTER SEQUENCE comment_id_seq RESTART WITH 2 INCREMENT BY 1;
 
 
-=======
->>>>>>> 8a05ae2e5091bfb9d906a6ce5e22f87482ed8b88
-ALTER SEQUENCE permission_id_seq RESTART WITH 6 INCREMENT BY 1;
+

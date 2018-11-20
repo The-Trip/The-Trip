@@ -24,6 +24,7 @@ import inviteCodeForm from "./inviteCodeForm";
 import tripLikes from "./tripLikes";
 import setNewUserTrip from "./setNewUserTrip";
 import newUserInvite from "./newUserInvite";
+import switcher from "./switcher";
 
 export default combineReducers({
   flightAPIResults: setFlightsAPIResults,
@@ -50,5 +51,6 @@ export default combineReducers({
   splashTripDestinations,
   tripLikes,
   setNewUserTrip,
-  newUserInvite
+  newUserInvite,
+  switcher
 });

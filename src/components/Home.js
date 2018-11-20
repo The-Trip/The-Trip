@@ -55,15 +55,13 @@ class Home extends React.Component {
             </nav>
 
             <div className="splash__trip-info">
-              <Fade in>
-                <h3>
-                  {this.props.splashImage.first_name.charAt(0).toUpperCase()}
-                  {this.props.splashImage.first_name.slice(1)} is going to{" "}
-                  {this.props.splashImage.destination.charAt(0).toUpperCase()}
-                  {this.props.splashImage.destination.slice(1)}
-                  {randomWords}
-                </h3>
-              </Fade>
+              <h3>
+                {this.props.splashImage.first_name.charAt(0).toUpperCase()}
+                {this.props.splashImage.first_name.slice(1)} is going to{" "}
+                {this.props.splashImage.destination.charAt(0).toUpperCase()}
+                {this.props.splashImage.destination.slice(1)}
+                {randomWords}
+              </h3>
             </div>
 
             {/* <button

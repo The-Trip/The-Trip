@@ -1,4 +1,4 @@
-function tripLikes(state = {}, action) {
+function tripLikes(state = [], action) {
   switch (action.type) {
     case "SET_TRIP_LIKES":
       return action.tripLikes;

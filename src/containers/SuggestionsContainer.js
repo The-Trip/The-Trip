@@ -1,17 +1,24 @@
 import { connect } from "react-redux";
 import Suggestions from "../components/Suggestions.js";
-import {
-  fetchSuggestionsFromDB,
-  fetchCommentsFromDB,
-  removeClickedClass,
-  addClickedClass
-} from "../actions";
+import { fetchSuggestionsFromDB, fetchCommentsFromDB } from "../actions";
 import {
   addLike,
   removeLike,
   addFavourite,
   removeFavourite,
-  likeFetch
+  likeFetch,
+  ascendChronFetch,
+  descendChronFetch,
+  ascendLikesFetch,
+  descendLikesFetch,
+  addClickedLike,
+  removeClickedLike,
+  addClickedFav,
+  removeClickedFav,
+  addClickedTime,
+  removeClickedTime,
+  addClickedLikes,
+  removeClickedLikes
 } from "../actions/chris";
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,10 +26,12 @@ const mapStateToProps = (state, ownProps) => {
   const tripId = parseInt(ownProps.match.params.id, 10);
   const contentType = ownProps.match.params.contentType;
   const trip = trips.find(trip => trip.id === tripId);
-  const clickedLike = state.stylesSwitches.clicked;
-  const clickedFav = state.stylesSwitches.clicked;
+  const clickedLike = state.switcher.clickedLike;
+  const clickedFav = state.switcher.clickedFav;
+  const clickedTime = state.switcher.clickedTime;
+  const clickedLikes = state.switcher.clickedLikes;
 
-  console.log(state.tripLikes);
+  // console.log(state.tripLikes);
 
   return {
     suggestions: state.suggestions,
@@ -33,7 +42,9 @@ const mapStateToProps = (state, ownProps) => {
     clickedLike,
     tripLikes: state.tripLikes,
     clickedFav,
-    contentType
+    contentType,
+    clickedTime,
+    clickedLikes
   };
 };
 
@@ -46,26 +57,46 @@ const mapDispatchToProps = dispatch => {
     },
 
     addLike: (suggestionId, tripId) => {
-      dispatch(addClickedClass());
+      dispatch(addClickedLike());
       console.log("clicked add like");
       dispatch(addLike(suggestionId, tripId));
     },
 
     removeLike: (suggestionId, tripId) => {
       console.log("clicked remove like");
-      dispatch(removeClickedClass());
+      dispatch(removeClickedLike());
       dispatch(removeLike(suggestionId, tripId));
     },
 
     addFavourites: (suggestionId, tripId) => {
-      dispatch(addClickedClass());
+      dispatch(addClickedFav());
       console.log("clicked add fav");
       dispatch(addFavourite(suggestionId, tripId));
     },
     removeFavourites: (suggestionId, tripId) => {
-      dispatch(removeClickedClass());
+      dispatch(removeClickedFav());
       console.log("clicked remove fav");
       dispatch(removeFavourite(suggestionId, tripId));
+    },
+    orderTimeAsc: tripId => {
+      console.log("clicked time up");
+      dispatch(addClickedTime());
+      dispatch(ascendChronFetch(tripId));
+    },
+    orderTimeDesc: tripId => {
+      dispatch(removeClickedTime());
+      console.log("clicked time down");
+      dispatch(descendChronFetch(tripId));
+    },
+    orderLikesAsc: tripId => {
+      dispatch(addClickedLikes());
+      console.log("clicked like down");
+      dispatch(ascendLikesFetch(tripId));
+    },
+    orderLikesDesc: tripId => {
+      dispatch(removeClickedLikes());
+      console.log("clicked like up");
+      dispatch(descendLikesFetch(tripId));
     }
   };
 };

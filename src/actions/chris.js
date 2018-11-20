@@ -1,4 +1,4 @@
-import { fetchSuggestionsFromDB } from "./phil.js";
+import { fetchSuggestionsFromDB, receiveSuggestions } from "./phil.js";
 
 export function setTripState(name, value) {
   return {
@@ -182,12 +182,10 @@ export function removeLike(suggestionId, tripId) {
 }
 
 export function likeFetch(tripId) {
-  console.log("likefetch");
   return function(dispatch, getState) {
     fetch(`/api/${tripId}/likefetch`)
       .then(response => response.json())
       .then(tripLikes => {
-        console.log(tripLikes);
         dispatch(setLikes(tripLikes));
       })
       .catch(console.error);
@@ -238,5 +236,113 @@ export function removeFavourite(suggestionId, tripId) {
         fetchSuggestionsFromDB(tripId);
       })
       .catch(console.error);
+  };
+}
+
+export function ascendChronFetch(tripId) {
+  console.log("achronfetch");
+  return function(dispatch, getState) {
+    fetch(`/api/trip/${tripId}/suggestion/achron`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
+      })
+      .catch(function(error) {});
+  };
+}
+
+export function descendChronFetch(tripId) {
+  console.log("dchronfetch");
+  return function(dispatch, getState) {
+    fetch(`/api/trip/${tripId}/suggestion/dchron`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
+      })
+      .catch(function(error) {});
+  };
+}
+
+export function ascendLikesFetch(tripId) {
+  console.log("alikefetch");
+  return function(dispatch, getState) {
+    fetch(`/api/trip/${tripId}/suggestion/alike`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
+      })
+      .catch(function(error) {});
+  };
+}
+
+export function descendLikesFetch(tripId) {
+  console.log("dlikefetch");
+  return function(dispatch, getState) {
+    fetch(`/api/trip/${tripId}/suggestion/dlike`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
+      })
+      .catch(function(error) {});
+  };
+}
+
+export function removeClickedLike(id) {
+  return {
+    type: "ADD_CLICKED_LIKE",
+    id
+  };
+}
+
+export function addClickedLike(id) {
+  return {
+    type: "REMOVE_CLICKED_LIKE",
+    id
+  };
+}
+
+export function addClickedFav(id) {
+  return {
+    type: "ADD_CLICKED_FAV",
+    id
+  };
+}
+
+export function removeClickedFav(id) {
+  return {
+    type: "REMOVE_CLICKED_FAV",
+    id
+  };
+}
+
+export function addClickedTime(id) {
+  return {
+    type: "ADD_CLICKED_TIME",
+    id
+  };
+}
+
+export function removeClickedTime(id) {
+  return {
+    type: "REMOVE_CLICKED_TIME",
+    id
+  };
+}
+
+export function addClickedLikes(id) {
+  return {
+    type: "ADD_CLICKED_LIKES",
+    id
+  };
+}
+
+export function removeClickedLikes(id) {
+  return {
+    type: "REMOVE_CLICKED_LIKES",
+    id
   };
 }

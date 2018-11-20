@@ -22,8 +22,8 @@ class Suggestions extends React.Component {
         suggestion => suggestion.place_category !== "lodging"
       );
     }
-    console.log(filteredSuggestions);
-    console.log(this.props.contentType);
+    // console.log(filteredSuggestions);
+    // console.log(this.props.contentType);
 
     const deDupedSuggest = [];
     const map = new Map();
@@ -42,7 +42,6 @@ class Suggestions extends React.Component {
           trip_id: item.trip_id,
           photo: item.photo_reference,
           favourite: item.favourite
-          // item.photos &&
         });
       }
     }
@@ -59,6 +58,36 @@ class Suggestions extends React.Component {
             )}
           </header>
 
+          {/* filter WIP */}
+          <section>
+            <button
+              onClick={() => {
+                this.props.clickedTime
+                  ? this.props.orderTimeDesc(this.props.tripId)
+                  : this.props.orderTimeAsc(this.props.tripId);
+              }}
+            >
+              Time
+            </button>
+            <button
+              onClick={() => {
+                this.props.clickedLikes
+                  ? this.props.orderLikesDesc(this.props.tripId)
+                  : this.props.orderLikesAsc(this.props.tripId);
+              }}
+            >
+              Likes
+            </button>
+            <button
+            // onClick={() => {
+            //   this.props.clickedLikes
+            //     ? this.props.orderFavsDesc(this.props.tripId)
+            //     : this.props.orderFavsAsc(this.props.tripId);
+            // }}
+            >
+              Favourites
+            </button>
+          </section>
           {deDupedSuggest.map(suggestion => {
             console.log(this.props.tripLikes);
             const tripLike = this.props.tripLikes
@@ -66,7 +95,7 @@ class Suggestions extends React.Component {
                   like => like.suggestion_id === suggestion.id
                 )
               : null;
-            console.log(tripLike);
+
             return (
               <SuggestionItem
                 key={suggestion.id}
@@ -81,6 +110,10 @@ class Suggestions extends React.Component {
                 removeFavourites={this.props.removeFavourites}
                 addFavourites={this.props.addFavourites}
                 clickedFav={this.props.clickedFav}
+                orderLikesAsc={this.props.orderLikesAsc}
+                orderLikesDesc={this.props.orderLikesDesc}
+                orderTimeDesc={this.props.orderTimeDesc}
+                orderTimeAsc={this.props.orderTimeAsc}
               />
             );
           })}
