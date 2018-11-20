@@ -7,7 +7,7 @@ import FlightResultsWrapper from "../containers/FlightResultsWrapper";
 import cx from "classnames";
 import SelectedTripFlightsContainer from "../containers/SelectedTripFlightsContainer";
 import LoginContainer from "../containers/LoginContainer";
-import {Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 
 class Flight extends React.Component {
   constructor() {
@@ -57,9 +57,9 @@ class Flight extends React.Component {
     return str
       .split(" ")
       .map(item => {
-          const word = item.split("");
-          word[0] = word[0].toUpperCase();
-          return word.join("");
+        const word = item.split("");
+        word[0] = word[0].toUpperCase();
+        return word.join("");
       })
       .join(" ");
   }
@@ -84,12 +84,21 @@ class Flight extends React.Component {
               onSearch={query => {
                 let fromInput = this.sentenceCase(query);
                 this.setState({ airportFromLoading: true });
-                this.promiseOptions(fromInput).then(airports => {
-                  this.setState({
-                    airportFromLoading: false,
-                    airportFromOptions: airports
-                  });
-                });
+                this.promiseOptions(fromInput)
+                  .then(airports => {
+                    const allAirports = airports.find(
+                      airport => airport.name === "All Airports"
+                    );
+                    if (allAirports) {
+                      airports.unshift(allAirports);
+                    }
+
+                    this.setState({
+                      airportFromLoading: false,
+                      airportFromOptions: airports
+                    });
+                  })
+                  .catch(console.error);
               }}
               options={this.state.airportFromOptions}
               onChange={selected => {
@@ -105,12 +114,20 @@ class Flight extends React.Component {
               onSearch={query => {
                 let toInput = this.sentenceCase(query);
                 this.setState({ airportToLoading: true });
-                this.promiseOptions(toInput).then(airports => {
-                  this.setState({
-                    airportToLoading: false,
-                    airportToOptions: airports
-                  });
-                });
+                this.promiseOptions(toInput)
+                  .then(airports => {
+                    const allAirports = airports.find(
+                      airport => airport.name === "All Airports"
+                    );
+                    if (allAirports) {
+                      airports.unshift(allAirports);
+                    }
+                    this.setState({
+                      airportToLoading: false,
+                      airportToOptions: airports
+                    });
+                  })
+                  .catch(console.error);
               }}
               options={this.state.airportToOptions}
               onChange={selected => {
@@ -186,7 +203,9 @@ class Flight extends React.Component {
           </div>
         </section>
         <section className="flightsresults">
-          {this.state.flightSubmit ? <FlightResultsWrapper tripId={this.props.tripId} /> : null}
+          {this.state.flightSubmit ? (
+            <FlightResultsWrapper tripId={this.props.tripId} />
+          ) : null}
         </section>
       </React.Fragment>
     );
