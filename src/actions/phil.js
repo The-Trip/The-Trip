@@ -161,9 +161,10 @@ export function loginUser() {
           dispatch(addNewTrip());
         }
         if (getState().newUserInvite === true) {
-          console.log("add new trip should happen next");
+          console.log("add new invite ....164");
           dispatch(checkInviteCode());
         }
+        console.log("clear registration next");
         dispatch(clearRegistrationStates());
       })
       .catch(console.error);
@@ -184,14 +185,16 @@ export function checkInviteCode() {
       }
     })
       .then(response => {
+        console.log(response.json);
         if (response.status === 401) {
           console.log("not logged in - check invite");
           dispatch(setNewUserInvite(true));
         }
-        response.json();
+        return response.json();
       })
       .then(tripId => {
-        dispatch(setAddedTripId(tripId));
+        console.log(tripId);
+        dispatch(setAddedTripId({ id: tripId }));
       });
   };
 }
