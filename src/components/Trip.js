@@ -73,7 +73,7 @@ class Trip extends React.Component {
               render={() => (
                 <section className="tripview container">
                   <header className="tripview__header">
-                    <h1 className="tripview__title">Your trip</h1>
+                    <h1 className="tripview__title" />
                     <h2 className="tripview__subtitle">
                       {this.props.trip.name}
                     </h2>

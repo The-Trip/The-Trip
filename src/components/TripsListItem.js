@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { whatsapp } from "vanilla-sharing";
 
 import "../styles/components/TripsListItem.scss";
 
@@ -28,12 +29,12 @@ function TripsListItem({ trip, tripId }) {
                 {trip.name}
               </h2>
             </header>
-            
-            {!!trip.details &&  
-            <section className="card__details container">
-              <p>{trip.details}</p>
-            </section>
-            }
+
+            {!!trip.details && (
+              <section className="card__details container">
+                <p>{trip.details}</p>
+              </section>
+            )}
             <footer className="card__footer">
               <section className="card__itinerary">
                 Trip details&nbsp;
