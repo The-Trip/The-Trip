@@ -2,8 +2,12 @@ import { connect } from "react-redux";
 import UserInvite from "../components/UserInvite";
 import { inviteCodeToState, checkInviteCode } from "../actions";
 
-const mapStateToProps = state => {
-  return {};
+export const mapStateToProps = (state, ownProps) => {
+  const inviteCode = parseInt(ownProps.match.params.code, 10);
+
+  return {
+    inviteCode
+  };
 };
 
 const mapDispatchToProps = dispatch => {

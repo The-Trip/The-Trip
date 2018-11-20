@@ -12,7 +12,6 @@ class Suggestions extends React.Component {
   render() {
     let filteredSuggestions = [];
     if (this.props.contentType === "hotels") {
-      console.log("if hotels");
       filteredSuggestions = this.props.suggestions.filter(
         suggestion => suggestion.place_category === "lodging"
       );
@@ -21,8 +20,6 @@ class Suggestions extends React.Component {
         suggestion => suggestion.place_category !== "lodging"
       );
     }
-    console.log(filteredSuggestions);
-    console.log(this.props.contentType);
 
     const deDupedSuggest = [];
     const map = new Map();

@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/components/UserInvite.scss";
 
-function UserInvite({ handleChange, handleSubmit }) {
+function UserInvite({ handleChange, handleSubmit, inviteCode }) {
   return (
     <React.Fragment>
       {/* INVITE FORM */}
@@ -28,6 +28,7 @@ function UserInvite({ handleChange, handleSubmit }) {
               type="text"
               onChange={event => handleChange(event)}
               name="inviteCode"
+              value={inviteCode}
               required
             />
             <span className="validity" />
