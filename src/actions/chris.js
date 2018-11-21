@@ -346,3 +346,14 @@ export function removeClickedLikes(id) {
     id
   };
 }
+
+export function fetchAllSuggestionsFromDB() {
+  return function(dispatch, getState) {
+    fetch(`/api/trip/suggestion`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+      })
+      .catch(function(error) {});
+  };
+}

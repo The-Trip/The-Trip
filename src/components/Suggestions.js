@@ -59,37 +59,40 @@ class Suggestions extends React.Component {
             )}
           </header>
 
-          {/* filter WIP */}
+          {/* Filter */}
 
           {!this.props.deDupedSuggest && (
-            <section>
-              <button
-                onClick={() => {
+            <section className="suggestions__filter">
+              <a
+                onClick={event => {
+                  event.preventDefault();
                   this.props.clickedTime
                     ? this.props.orderTimeDesc(this.props.tripId)
                     : this.props.orderTimeAsc(this.props.tripId);
                 }}
               >
                 Time
-              </button>
-              <button
-                onClick={() => {
+              </a>
+              <a
+                onClick={event => {
+                  event.preventDefault();
                   this.props.clickedLikes
                     ? this.props.orderLikesDesc(this.props.tripId)
                     : this.props.orderLikesAsc(this.props.tripId);
                 }}
               >
                 Likes
-              </button>
-              <button
-              // onClick={() => {
+              </a>
+              <a
+              // onClick={(event) => {
+              // event.preventDefault();
               //   this.props.clickedLikes
               //     ? this.props.orderFavsDesc(this.props.tripId)
               //     : this.props.orderFavsAsc(this.props.tripId);
               // }}
               >
                 Favourites
-              </button>
+              </a>
             </section>
           )}
           {deDupedSuggest.map(suggestion => {

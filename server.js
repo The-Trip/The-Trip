@@ -710,6 +710,19 @@ app.get("/api/trip/:id/suggestion/dlike", function(req, res) {
     });
 });
 
+//get all suggestions for Trip Items
+app.get("/api/trip/suggestion", function(req, res) {
+  db.any(
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id GROUP BY suggestion.customer_id, suggestion.id, customer.id"
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
@@ -719,3 +732,6 @@ const port = process.env.PORT || 8080;
 server.listen(port, function() {
   console.log("Listening on port 8080");
 });
+
+
+
