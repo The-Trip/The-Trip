@@ -33,7 +33,8 @@ function App() {
         <Route path="/register/" component={RegisterContainer} />
 
         <Route path="/flights/" component={FlightWrapper} />
-        <Route path="/invite/" component={UserInviteContainer} />
+        <Route path="/invite/" exact component={UserInviteContainer} />
+        <Route path="/invite/:code/" component={UserInviteContainer} />
       </main>
       {/* <Footer /> */}
     </div>

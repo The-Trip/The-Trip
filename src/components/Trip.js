@@ -17,7 +17,7 @@ class Trip extends React.Component {
     const flightsUrl = `/trips/${this.props.tripId}/flights`;
     const suggestionsUrl = `/trips/${this.props.tripId}/suggestions`;
     const hotelsUrl = `/trips/${this.props.tripId}/hotels`;
-
+    console.log(this.props);
     if (!this.props.trip) {
       return <div>Loading...</div>;
     }
@@ -79,6 +79,10 @@ class Trip extends React.Component {
                     </h2>
                   </header>
                   <p>{this.props.trip.details}</p>
+                  <p>Share this link</p>
+                  <p>
+                    localhost:8080/invite/{this.props.trip.auth_code_suggest}
+                  </p>
                 </section>
               )}
             />

@@ -1,4 +1,8 @@
-import { fetchSuggestionsFromDB, receiveSuggestions } from "./phil.js";
+import {
+  fetchSuggestionsFromDB,
+  receiveSuggestions,
+  setRegistered
+} from "./phil.js";
 
 export function setTripState(name, value) {
   return {

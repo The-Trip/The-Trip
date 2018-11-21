@@ -109,18 +109,23 @@ app.get("/api/airports", function(req, res) {
 
 app.post("/api/trip", isLoggedIn, (req, res) => {
   const randomNum = Math.floor(Math.random() * tripWordsArray.length);
+  const randomNumSuggest = Math.floor(Math.random() * 100);
+  const randomNumCollaborate = Math.floor(Math.random() * 100);
+
   const randomArrayValue = tripWordsArray[randomNum];
   const destinationSplit = req.body.trip.destination.split(" ");
   const destinationJoin = destinationSplit.join("-");
   const randomURLString = `${
     req.body.user.name
   }-${destinationJoin}-${randomArrayValue}`;
-  const suggest_code = `${randomNum}_${
-    req.body.trip.destination.split(" ")[0]
-  }_${req.body.user.id}_suggest`;
-  const collaborate_code = `${randomNum}_${
-    req.body.trip.destination.split(" ")[0]
-  }_${req.body.user.id}_collarborate`;
+
+  const suggest_code = `${req.body.trip.destination
+    .split(" ")[0]
+    .toUpperCase()}_${req.body.user.id}${randomNumSuggest}`;
+
+  const collaborate_code = `${req.body.trip.destination.split(" ")[0]}_${
+    req.body.user.id
+  }${randomNumCollaborate}`;
 
   const photoUrl = `https://api.unsplash.com/search/photos?page=1&query=${
     req.body.trip.destination
@@ -330,7 +335,7 @@ app.get("/api/user/trip", isLoggedIn, function(req, res) {
   console.log(userId);
   // console.log(req.params)
   db.any(
-    "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, trip.time, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = $1 AND trip.id = permission.trip_id ORDER BY trip.time DESC",
+    "SELECT trip.id, trip.auth_code_suggest, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, trip.time, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = $1 AND trip.id = permission.trip_id ORDER BY trip.time DESC",
     [userId]
   )
     .then(function(data) {
@@ -519,7 +524,8 @@ app.post("/api/invite", isLoggedIn, (req, res) => {
         [trip.id, req.user.id, "suggester"]
       )
         .then(id => {
-          return res.json({ tripId: trip.id });
+          console.log(`527 ${trip.id}`);
+          return res.json(trip.id);
         })
         .catch(error => {
           console.error(error.stack);
