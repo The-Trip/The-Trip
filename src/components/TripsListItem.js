@@ -42,7 +42,7 @@ function TripsListItem({ trip, tripId, suggestions }) {
               </section>
 
               <section className="card__suggestions">
-                Suggestions
+                {/* Suggestions
                 {suggestions.map(initial => (
                   <ul
                     key={initial.id}
@@ -51,11 +51,8 @@ function TripsListItem({ trip, tripId, suggestions }) {
                     <li className="card__suggestor">
                       {initial.first_name.charAt(0).toUpperCase()}
                     </li>
-                    {/* <li className="card__suggestor">C</li>
-                    <li className="card__suggestor">P</li>
-                    <li className="card__suggestor">T</li> */}
                   </ul>
-                ))}
+                ))} */}
               </section>
             </footer>
           </Link>
