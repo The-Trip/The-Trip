@@ -549,7 +549,7 @@ app.post("/api/addlike", (req, res) => {
   )
     .then(() => {
       db.any(
-        `SELECT likes.id, likes.suggestion_id, likes.customer_id FROM likes, suggestion WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id`,
+        `SELECT likes.id, likes.suggestion_id, likes.customer_id, customer.first_name FROM likes, suggestion, customer WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id AND customer.id = likes.customer_id`,
         [tripId]
       )
         .then(likes => {
@@ -591,7 +591,7 @@ app.get("/api/:tripId/likefetch", function(req, res) {
   const { tripId } = req.params;
   console.log(tripId);
   db.any(
-    "SELECT likes.id, likes.suggestion_id, likes.customer_id FROM likes, suggestion WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id",
+    "SELECT likes.id, likes.suggestion_id, likes.customer_id, customer.first_name FROM likes, suggestion, customer WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id AND customer.id = likes.customer_id",
     [tripId]
   )
     .then(function(likes) {
@@ -640,21 +640,6 @@ app.post("/api/remove-favourite", (req, res) => {
 });
 
 // FILTER GETs WIP
-
-app.get("/api/trip/:id/suggestion/dlike", function(req, res) {
-  const tripId = req.params.id;
-
-  db.any(
-    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
-    [tripId]
-  )
-    .then(function(data) {
-      res.json(data);
-    })
-    .catch(error => {
-      console.error(`${error}`);
-    });
-});
 
 app.get("/api/trip/:id/suggestion/achron", function(req, res) {
   const tripId = req.params.id;
@@ -706,6 +691,33 @@ app.get("/api/trip/:id/suggestion/dlike", function(req, res) {
   console.log("dlike");
   db.any(
     "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite, COUNT(likes.suggestion_id) AS likes FROM customer, likes, suggestion, trip WHERE likes.suggestion_id = suggestion.id AND trip_id = $1 AND customer.id = suggestion.customer_id GROUP BY suggestion.customer_id, suggestion.id, customer.id ORDER BY COUNT(suggestion_id) DESC;",
+    [tripId]
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+//get all suggestions for Trip Items
+app.get("/api/trip/suggestion", function(req, res) {
+  db.any(
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id GROUP BY suggestion.customer_id, suggestion.id, customer.id"
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+app.get("/api/trip/${tripId}/suggestion/favfilter", function(req, res) {
+  const tripId = req.params.id;
+  db.any(
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = $1 AND suggestion.favourite = true GROUP BY suggestion.customer_id, suggestion.id, customer.id",
     [tripId]
   )
     .then(function(data) {

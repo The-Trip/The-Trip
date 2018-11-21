@@ -279,6 +279,19 @@ export function fetchSuggestionsFromDB(tripId) {
   };
 }
 
+export function filterOutFavsFetch(tripId) {
+  console.log("fav filter");
+  return function(dispatch, getState) {
+    fetch(`/api/trip/${tripId}/suggestion/favfilter`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
+      })
+      .catch(function(error) {});
+  };
+}
+
 export function receiveTrips(trips) {
   return {
     type: "RECEIVE_TRIPS",

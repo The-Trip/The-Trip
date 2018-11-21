@@ -1,5 +1,12 @@
 @import "../base/_variables.scss";
 
-.suggestions__title {
-  margin-bottom: $main-padding * 0.5;
+.suggestions {
+  &__title {
+    margin-bottom: $main-padding * 0.5;
+  }
+
+  &__filter {
+    display: flex;
+    justify-content: space-around;
+  }
 }

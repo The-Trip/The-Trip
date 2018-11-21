@@ -295,6 +295,32 @@ export function descendLikesFetch(tripId) {
   };
 }
 
+export function filterOutFavsFetch(tripId) {
+  console.log("alikefetch");
+  return function(dispatch, getState) {
+    fetch(`/api/trip/${tripId}/suggestion/favin`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
+      })
+      .catch(function(error) {});
+  };
+}
+
+export function filterInFavsFetch(tripId) {
+  console.log("dlikefetch");
+  return function(dispatch, getState) {
+    fetch(`/api/trip/${tripId}/suggestion/favout`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
+      })
+      .catch(function(error) {});
+  };
+}
+
 export function removeClickedLike(id) {
   return {
     type: "ADD_CLICKED_LIKE",
@@ -348,5 +374,30 @@ export function removeClickedLikes(id) {
   return {
     type: "REMOVE_CLICKED_LIKES",
     id
+  };
+}
+
+export function addClickedFavFilter(id) {
+  return {
+    type: "ADD_CLICKED_FAVFILTER",
+    id
+  };
+}
+
+export function removeClickedFavFilter(id) {
+  return {
+    type: "REMOVE_CLICKED_FAVFILTER",
+    id
+  };
+}
+
+export function fetchAllSuggestionsFromDB() {
+  return function(dispatch, getState) {
+    fetch(`/api/trip/suggestion`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+      })
+      .catch(function(error) {});
   };
 }

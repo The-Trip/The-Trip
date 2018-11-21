@@ -8,7 +8,8 @@ const mapStateToProps = (state, ownProps) => {
     tabOpen: state.stylesSwitches.tabOpen,
     tripId: ownProps.tripId,
     suggestion: ownProps.suggestion,
-    clicked: state.stylesSwitches.clicked
+    clicked: state.stylesSwitches.clicked,
+    tripLike: ownProps.tripLike
   };
 };
 

@@ -3,7 +3,8 @@ function switcher(
     clickedLike: false,
     clickedFav: false,
     clickedTime: false,
-    clickedLikes: false
+    clickedLikes: false,
+    clickedFavFilter: false
   },
   action
 ) {
@@ -31,6 +32,12 @@ function switcher(
 
     case "REMOVE_CLICKED_LIKES":
       return Object.assign({}, state, { clickedLikes: false });
+
+    case "ADD_CLICKED_FAVFILTER":
+      return Object.assign({}, state, { clickedFavFilter: true });
+
+    case "REMOVE_CLICKED_FAVFILTER":
+      return Object.assign({}, state, { clickedFavFilter: false });
 
     default:
       return state;
