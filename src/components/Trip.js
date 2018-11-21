@@ -81,7 +81,9 @@ class Trip extends React.Component {
                   <p>{this.props.trip.details}</p>
                   <p>Share this link</p>
                   <p>
-                    localhost:8080/invite/{this.props.trip.auth_code_suggest}
+                    {window.location.hostname +
+                      "/invite/" +
+                      this.props.trip.auth_code_suggest}
                   </p>
                 </section>
               )}
