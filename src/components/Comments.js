@@ -34,6 +34,7 @@ class Comments extends React.Component {
       "tab--open": this.state.clickedstate,
       "tab--closed": !this.state.clickedstate
     });
+    console.log(this.props.tripLike);
 
     return (
       <React.Fragment>
@@ -77,15 +78,22 @@ class Comments extends React.Component {
             </div>
 
             {/* LIKES OUTPUT - USER INTIAL OF LIKER */}
+
             <section className="viewcomments__likes">
-              Suggestions
-              <ul className="viewcomments__likeslist menu--settings">
-                <li className="viewcomments__likesitem">M</li>
-                <li className="viewcomments__likesitem">C</li>
-                <li className="viewcomments__likesitem">P</li>
-                <li className="viewcomments__likesitem">T</li>
-                <li className="viewcomments__likesitem">M</li>
-              </ul>
+              {this.props.tripLike.map(initial => (
+                <ul
+                  key={initial.id}
+                  className="viewcomments__likeslist menu--settings"
+                >
+                  <li className="viewcomments__likesitem">
+                    {initial.first_name.charAt(0).toUpperCase()}
+                  </li>
+                  {/* <li className="viewcomments__likesitem">C</li>
+                  <li className="viewcomments__likesitem">P</li>
+                  <li className="viewcomments__likesitem">T</li>
+                  <li className="viewcomments__likesitem">M</li> */}
+                </ul>
+              ))}
             </section>
           </section>
         )}

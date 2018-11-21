@@ -15,6 +15,7 @@ class TripsList extends React.Component {
   render() {
     const myTripsUrl = `/trips/`;
     const friendsTripsUrl = `/trips/friends`;
+    console.log(this.props.suggestions);
 
     return (
       <div>
@@ -56,7 +57,20 @@ class TripsList extends React.Component {
                         {this.props.trips
                           .filter(trip => trip.permission === "owner")
                           .map(trip => {
-                            return <TripsListItem key={trip.id} trip={trip} />;
+                            //   const Arr = this.props.suggestions
+                            //   console.log(
+
+                            //     function removeDuplicates(Arr, prop) { return this.props.suggestions.filter((obj, pos, arr) => { return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos; });}
+                            //  )
+                            return (
+                              <TripsListItem
+                                key={trip.id}
+                                trip={trip}
+                                suggestions={this.props.suggestions.filter(
+                                  suggestion => suggestion.trip_id === trip.id
+                                )}
+                              />
+                            );
                           })}
                         {this.props.trips.filter(
                           trip => trip.permission === "owner"

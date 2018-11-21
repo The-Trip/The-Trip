@@ -80,7 +80,9 @@ class SuggestionItem extends React.Component {
                   ? this.removeFavourites()
                   : this.addFavourites();
               }}
-            />
+            >
+              <i className="far fa-star fa-lg" />
+            </button>
             <button
               className="suggestion__likebtn"
               onClick={() => {
@@ -111,6 +113,7 @@ class SuggestionItem extends React.Component {
             key={this.props.suggestion.id}
             suggestion={this.props.suggestion}
             tripId={this.props.tripId}
+            tripLike={this.props.tripLike}
           />
         </div>
       </article>
