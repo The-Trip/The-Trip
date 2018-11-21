@@ -18,7 +18,10 @@ import {
   addClickedTime,
   removeClickedTime,
   addClickedLikes,
-  removeClickedLikes
+  removeClickedLikes,
+  filterOutFavsFetch,
+  addClickedFavFilter,
+  removeClickedFavFilter
 } from "../actions/chris";
 
 const mapStateToProps = (state, ownProps) => {
@@ -97,6 +100,16 @@ const mapDispatchToProps = dispatch => {
       dispatch(removeClickedLikes());
       console.log("clicked like up");
       dispatch(descendLikesFetch(tripId));
+    },
+    filterFavsIn: tripId => {
+      dispatch(addClickedFavFilter());
+      console.log("clicked fav in");
+      dispatch(fetchSuggestionsFromDB(tripId));
+    },
+    filterFavsOut: tripId => {
+      dispatch(removeClickedFavFilter());
+      console.log("clicked fav out");
+      dispatch(filterOutFavsFetch(tripId));
     }
   };
 };

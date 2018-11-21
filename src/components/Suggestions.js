@@ -84,12 +84,12 @@ class Suggestions extends React.Component {
                 Likes
               </a>
               <a
-              // onClick={(event) => {
-              // event.preventDefault();
-              //   this.props.clickedLikes
-              //     ? this.props.orderFavsDesc(this.props.tripId)
-              //     : this.props.orderFavsAsc(this.props.tripId);
-              // }}
+                onClick={event => {
+                  event.preventDefault();
+                  this.props.clickedFav
+                    ? this.props.filterFavsIn(this.props.tripId)
+                    : this.props.filterFavsOut(this.props.tripId);
+                }}
               >
                 Favourites
               </a>
