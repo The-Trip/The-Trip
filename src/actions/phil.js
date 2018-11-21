@@ -2,7 +2,8 @@ import {
   fetchCommentsFromDB,
   addNewTrip,
   setSelectedPlace,
-  storeGoogleFetch
+  storeGoogleFetch,
+  likeFetch
 } from "./chris.js";
 
 export function suggestionInputToState(name, value) {
@@ -272,6 +273,7 @@ export function fetchSuggestionsFromDB(tripId) {
       .then(response => response.json())
       .then(result => {
         dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
       })
       .catch(function(error) {});
   };
