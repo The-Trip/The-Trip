@@ -45,6 +45,7 @@ class Suggestions extends React.Component {
         });
       }
     }
+
     return (
       <React.Fragment>
         <section className="suggestions">
@@ -59,35 +60,38 @@ class Suggestions extends React.Component {
           </header>
 
           {/* filter WIP */}
-          <section>
-            <button
-              onClick={() => {
-                this.props.clickedTime
-                  ? this.props.orderTimeDesc(this.props.tripId)
-                  : this.props.orderTimeAsc(this.props.tripId);
-              }}
-            >
-              Time
-            </button>
-            <button
-              onClick={() => {
-                this.props.clickedLikes
-                  ? this.props.orderLikesDesc(this.props.tripId)
-                  : this.props.orderLikesAsc(this.props.tripId);
-              }}
-            >
-              Likes
-            </button>
-            <button
-            // onClick={() => {
-            //   this.props.clickedLikes
-            //     ? this.props.orderFavsDesc(this.props.tripId)
-            //     : this.props.orderFavsAsc(this.props.tripId);
-            // }}
-            >
-              Favourites
-            </button>
-          </section>
+
+          {!this.props.deDupedSuggest && (
+            <section>
+              <button
+                onClick={() => {
+                  this.props.clickedTime
+                    ? this.props.orderTimeDesc(this.props.tripId)
+                    : this.props.orderTimeAsc(this.props.tripId);
+                }}
+              >
+                Time
+              </button>
+              <button
+                onClick={() => {
+                  this.props.clickedLikes
+                    ? this.props.orderLikesDesc(this.props.tripId)
+                    : this.props.orderLikesAsc(this.props.tripId);
+                }}
+              >
+                Likes
+              </button>
+              <button
+              // onClick={() => {
+              //   this.props.clickedLikes
+              //     ? this.props.orderFavsDesc(this.props.tripId)
+              //     : this.props.orderFavsAsc(this.props.tripId);
+              // }}
+              >
+                Favourites
+              </button>
+            </section>
+          )}
           {deDupedSuggest.map(suggestion => {
             console.log(this.props.tripLikes);
             const tripLike = this.props.tripLikes

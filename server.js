@@ -543,7 +543,7 @@ app.post("/api/addlike", (req, res) => {
   )
     .then(() => {
       db.any(
-        `SELECT likes.id, likes.suggestion_id, likes.customer_id FROM likes, suggestion WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id`,
+        `SELECT likes.id, likes.suggestion_id, likes.customer_id, customer.first_name FROM likes, suggestion, customer WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id AND customer.id = likes.customer_id`,
         [tripId]
       )
         .then(likes => {
@@ -585,7 +585,7 @@ app.get("/api/:tripId/likefetch", function(req, res) {
   const { tripId } = req.params;
   console.log(tripId);
   db.any(
-    "SELECT likes.id, likes.suggestion_id, likes.customer_id FROM likes, suggestion WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id",
+    "SELECT likes.id, likes.suggestion_id, likes.customer_id, customer.first_name FROM likes, suggestion, customer WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id AND customer.id = likes.customer_id",
     [tripId]
   )
     .then(function(likes) {
