@@ -2,7 +2,6 @@ import React from "react";
 
 import "../styles/components/TripCreation.scss";
 
-
 class TripCreation extends React.Component {
   componentDidUpdate(newProps) {
     if (this.props.addedTripId) {
@@ -17,7 +16,12 @@ class TripCreation extends React.Component {
       <React.Fragment>
         <section className="trip-create container">
           <header className="trip-create__header">
-            <h1 className="trip-create__title">Create new trip</h1>
+            <h1 className="trip-create__title">Create new Trip</h1>
+            <p className="trip-create__intro">
+              Looking for action, relaxation &ndash; or something a little bit
+              quirky? City jaunt or beachmat? Let your friends know the sort of
+              Trip you want&hellip;
+            </p>
           </header>
 
           <form

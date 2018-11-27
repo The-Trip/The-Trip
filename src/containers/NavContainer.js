@@ -5,7 +5,10 @@ import { checkLogin } from "../actions";
 
 const mapStateToProps = state => {
   return {
-    user: state.user.id
+    user: state.user.id,
+    registered: state.registered,
+    setNewUserTrip: state.setNewUserTrip,
+    newUserInvite: state.newUserInvite
   };
 };
 

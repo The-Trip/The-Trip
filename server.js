@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(
   expressSession({
-    secret: "some random text #^*%!!", // used to generate session ids
+    secret: "hello goodevening welcome and goodbye. carter usm", // used to generate session ids
     resave: false,
     saveUninitialized: false
   })
@@ -107,20 +107,25 @@ app.get("/api/airports", function(req, res) {
   res.json(results);
 });
 
-app.post("/api/trip", (req, res) => {
+app.post("/api/trip", isLoggedIn, (req, res) => {
   const randomNum = Math.floor(Math.random() * tripWordsArray.length);
+  const randomNumSuggest = Math.floor(Math.random() * 100);
+  const randomNumCollaborate = Math.floor(Math.random() * 100);
+
   const randomArrayValue = tripWordsArray[randomNum];
   const destinationSplit = req.body.trip.destination.split(" ");
   const destinationJoin = destinationSplit.join("-");
   const randomURLString = `${
     req.body.user.name
   }-${destinationJoin}-${randomArrayValue}`;
-  const suggest_code = `${randomNum}_${
-    req.body.trip.destination.split(" ")[0]
-  }_${req.body.user.id}_suggest`;
-  const collaborate_code = `${randomNum}_${
-    req.body.trip.destination.split(" ")[0]
-  }_${req.body.user.id}_collarborate`;
+
+  const suggest_code = `${req.body.trip.destination
+    .split(" ")[0]
+    .toUpperCase()}_${req.body.user.id}${randomNumSuggest}`;
+
+  const collaborate_code = `${req.body.trip.destination.split(" ")[0]}_${
+    req.body.user.id
+  }${randomNumCollaborate}`;
 
   const photoUrl = `https://api.unsplash.com/search/photos?page=1&query=${
     req.body.trip.destination
@@ -172,7 +177,7 @@ app.post("/api/trip", (req, res) => {
     .catch(error => console.error(error));
 }); //allows logged in customer to add a trip (will error if not logged in as needs id)
 
-app.post("/api/permission", (req, res) => {
+app.post("/api/permission", isLoggedIn, (req, res) => {
   db.one(
     `INSERT INTO permission (trip_id, customer_id, permission)
             VALUES ($1, $2, 'owner') RETURNING trip_id`,
@@ -326,9 +331,11 @@ app.get("/api/checklogin/", function(req, res) {
 
 app.get("/api/user/trip", isLoggedIn, function(req, res) {
   const userId = req.user.id;
+  console.log("trip get");
+  console.log(userId);
   // console.log(req.params)
   db.any(
-    "SELECT trip.id, trip.url, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = ($1) AND trip.id = permission.trip_id",
+    "SELECT trip.id, trip.auth_code_suggest, trip.name, trip.origin, trip.destination, trip.details, trip.image, trip.customer_id, trip.time, permission.permission, permission.customer_id FROM trip, permission WHERE permission.customer_id = $1 AND trip.id = permission.trip_id ORDER BY trip.time DESC",
     [userId]
   )
     .then(function(data) {
@@ -343,7 +350,7 @@ app.get("/api/trip/:id/suggestion", function(req, res) {
   const tripId = req.params.id;
 
   db.any(
-    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id",
     [tripId]
   )
     .then(function(data) {
@@ -401,6 +408,7 @@ app.post("/api/flights", (req, res) => {
   let request = req.body.flightObject;
   db.one(
     `INSERT INTO flight (
+        trip_id,
         airport_from, 
         airport_to, 
         city_from, 
@@ -413,8 +421,9 @@ app.post("/api/flights", (req, res) => {
         return_flight_date, 
         return_local_arrival_time, 
         return_local_departure_time)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id`,
     [
+      request.tripId,
       request.airportFrom,
       request.airportTo,
       request.cityFrom,
@@ -438,6 +447,68 @@ app.post("/api/flights", (req, res) => {
     });
 }); // allows a flight to be added
 
+app.get("/api/trip/:id/flights", function(req, res) {
+  console.log(req.params);
+  const tripId = req.params.id;
+  console.log(tripId, "flights fetch on server");
+  db.any("SELECT * FROM flight WHERE trip_id = ($1)", [tripId])
+    .then(function(data) {
+      console.log(data);
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+app.delete("/api/flights/:flightId", (req, res) => {
+  console.log("trying to remove");
+  let flight = req.params.flightId;
+  db.none(
+    `DELETE FROM flight
+            WHERE id = ($1)`,
+    [flight]
+  )
+    .then(() => {
+      return res.json({ flightRemovedID: flight });
+    })
+    .catch(error => {
+      console.error(error);
+      res.json({ error: error.message });
+    });
+}); // allows a flight to be deleted
+
+// fetches all trips and their owner info for homepage
+app.get("/api/custlocations", (req, res) => {
+  db.any(
+    "SELECT trip.destination, trip.image, customer.first_name FROM trip, customer WHERE trip.customer_id = customer.id"
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+//splash page fetch from array (to complete post fri demo)
+app.get("/api/splash", function(req, res) {
+  const tripId = req.params.id;
+
+  const photoUrl = `https://api.unsplash.com/search/photos?page=1&query=${
+    req.body.trip.destination
+  }&client_id=${unsplashId}`;
+
+  fetch(photoUrl)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(data => {
+      return res.json(data.results);
+    })
+    .catch(console.error);
+});
+
 app.post("/api/invite", isLoggedIn, (req, res) => {
   console.log("invite");
   db.one(`SELECT * FROM trip WHERE auth_code_suggest = ($1)`, [
@@ -453,7 +524,8 @@ app.post("/api/invite", isLoggedIn, (req, res) => {
         [trip.id, req.user.id, "suggester"]
       )
         .then(id => {
-          return res.json({ tripId: trip.id });
+          console.log(`527 ${trip.id}`);
+          return res.json(trip.id);
         })
         .catch(error => {
           console.error(error.stack);
@@ -462,6 +534,199 @@ app.post("/api/invite", isLoggedIn, (req, res) => {
     })
     .catch(console.error);
 }); // al
+
+//Likes
+
+app.post("/api/addlike", (req, res) => {
+  console.log("adding");
+
+  const { suggestionId, customerId, tripId } = req.body;
+
+  db.none(
+    `INSERT INTO likes (suggestion_id, customer_id)
+        VALUES ($1, $2)`,
+    [suggestionId, customerId]
+  )
+    .then(() => {
+      db.any(
+        `SELECT likes.id, likes.suggestion_id, likes.customer_id, customer.first_name FROM likes, suggestion, customer WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id AND customer.id = likes.customer_id`,
+        [tripId]
+      )
+        .then(likes => {
+          return res.json(likes);
+        })
+        .catch(error => {
+          console.error(error.stack);
+          res.json({ error: error.message });
+        });
+    })
+    .catch(console.error);
+});
+
+app.post("/api/removelike", (req, res) => {
+  console.log("removing");
+  const { suggestionId, customerId, tripId } = req.body;
+
+  db.none(`DELETE FROM likes WHERE suggestion_id = $1 AND customer_id = $2`, [
+    suggestionId,
+    customerId
+  ])
+    .then(() => {
+      db.any(
+        `SELECT likes.id, likes.suggestion_id, likes.customer_id FROM likes, suggestion WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id`,
+        [tripId]
+      )
+        .then(likes => {
+          return res.json(likes);
+        })
+        .catch(error => {
+          console.error(error.stack);
+          res.json({ error: error.message });
+        });
+    })
+    .catch(console.error);
+});
+
+app.get("/api/:tripId/likefetch", function(req, res) {
+  const { tripId } = req.params;
+  console.log(tripId);
+  db.any(
+    "SELECT likes.id, likes.suggestion_id, likes.customer_id, customer.first_name FROM likes, suggestion, customer WHERE suggestion.trip_id = $1 AND likes.suggestion_id = suggestion.id AND customer.id = likes.customer_id",
+    [tripId]
+  )
+    .then(function(likes) {
+      res.json(likes);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+//ADD TO favourites
+app.post("/api/add-favourite", (req, res) => {
+  const { suggestionId, customerId } = req.body;
+
+  db.none(
+    `UPDATE suggestion
+    SET favourite = true
+    WHERE suggestion.id = $1 AND customer_id = $2`,
+    [suggestionId, customerId]
+  )
+    .then(() => {
+      return res.send(204);
+    })
+    .catch(error => {
+      console.error(error.stack);
+      res.json({ error: error.message });
+    });
+});
+
+app.post("/api/remove-favourite", (req, res) => {
+  const { suggestionId, customerId } = req.body;
+
+  db.none(
+    `UPDATE suggestion
+    SET favourite = false
+    WHERE suggestion.id = $1 AND customer_id = $2`,
+    [suggestionId, customerId]
+  )
+    .then(() => {
+      return res.json(204);
+    })
+    .catch(error => {
+      console.error(error.stack);
+      res.json({ error: error.message });
+    });
+});
+
+// FILTER GETs WIP
+
+app.get("/api/trip/:id/suggestion/achron", function(req, res) {
+  const tripId = req.params.id;
+  console.log("achron");
+  db.any(
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id ORDER BY suggestion.time ASC",
+    [tripId]
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+app.get("/api/trip/:id/suggestion/dchron", function(req, res) {
+  const tripId = req.params.id;
+  console.log("dchron");
+  db.any(
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = ($1) GROUP BY suggestion.customer_id, suggestion.id, customer.id ORDER BY suggestion.time DESC",
+    [tripId]
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+app.get("/api/trip/:id/suggestion/alike", function(req, res) {
+  const tripId = req.params.id;
+
+  db.any(
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite, COUNT(likes.suggestion_id) AS likes FROM customer, likes, suggestion, trip WHERE likes.suggestion_id = suggestion.id AND trip_id = $1 AND customer.id = suggestion.customer_id GROUP BY suggestion.customer_id, suggestion.id, customer.id ORDER BY COUNT(suggestion_id) ASC;",
+    [tripId]
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+app.get("/api/trip/:id/suggestion/dlike", function(req, res) {
+  const tripId = req.params.id;
+  console.log("dlike");
+  db.any(
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite, COUNT(likes.suggestion_id) AS likes FROM customer, likes, suggestion, trip WHERE likes.suggestion_id = suggestion.id AND trip_id = $1 AND customer.id = suggestion.customer_id GROUP BY suggestion.customer_id, suggestion.id, customer.id ORDER BY COUNT(suggestion_id) DESC;",
+    [tripId]
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+//get all suggestions for Trip Items
+app.get("/api/trip/suggestion", function(req, res) {
+  db.any(
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id GROUP BY suggestion.customer_id, suggestion.id, customer.id"
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
+
+app.get("/api/trip/${tripId}/suggestion/favfilter", function(req, res) {
+  const tripId = req.params.id;
+  db.any(
+    "SELECT suggestion.id, suggestion.place_name, suggestion.place_address, suggestion.place_id, suggestion.place_category, trip_id, suggestion.customer_id, customer.first_name, suggestion.photo_reference, suggestion.favourite FROM customer, suggestion, trip WHERE customer.id = suggestion.customer_id AND trip_id = $1 AND suggestion.favourite = true GROUP BY suggestion.customer_id, suggestion.id, customer.id",
+    [tripId]
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(`${error}`);
+    });
+});
 
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/index.html");

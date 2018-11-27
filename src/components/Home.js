@@ -1,29 +1,70 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import "../styles/components/Home.scss";
 
-function Home({ handleClick }) {
-  return (
-    <React.Fragment>
-      <h2>SPLASH</h2>
+class Home extends React.Component {
+  getData() {
+    this.interval = setInterval(() => this.props.fetchImages(), 6000);
+  }
 
-      <nav className="splash__nav">
-        <h3>
-          <NavLink to="/trips/" activeClassName="active" className="nav__item">
-            Trips
-          </NavLink>
-        </h3>
-        <h3>
-          <NavLink
-            to="/create-trip/"
-            activeClassName="active btn"
-            className="nav__item"
+  componentDidMount() {
+    this.props.fetchImages();
+    this.getData();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  render() {
+    const wordsArr = [
+      " ...woo",
+      " ...Oh la la",
+      " ...lucky them",
+      " ...so not jealous"
+    ];
+    var randomWords = wordsArr[Math.floor(Math.random() * wordsArr.length)];
+    return (
+      <React.Fragment>
+        {this.props.splashImage && (
+          <div
+            className="splash"
+            style={{
+              backgroundImage: `url(${this.props.splashImage.image})`
+            }}
           >
-            Create a trip
-          </NavLink>
-        </h3>
-      </nav>
+            <nav className="splash__nav">
+              <h3>
+                {/* <NavLink
+                  to="/trips/"
+                  activeClassName="active"
+                  className="nav__item"
+                >
+                  Trips
+                </NavLink> */}
+              </h3>
+              <button className="btn btn--large">
+                <NavLink
+                  to="/create-trip/"
+                  activeClassName="active btn"
+                  className="nav__item"
+                >
+                  Create a trip
+                </NavLink>
+              </button>
+            </nav>
 
-      {/* <button
+            <div className="splash__trip-info">
+              <h3>
+                {this.props.splashImage.first_name.charAt(0).toUpperCase()}
+                {this.props.splashImage.first_name.slice(1)} is going to{" "}
+                {this.props.splashImage.destination.charAt(0).toUpperCase()}
+                {this.props.splashImage.destination.slice(1)}
+                {randomWords}
+              </h3>
+            </div>
+
+            {/* <button
         onClick={() => handleClick("login")}
         className="login btn btn__login"
       >
@@ -41,8 +82,11 @@ function Home({ handleClick }) {
       >
         Create a trip
       </button> */}
-    </React.Fragment>
-  );
+          </div>
+        )}
+      </React.Fragment>
+    );
+  }
 }
 
 export default Home;

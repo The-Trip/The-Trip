@@ -17,7 +17,7 @@ class Trip extends React.Component {
     const flightsUrl = `/trips/${this.props.tripId}/flights`;
     const suggestionsUrl = `/trips/${this.props.tripId}/suggestions`;
     const hotelsUrl = `/trips/${this.props.tripId}/hotels`;
-
+    console.log(this.props);
     if (!this.props.trip) {
       return <div>Loading...</div>;
     }
@@ -73,22 +73,31 @@ class Trip extends React.Component {
               render={() => (
                 <section className="tripview container">
                   <header className="tripview__header">
-                    <h1 className="tripview__title">Your trip</h1>
+                    <h1 className="tripview__title" />
                     <h2 className="tripview__subtitle">
                       {this.props.trip.name}
                     </h2>
                   </header>
                   <p>{this.props.trip.details}</p>
+                  <p>Share this link</p>
+                  <p>
+                    {window.location.hostname +
+                      "/invite/" +
+                      this.props.trip.auth_code_suggest}
+                  </p>
                 </section>
               )}
             />
 
             <div className="tabs__content">
               <Switch>
-                <Route path="/trips/:id/flights" component={FlightWrapper} />
-                <Route path="/trips/:id/hotels" component={HotelsContainer} />
                 <Route
-                  path="/trips/:id/suggestions"
+                  path="/trips/:id/flights"
+                  exact
+                  component={FlightWrapper}
+                />
+                <Route
+                  path="/trips/:id/:contentType"
                   component={SuggestionsContainer}
                 />
               </Switch>

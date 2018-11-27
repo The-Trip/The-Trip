@@ -1,0 +1,7 @@
+@import "../base/_variables.scss";
+.comment-frm {
+  margin-top: $main-padding;
+}
+textarea.comment-frm__comment {
+  width: 100%;
+}

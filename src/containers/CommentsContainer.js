@@ -8,17 +8,18 @@ const mapStateToProps = (state, ownProps) => {
     tabOpen: state.stylesSwitches.tabOpen,
     tripId: ownProps.tripId,
     suggestion: ownProps.suggestion,
-    clicked: state.stylesSwitches.clicked
+    clicked: state.stylesSwitches.clicked,
+    tripLike: ownProps.tripLike
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    addClickedClass: event => {
-      dispatch(addClickedClass());
+    addClickedClass: id => {
+      dispatch(addClickedClass(id));
     },
-    removeClickedClass: event => {
-      dispatch(removeClickedClass());
+    removeClickedClass: id => {
+      dispatch(removeClickedClass(id));
     }
   };
 };

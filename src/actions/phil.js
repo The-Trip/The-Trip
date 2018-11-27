@@ -1,4 +1,10 @@
-import { fetchCommentsFromDB } from "./chris.js";
+import {
+  fetchCommentsFromDB,
+  addNewTrip,
+  setSelectedPlace,
+  storeGoogleFetch,
+  likeFetch
+} from "./chris.js";
 
 export function suggestionInputToState(name, value) {
   return {
@@ -58,6 +64,8 @@ export function addSuggestionToDB(place, tripId) {
         // TODO - Create response in server.js
         .then(id => {
           dispatch(addCommentToDB(id, tripId));
+          dispatch(setSelectedPlace(null));
+          dispatch(storeGoogleFetch([]));
         })
     );
   };
@@ -81,6 +89,7 @@ export function addCommentToDB(id, tripId) {
         // TODO - Create response in server.js
         .then(() => {
           dispatch(fetchSuggestionsFromDB(tripId));
+          dispatch(fetchCommentsFromDB(tripId));
         })
     );
   };
@@ -125,7 +134,7 @@ export function addUserToDB() {
       .then(userData => {
         console.log(userData);
         console.log("register");
-        dispatch(setUser(userData));
+        dispatch(setRegistered(true));
       });
   };
 }
@@ -134,24 +143,32 @@ export function loginUser() {
   return function(dispatch, getState) {
     console.log("login user");
     console.log(getState().loginForm);
-    return (
-      fetch("/api/login", {
-        method: "post",
-        body: JSON.stringify({
-          username: getState().loginForm.loginEmail,
-          password: getState().loginForm.loginPassword
-        }),
-        headers: {
-          "Content-Type": "application/json"
+    return fetch("/api/login", {
+      method: "post",
+      body: JSON.stringify({
+        username: getState().loginForm.loginEmail,
+        password: getState().loginForm.loginPassword
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(user => {
+        dispatch(setUser({ id: null }));
+        dispatch(setUser(user));
+        if (getState().setNewUserTrip === true) {
+          console.log("add new trip should happen next");
+          dispatch(addNewTrip());
         }
+        if (getState().newUserInvite === true) {
+          console.log("add new invite ....164");
+          dispatch(checkInviteCode());
+        }
+        console.log("clear registration next");
+        dispatch(clearRegistrationStates());
       })
-        .then(response => response.json())
-        // TODO - Create response in server.js
-        .then(user => {
-          dispatch(setUser(user));
-        })
-        .catch(console.error)
-    );
+      .catch(console.error);
   };
 }
 
@@ -159,22 +176,34 @@ export function checkInviteCode() {
   return function(dispatch, getState) {
     console.log("checkInvite");
     console.log(getState().inviteCodeForm);
-    return (
-      fetch("/api/invite", {
-        method: "post",
-        body: JSON.stringify({
-          inviteCode: getState().inviteCodeForm.inviteCode
-        }),
-        headers: {
-          "Content-Type": "application/json"
+    return fetch("/api/invite", {
+      method: "post",
+      body: JSON.stringify({
+        inviteCode: getState().inviteCodeForm.inviteCode
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        console.log(response.json);
+        if (response.status === 401) {
+          console.log("not logged in - check invite");
+          dispatch(setNewUserInvite(true));
         }
+        return response.json();
       })
-        .then(response => response.json())
-        // TODO - Create response in server.js
-        .then(tripId => {
-          dispatch(setAddedTripId(tripId));
-        })
-    );
+      .then(tripId => {
+        console.log(tripId);
+        dispatch(setAddedTripId({ id: tripId }));
+      });
+  };
+}
+
+export function setNewUserInvite(isTrue) {
+  return {
+    type: "SET_NEW_USER_INVITE",
+    isTrue
   };
 }
 
@@ -192,6 +221,19 @@ export function setUser(user) {
   return {
     type: "SET_USER",
     user: user
+  };
+}
+
+export function setRegistered(trueOrNull) {
+  return {
+    type: "SET_REGISTERED",
+    registered: trueOrNull
+  };
+}
+
+export function clearRegistrationStates() {
+  return {
+    type: "CLEAR_REGISTRATION_STATES"
   };
 }
 
@@ -231,6 +273,20 @@ export function fetchSuggestionsFromDB(tripId) {
       .then(response => response.json())
       .then(result => {
         dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
+      })
+      .catch(function(error) {});
+  };
+}
+
+export function filterOutFavsFetch(tripId) {
+  console.log("fav filter");
+  return function(dispatch, getState) {
+    fetch(`/api/trip/${tripId}/suggestion/favfilter`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
       })
       .catch(function(error) {});
   };

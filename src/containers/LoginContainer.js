@@ -14,20 +14,15 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     handleChangeLogin: event => {
-      console.log(event.target.name);
-      console.log(event.target.value);
       dispatch(loginToState(event.target.name, event.target.value));
     },
 
     handleSubmitLogin: event => {
-      console.log("handle submit login");
       event.preventDefault();
       dispatch(loginUser());
     },
 
     handleChangeRegister: event => {
-      console.log(event.target.name);
-      console.log(event.target.value);
       dispatch(registerToState(event.target.name, event.target.value));
     },
 
