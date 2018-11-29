@@ -2,12 +2,7 @@ import React from "react";
 import "../styles/components/Login.scss";
 import { NavLink } from "react-router-dom";
 
-function Login({
-  handleChangeRegister,
-  handleChangeLogin,
-  handleSubmitLogin,
-  handleSubmitRegister
-}) {
+function Login({ handleChangeLogin, handleSubmitLogin, loginMessage }) {
   return (
     <React.Fragment>
       {/* LOGIN FORM */}
@@ -55,7 +50,7 @@ function Login({
             />
             <span className="validity" />
           </div>
-
+          <div>{loginMessage}</div>
           <button type="submit" className="login-frm__submit btn btn__submit">
             Log in
           </button>
