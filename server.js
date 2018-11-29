@@ -259,9 +259,9 @@ app.post("/api/customer", (req, res) => {
 
 app.post("/api/login", function(req, res, next) {
   passport.authenticate("local", function(err, user, info) {
-    console.log(err);
-    console.log(user);
-    console.log(info);
+    console.log("e" + err);
+    console.log("u" + user);
+    console.log("i" + info);
 
     console.log(1);
     if (err) {
@@ -326,7 +326,7 @@ passport.use(
   new LocalStrategy(function(username, password, done) {
     getUserByUsername(username)
       .then(user => {
-        console.log(user);
+        console.log("uu" + user);
         if (!user) return done(null, false);
 
         bcrypt
@@ -336,7 +336,7 @@ passport.use(
           })
           .catch(error => console.log("bcrypt  :  " + error));
       })
-      .catch(error => console.log(error.received));
+      .catch(() => done(null, false));
   })
 );
 

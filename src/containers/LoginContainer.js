@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Login from "../components/Login";
-import { loginToState, loginUser } from "../actions";
+import { loginToState, loginUser, setLoginMessage } from "../actions";
 
 const mapStateToProps = state => {
   const loginMessage = state.loginMessage;
@@ -18,6 +18,10 @@ const mapDispatchToProps = dispatch => {
     handleSubmitLogin: event => {
       event.preventDefault();
       dispatch(loginUser());
+    },
+
+    clearLoginMessage: () => {
+      dispatch(setLoginMessage(null));
     }
   };
 };
