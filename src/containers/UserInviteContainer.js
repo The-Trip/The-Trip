@@ -13,19 +13,15 @@ export const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     handleChange: event => {
-      console.log(event.target.name);
-      console.log(event.target.value);
       dispatch(inviteCodeToState(event.target.name, event.target.value));
     },
 
     handleSubmit: event => {
-      console.log("handle submit login");
       event.preventDefault();
       dispatch(checkInviteCode());
     },
 
     setInviteCode: code => {
-      console.log("jddd");
       dispatch(inviteCodeToState("inviteCode", code));
     }
   };

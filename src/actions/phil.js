@@ -96,7 +96,6 @@ export function addCommentToDB(id, tripId) {
 }
 
 export function addIndivCommentToDB(suggestionId, tripId) {
-  console.log(suggestionId, tripId);
   return function(dispatch, getState) {
     return (
       fetch("/api/comment", {
@@ -121,7 +120,6 @@ export function addIndivCommentToDB(suggestionId, tripId) {
 }
 
 export function addUserToDB() {
-  console.log("start of addUserToDB action");
   return function(dispatch, getState) {
     return fetch("/api/customer", {
       method: "post",

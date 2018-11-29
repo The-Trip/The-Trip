@@ -3,8 +3,11 @@ import "../styles/components/UserInvite.scss";
 
 class UserInvite extends React.Component {
   componentDidMount() {
-    console.log(this.props.inviteCode);
     this.props.setInviteCode(this.props.inviteCode);
+  }
+
+  componentWillUnmount() {
+    this.props.setInviteCode(null);
   }
 
   render() {
