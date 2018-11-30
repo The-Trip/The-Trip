@@ -8,7 +8,8 @@ const mapStateToProps = state => {
     user: state.user.id,
     registered: state.registered,
     setNewUserTrip: state.setNewUserTrip,
-    newUserInvite: state.newUserInvite
+    newUserInvite: state.newUserInvite,
+    inviteCode: state.inviteCodeForm.inviteCode
   };
 };
 

@@ -8,7 +8,9 @@ class Nav extends React.Component {
   }
 
   componentDidUpdate(oldProps) {
-    if (this.props.user && !oldProps.user) {
+    if (this.props.user && !oldProps.user && !this.props.inviteCode) {
+      console.log("CDU Nav.js");
+      console.log(this.props.inviteCode);
       this.props.history.push(`/trips/`);
     }
     if (this.props.registered && !oldProps.registered) {
