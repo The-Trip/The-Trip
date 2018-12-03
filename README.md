@@ -2,7 +2,7 @@
 
 ## What is it?
 
-TheTrip.io is a platform to help you plan a successful and enjoyable holiday. There are 3 main areas it helps you plan are :
+TheTrip.io is a platform to help you plan a successful and enjoyable holiday. There are 3 main areas it helps you plan :
 
 1. Flights - currently a flight search engine using the kiwi.com API
 2. Hotels - hotel search using Google Places API
