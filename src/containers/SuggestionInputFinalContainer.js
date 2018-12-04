@@ -4,7 +4,7 @@ import {
   addSuggestionToDB,
   commentInputToState,
   addCommentToDB
-} from "../actions/phil";
+} from "../actions";
 
 const mapStateToProps = state => {
   return {

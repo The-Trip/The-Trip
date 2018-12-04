@@ -2,9 +2,9 @@ import { connect } from "react-redux";
 import SuggestionInput from "../components/SuggestionInput.js";
 import {
   suggestionInputToState,
-  suggestionInputClearState
+  suggestionInputClearState,
+  googleFetch
 } from "../actions";
-import { googleFetch } from "../actions";
 
 export const mapStateToProps = (state, ownProps) => {
   return {
