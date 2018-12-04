@@ -1,0 +1,53 @@
+@import "../base/_variables.scss";
+
+.selected {
+  background: $white;
+  color: $primary-color;
+  margin-bottom: $main-padding * 0.5;
+  // &:first-child {
+  //   margin-top: $main-padding * 1.5;
+  // }
+  &:last-child {
+    border-bottom: $main-padding * 0.5 solid lighten($secondary-color, 10%);
+    margin-bottom: $main-padding * 1.5;
+  }
+
+  &__table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: $main-padding auto;
+    table-layout: fixed;
+  }
+
+  td {
+    border-collapse: collapse;
+    padding: $main-padding * 0.3;
+    text-align: left;
+  }
+
+  &__outbound,
+  &__return,
+  &__city {
+    td:nth-child(2) {
+      text-align: center;
+      color: lighten($primary-color, 10%);
+    }
+  }
+
+  &__outbound,
+  &__return,
+  &__details {
+    td:nth-child(1) {
+      text-transform: uppercase;
+      padding-left: $main-padding * 0.5;
+    }
+  }
+
+  &__details {
+    color: $grey;
+  }
+
+  &__btn {
+    color: $accent-color;
+  }
+}
