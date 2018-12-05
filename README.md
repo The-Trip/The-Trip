@@ -116,8 +116,8 @@ Run `npm start` to launch the app and navigate to localhost:8080
 ### Contributors &amp; development focus
 
 **[Phil Berryman](https://github.com/philberryman)**
-Server work - API endpoints, queries in Postgres, Heroku setup
-Register / Login - using passport.js and React Router
+- Server work - API endpoints, queries in Postgres, Heroku setup
+- Register / Login - using passport.js and React Router
 
 **[Chris Phillers](https://github.com/chrisphillers)**
 Blah blah blah content to come
