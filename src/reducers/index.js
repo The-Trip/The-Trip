@@ -25,6 +25,7 @@ import tripLikes from "./tripLikes";
 import setNewUserTrip from "./setNewUserTrip";
 import newUserInvite from "./newUserInvite";
 import switcher from "./switcher";
+import loginMessage from "./loginMessage";
 
 export default combineReducers({
   flightAPIResults: setFlightsAPIResults,
@@ -52,5 +53,6 @@ export default combineReducers({
   tripLikes,
   setNewUserTrip,
   newUserInvite,
-  switcher
+  switcher,
+  loginMessage
 });

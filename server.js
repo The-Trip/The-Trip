@@ -247,16 +247,40 @@ app.post("/api/customer", (req, res) => {
 }); // allows a comment to be added to DB. Returns new comment ID if success
 
 // route to accept logins
-app.post(
-  "/api/login",
-  //(req, res) => console.log("post login", req.body),
-  passport.authenticate("local", { session: true }),
-  function(req, res) {
-    console.log(req.user);
-    console.log("api login");
-    res.json(req.user).end();
-  }
-);
+// app.post(
+//   "/api/login",
+//   passport.authenticate("local", { session: true }),
+//   function(req, res) {
+//     console.log(req.user);
+//     console.log("api login");
+//     res.json(req.user).end();
+//   }
+// );
+
+app.post("/api/login", function(req, res, next) {
+  passport.authenticate("local", function(err, user, info) {
+    console.log("e" + err);
+    console.log("u" + user);
+    console.log("i" + info);
+
+    console.log(1);
+    if (err) {
+      console.log(2);
+      return next(err);
+    }
+    if (!user) {
+      console.log(3);
+      return res.json(null);
+    }
+    req.logIn(user, function(err) {
+      console.log(4);
+      if (err) {
+        return next(err);
+      }
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
 
 // const users = {
 //   1: {
@@ -274,7 +298,7 @@ app.post(
 function getUserByUsername(username) {
   return db
     .one(`SELECT * FROM customer WHERE email = ($1)`, [username])
-    .catch(console.error);
+    .catch("getUserByUserName" + console.error);
 }
 
 passport.serializeUser(function(user, done) {
@@ -302,6 +326,7 @@ passport.use(
   new LocalStrategy(function(username, password, done) {
     getUserByUsername(username)
       .then(user => {
+        console.log("uu" + user);
         if (!user) return done(null, false);
 
         bcrypt
@@ -309,9 +334,9 @@ passport.use(
           .then(matches => {
             matches ? done(null, user) : done(null, false);
           })
-          .catch(console.error);
+          .catch(error => console.log("bcrypt  :  " + error));
       })
-      .catch(console.error);
+      .catch(() => done(null, false));
   })
 );
 

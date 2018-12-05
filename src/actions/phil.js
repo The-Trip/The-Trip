@@ -96,7 +96,6 @@ export function addCommentToDB(id, tripId) {
 }
 
 export function addIndivCommentToDB(suggestionId, tripId) {
-  console.log(suggestionId, tripId);
   return function(dispatch, getState) {
     return (
       fetch("/api/comment", {
@@ -121,7 +120,6 @@ export function addIndivCommentToDB(suggestionId, tripId) {
 }
 
 export function addUserToDB() {
-  console.log("start of addUserToDB action");
   return function(dispatch, getState) {
     return fetch("/api/customer", {
       method: "post",
@@ -155,6 +153,12 @@ export function loginUser() {
     })
       .then(response => response.json())
       .then(user => {
+        if (!user) {
+          console.log(user);
+          console.log("incorrect password");
+          dispatch(setLoginMessage("Incorrect username or password"));
+          return;
+        }
         dispatch(setUser({ id: null }));
         dispatch(setUser(user));
         if (getState().setNewUserTrip === true) {
@@ -168,7 +172,7 @@ export function loginUser() {
         console.log("clear registration next");
         dispatch(clearRegistrationStates());
       })
-      .catch(console.error);
+      .catch("catch login" + console.error.QueryResultError);
   };
 }
 
@@ -221,6 +225,13 @@ export function setUser(user) {
   return {
     type: "SET_USER",
     user: user
+  };
+}
+
+export function setLoginMessage(message) {
+  return {
+    type: "SET_LOGIN_MESSAGE",
+    message
   };
 }
 

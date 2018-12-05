@@ -1,21 +1,21 @@
-import { connect } from 'react-redux';
-import FlightResults from '../components/FlightResults';
-import {fetchFlightsFromDB} from "../actions/tomactions"
+import { connect } from "react-redux";
+import FlightResults from "../components/FlightResults";
+import { fetchFlightsFromDB } from "../actions";
 
 export const mapStateToProps = state => {
-    return {
-        flightResults: state.flightAPIResults.data,
-        isAPILoading: state.isAPILoading,
-        startDate: state.startDate,
-        endDate: state.endDate,
-    }
+  return {
+    flightResults: state.flightAPIResults.data,
+    isAPILoading: state.isAPILoading,
+    startDate: state.startDate,
+    endDate: state.endDate
+  };
 };
 
 const mapDispatchToProps = {
-    fetchFlightsFromDB
+  fetchFlightsFromDB
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps
 )(FlightResults);

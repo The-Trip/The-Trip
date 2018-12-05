@@ -1,14 +1,12 @@
 import { connect } from "react-redux";
 import Login from "../components/Login";
-import {
-  loginToState,
-  registerToState,
-  addUserToDB,
-  loginUser
-} from "../actions";
+import { loginToState, loginUser, setLoginMessage } from "../actions";
 
 const mapStateToProps = state => {
-  return {};
+  const loginMessage = state.loginMessage;
+  return {
+    loginMessage
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -22,13 +20,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(loginUser());
     },
 
-    handleChangeRegister: event => {
-      dispatch(registerToState(event.target.name, event.target.value));
-    },
-
-    handleSubmitRegister: event => {
-      event.preventDefault();
-      dispatch(addUserToDB());
+    clearLoginMessage: () => {
+      dispatch(setLoginMessage(null));
     }
   };
 };
