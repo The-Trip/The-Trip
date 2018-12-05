@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import AddIndivComment from "../components/AddIndivComment.js";
-import { commentInputToState, addIndivCommentToDB } from "../actions/phil";
+import { commentInputToState, addIndivCommentToDB } from "../actions";
 
 const mapStateToProps = (state, ownProps) => {
   return {
