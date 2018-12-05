@@ -121,7 +121,9 @@ Run `npm start` to launch the app and navigate to localhost:8080
 - Invite link functionality
 
 **[Chris Phillers](https://github.com/chrisphillers)**
-Blah blah blah content to come
+- Google Places API
+- Suggestions/Comments/Likes/Favourites functionality
+- Server work - API endpoints, queries in Postgres
 
 **[Melanie Ashby](https://github.com/lemonydesign)**
 Create &amp; seed initial database, semantic-bem html schema, component creation and hierarchy, SASS &amp; design, user journey mapping using React-Router links &amp; views
