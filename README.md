@@ -6,15 +6,9 @@
 
 > View live demo **[TheTrip.io](https://www.thetrip.io/)**
 
-#### Planning
+#### Planning ####
 
 **[TheTrip.io](https://www.thetrip.io/)** provides a user-friendly platform for the trip planner to create a trip, then share a link to a unique trip page with those going, where trip-goers can plan:
-=======
-# The-Trip
-
-## What is it?
-
-TheTrip.io is a platform to help you plan a successful and enjoyable holiday. There are 3 main areas it helps you plan :
 
 1. Flights - currently a flight search engine using the kiwi.com API
 2. Hotels - hotel search using Google Places API
