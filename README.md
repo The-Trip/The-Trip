@@ -97,10 +97,6 @@ Run `npm start` to launch the app and navigate to localhost:8080
 
 - Suggestions managed and ranked by likes or chronology, with filter for trip favourites.
 
-#### Design
-
-- Figma wireframes and design patterns
-
 #### Database
 
 - Trips, customers (users), permissions, suggestions, comments and flights are held in a relational database.
