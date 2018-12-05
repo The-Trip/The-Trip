@@ -6,7 +6,7 @@
 
 > View live demo **[TheTrip.io](https://www.thetrip.io/)**
 
-####Planning
+#### Planning
 
 **[TheTrip.io](https://www.thetrip.io/)** provides a user-friendly platform for the trip planner to create a trip, then share a link to a unique trip page with those going, where trip-goers can plan:
 =======
@@ -22,7 +22,7 @@ TheTrip.io is a platform to help you plan a successful and enjoyable holiday. Th
 
 Search results may be scrapbooked and enable users to pin down the exact where, how and when; when they go away they trip planners have everything to hand, stored on their trip page.
 
-####Crowdsourcing
+#### Crowdsourcing
 
 A key feature of The Trip is that it enables users to crowdsource suggestions from friends.
 By sharing an invite URL you can ask for ideas about where to go when arriving at the trip destination. Friends can recommend venues, museums, sights etc, upvote and comment on each other’s suggestions. Planners may select favourites from suggestions to prioritise for their visit.
@@ -126,7 +126,9 @@ Run `npm start` to launch the app and navigate to localhost:8080
 - Server work - API endpoints, queries in Postgres
 
 **[Melanie Ashby](https://github.com/lemonydesign)**
-Create &amp; seed initial database, semantic-bem html schema, component creation and hierarchy, SASS &amp; design, user journey mapping using React-Router links &amp; views
+- Semantic-bem html schema, component creation and hierarchy, 
+- SASS &amp; design
+- User journey mapping using React-Router links &amp; views
 
 **[Tom Bast](https://github.com/tomjbast)**
 Flights and unit tests
