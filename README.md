@@ -118,7 +118,7 @@ Run `npm start` to launch the app and navigate to localhost:8080
 - Server work - API endpoints, queries in Postgres
 
 **[Melanie Ashby](https://github.com/lemonydesign)**
-- Semantic-bem html schema, component creation and hierarchy 
+- Semantic-bem html schema, component creation, hierarchy &amp; revisions
 - SASS, design, design functionality
 - React-Router links, views, user-journey mapping
 
