@@ -6,6 +6,8 @@
 
 > View live demo **[TheTrip.io](https://www.thetrip.io/)**
 
+_App under development, mobile view_ 
+
 #### Planning ####
 
 **[TheTrip.io](https://www.thetrip.io/)** provides a user-friendly platform for the trip planner to create a trip, then share a link to a unique trip page with those going, where trip-goers can plan:
