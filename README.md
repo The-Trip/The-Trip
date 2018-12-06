@@ -118,12 +118,14 @@ Run `npm start` to launch the app and navigate to localhost:8080
 - Server work - API endpoints, queries in Postgres
 
 **[Melanie Ashby](https://github.com/lemonydesign)**
-- Semantic-bem html schema, component creation and hierarchy, 
-- SASS &amp; design
-- User journey mapping using React-Router links &amp; views
+- Semantic-bem html schema, component creation and hierarchy 
+- SASS, design, design functionality
+- React-Router links, views, user-journey mapping
 
 **[Tom Bast](https://github.com/tomjbast)**
-Flights and unit tests
+- Flights
+- Unit tests
+- Server work for flights
 
 ---
 
