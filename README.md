@@ -6,7 +6,7 @@
 
 > View live demo **[TheTrip.io](https://www.thetrip.io/)**
 
-_App under development, mobile view_ 
+(NB _app under development, mobile view only_) 
 
 #### Planning ####
 
