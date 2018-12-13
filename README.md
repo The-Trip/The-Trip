@@ -6,15 +6,11 @@
 
 > View live demo **[TheTrip.io](https://www.thetrip.io/)**
 
-####Planning
+(NB _app under development, mobile view only_) 
+
+#### Planning ####
 
 **[TheTrip.io](https://www.thetrip.io/)** provides a user-friendly platform for the trip planner to create a trip, then share a link to a unique trip page with those going, where trip-goers can plan:
-=======
-# The-Trip
-
-## What is it?
-
-TheTrip.io is a platform to help you plan a successful and enjoyable holiday. There are 3 main areas it helps you plan :
 
 1. Flights - currently a flight search engine using the kiwi.com API
 2. Hotels - hotel search using Google Places API
@@ -22,7 +18,7 @@ TheTrip.io is a platform to help you plan a successful and enjoyable holiday. Th
 
 Search results may be scrapbooked and enable users to pin down the exact where, how and when; when they go away they trip planners have everything to hand, stored on their trip page.
 
-####Crowdsourcing
+#### Crowdsourcing
 
 A key feature of The Trip is that it enables users to crowdsource suggestions from friends.
 By sharing an invite URL you can ask for ideas about where to go when arriving at the trip destination. Friends can recommend venues, museums, sights etc, upvote and comment on each other’s suggestions. Planners may select favourites from suggestions to prioritise for their visit.
@@ -103,10 +99,6 @@ Run `npm start` to launch the app and navigate to localhost:8080
 
 - Suggestions managed and ranked by likes or chronology, with filter for trip favourites.
 
-#### Design
-
-- Figma wireframes and design patterns
-
 #### Database
 
 - Trips, customers (users), permissions, suggestions, comments and flights are held in a relational database.
@@ -116,16 +108,24 @@ Run `npm start` to launch the app and navigate to localhost:8080
 ### Contributors &amp; development focus
 
 **[Phil Berryman](https://github.com/philberryman)**
-Blah blah blah content to come
+- Server work - API endpoints, queries in Postgres, Heroku setup
+- Register / Login functionality and journeys - using passport.js and React Router
+- Invite link functionality
 
 **[Chris Phillers](https://github.com/chrisphillers)**
-Blah blah blah content to come
+- Google Places API
+- Suggestions/Comments/Likes/Favourites functionality
+- Server work - API endpoints, queries in Postgres
 
 **[Melanie Ashby](https://github.com/lemonydesign)**
-Create &amp; seed initial database, semantic-bem html schema, component creation and hierarchy, SASS &amp; design, user journey mapping using React-Router links &amp; views
+- Semantic-bem html schema, component creation, hierarchy &amp; revisions
+- SASS, design, design functionality
+- React-Router links, views, user-journey mapping
 
 **[Tom Bast](https://github.com/tomjbast)**
-Flights and unit tests
+- Flights
+- Unit tests
+- Server work for flights
 
 ---
 
@@ -147,4 +147,3 @@ Flights and unit tests
 - Desktop layout.
 - Cross-browser testing (currently only Chrome).
 - Further unit testing
-=======
