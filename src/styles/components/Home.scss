@@ -2,36 +2,38 @@
 
 .splash {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: fixed;
-  background-position-x: -10vh;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  height: 100vh;
   margin: 0;
+  width: 100%;
   background-color: $primary-color;
   background-repeat: no-repeat;
   background-position: center;
-  width: 100%;
-  height: 90vh;
   background-size: cover;
 
-  &__trip-info {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    color: white;
-    background: #333; /* For browsers that don't support RGBA */
-    background: rgba(0, 0, 0, 0.18);
-    padding: 4px 8px;
+  &__promo {
+    position: relative;
+    z-index: 1;
   }
 
-  &__nav {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-    margin-top: 20rem;
+  &__trip-info {
+    color: white;
   }
+}
+
+.splash:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 @keyframes fadeIn {

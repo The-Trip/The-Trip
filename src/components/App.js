@@ -20,10 +20,10 @@ import FlightWrapper from "../containers/FlightWrapper";
 
 function App() {
   return (
-    <div>
+    <React.Fragment>
       {/* <SocketContainer /> */}
       <NavContainer />
-      <main>
+      <main className="main">
         <Route path="/" exact component={HomeContainer} />
         <Route path="/trips/friends/" exact component={TripsListContainer} />
         <Route path="/trips/" exact component={TripsListContainer} />
@@ -37,7 +37,7 @@ function App() {
         <Route path="/invite/:code/" component={UserInviteContainer} />
       </main>
       {/* <Footer /> */}
-    </div>
+    </React.Fragment>
   );
 }
 

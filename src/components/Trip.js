@@ -19,7 +19,7 @@ class Trip extends React.Component {
     const hotelsUrl = `/trips/${this.props.tripId}/hotels`;
     console.log(this.props);
     if (!this.props.trip) {
-      return <div>Loading...</div>;
+      return <div className="show--screenreaders">Loading...</div>;
     }
 
     return (

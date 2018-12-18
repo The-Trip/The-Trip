@@ -20,10 +20,13 @@ body {
   font-family: $body-font;
   margin: 0;
   padding: 0;
-  background: $white;
+  background: lighten($primary-color, 20%);
   line-height: 1.5;
   color: $primary-color;
   -webkit-font-smoothing: antialiased;
+}
+.main {
+  background: $white;
 }
 h1,
 h2,
@@ -49,10 +52,16 @@ a {
   padding-right: $main-padding * 1.5;
   margin: 0 auto;
 }
-main {
+.main {
   margin-top: 4.6rem;
   padding-bottom: $main-padding * 1.5;
 }
+// splash view reset
+.splash-context .main {
+  margin-top: 0;
+  padding-bottom: 0;
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -93,22 +102,28 @@ img {
 
 // MEDIA QUERIES - post MVP
 @media (min-width: 768px) {
+  .main,
+  .sitehead__wrapper {
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 @media (min-width: 960px) {
-  .container {
-    max-width: 930px;
-  }
+  // .container {
+  //   max-width: 930px;
+  // }
 }
 
 @media (min-width: 1200px) {
-  .container {
-    max-width: 1170px;
-  }
+  // .container {
+  //   max-width: 1170px;
+  // }
 }
 
 @media (min-width: 1440px) {
-  .container {
-    max-width: 1410px;
-  }
+  // .container {
+  //   max-width: 1410px;
+  // }
 }

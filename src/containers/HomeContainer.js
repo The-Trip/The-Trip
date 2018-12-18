@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import Home from "../components/Home.js";
-import { setView } from "../actions/phil";
 import { fetchCustomersDestinationsFromDB } from "../actions";
 
 const mapStateToProps = state => {
