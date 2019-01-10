@@ -112,7 +112,7 @@ Run `npm start` to launch the app and navigate to localhost:8080
 - Register / Login functionality and journeys - using passport.js and React Router
 - Invite link functionality
 
-**[Chris Phillers](https://github.com/chrisphillers)**
+**[Chris Phillips](https://github.com/chrisphillers)**
 - Google Places API
 - Suggestions/Comments/Likes/Favourites functionality
 - Server work - API endpoints, queries in Postgres
