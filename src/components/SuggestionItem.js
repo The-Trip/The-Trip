@@ -10,11 +10,6 @@ class SuggestionItem extends React.Component {
       clickedLike: props.clickedLike,
       clickedFav: props.clickedFav
     };
-    // this.state = {
-    //   clickedstate: false,
-    //   clickedLike: false,
-    //   clickedFav: false
-    // };
 
     this.removeClicked = this.removeClicked.bind(this);
     this.addClicked = this.addClicked.bind(this);
@@ -52,8 +47,6 @@ class SuggestionItem extends React.Component {
     this.props.addFavourites(this.props.suggestion.id, this.props.tripId);
   }
   render() {
-    console.log(this.props.tripLike);
-    console.log(this.props);
     return (
       <article className="suggestion">
         <header className="suggestion__header container">

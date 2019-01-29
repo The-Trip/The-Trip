@@ -22,7 +22,7 @@ import {
   filterOutFavsFetch,
   addClickedFavFilter,
   removeClickedFavFilter
-} from "../actions/chris";
+} from "../actions";
 
 const mapStateToProps = (state, ownProps) => {
   const trips = state.trips;
@@ -33,8 +33,6 @@ const mapStateToProps = (state, ownProps) => {
   const clickedFav = state.switcher.clickedFav;
   const clickedTime = state.switcher.clickedTime;
   const clickedLikes = state.switcher.clickedLikes;
-
-  // console.log(state.tripLikes);
 
   return {
     suggestions: state.suggestions,
@@ -61,54 +59,44 @@ const mapDispatchToProps = dispatch => {
 
     addLike: (suggestionId, tripId) => {
       dispatch(addClickedLike());
-      console.log("clicked add like");
       dispatch(addLike(suggestionId, tripId));
     },
 
     removeLike: (suggestionId, tripId) => {
-      console.log("clicked remove like");
       dispatch(removeClickedLike());
       dispatch(removeLike(suggestionId, tripId));
     },
 
     addFavourites: (suggestionId, tripId) => {
       dispatch(addClickedFav());
-      console.log("clicked add fav");
       dispatch(addFavourite(suggestionId, tripId));
     },
     removeFavourites: (suggestionId, tripId) => {
       dispatch(removeClickedFav());
-      console.log("clicked remove fav");
       dispatch(removeFavourite(suggestionId, tripId));
     },
     orderTimeAsc: tripId => {
-      console.log("clicked time up");
       dispatch(addClickedTime());
       dispatch(ascendChronFetch(tripId));
     },
     orderTimeDesc: tripId => {
       dispatch(removeClickedTime());
-      console.log("clicked time down");
       dispatch(descendChronFetch(tripId));
     },
     orderLikesAsc: tripId => {
       dispatch(addClickedLikes());
-      console.log("clicked like down");
       dispatch(ascendLikesFetch(tripId));
     },
     orderLikesDesc: tripId => {
       dispatch(removeClickedLikes());
-      console.log("clicked like up");
       dispatch(descendLikesFetch(tripId));
     },
     filterFavsIn: tripId => {
       dispatch(addClickedFavFilter());
-      console.log("clicked fav in");
       dispatch(fetchSuggestionsFromDB(tripId));
     },
     filterFavsOut: tripId => {
       dispatch(removeClickedFavFilter());
-      console.log("clicked fav out");
       dispatch(filterOutFavsFetch(tripId));
     }
   };

@@ -13,12 +13,10 @@ const mapDispatchToProps = dispatch => {
     handleChange: event => {
       dispatch(setTripState(event.target.name, event.target.value));
     },
-
     handleSubmit: event => {
       event.preventDefault();
       dispatch(addNewTrip());
     },
-
     resetAddedTripId: () => {
       dispatch(setAddedTripId(null));
     }

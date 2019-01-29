@@ -8,14 +8,12 @@ import "../styles/base/tabs.scss";
 
 class TripsList extends React.Component {
   componentDidMount() {
-    console.log(this.props.trips);
     this.props.fetchTripsFromDB(this.props.userId);
   }
 
   render() {
     const myTripsUrl = `/trips/`;
     const friendsTripsUrl = `/trips/friends`;
-    console.log(this.props.suggestions);
 
     return (
       <div>
@@ -57,11 +55,8 @@ class TripsList extends React.Component {
                         {this.props.trips
                           .filter(trip => trip.permission === "owner")
                           .map(trip => {
-                            //   const Arr = this.props.suggestions
-                            //   console.log(
-
-                            //     function removeDuplicates(Arr, prop) { return this.props.suggestions.filter((obj, pos, arr) => { return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos; });}
-                            //  )
+                            //  const Arr = this.props.suggestions
+                            //  function removeDuplicates(Arr, prop) { return this.props.suggestions.filter((obj, pos, arr) => { return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos; });}
                             return (
                               <TripsListItem
                                 key={trip.id}
@@ -88,11 +83,6 @@ class TripsList extends React.Component {
                     exact
                     render={() => (
                       <section className="friendsView">
-                        {console.log(
-                          this.props.trips.filter(
-                            trip => trip.permission === "suggester"
-                          )
-                        )}
                         {this.props.trips
                           .filter(trip => trip.permission === "suggester")
                           .map(trip => {

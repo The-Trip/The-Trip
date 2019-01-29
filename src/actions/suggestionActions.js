@@ -1,25 +1,22 @@
 export function addSuggestionToDB(place, tripId) {
   return function(dispatch, getState) {
-    return (
-      fetch("/api/suggestion", {
-        method: "post",
-        body: JSON.stringify({
-          place: place,
-          user: getState().user.id,
-          trip: tripId
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(response => response.json())
-        // TODO - Create response in server.js
-        .then(id => {
-          dispatch(addCommentToDB(id, tripId));
-          dispatch(setSelectedPlace(null));
-          dispatch(storeGoogleFetch([]));
-        })
-    );
+    return fetch("/api/suggestion", {
+      method: "post",
+      body: JSON.stringify({
+        place: place,
+        user: getState().user.id,
+        trip: tripId
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(id => {
+        dispatch(addCommentToDB(id, tripId));
+        dispatch(setSelectedPlace(null));
+        dispatch(storeGoogleFetch([]));
+      });
   };
 }
 
@@ -46,7 +43,6 @@ export function fetchSuggestionsFromDB(tripId) {
   };
 }
 
-// DUPLICATION !!!!!
 export function receiveSuggestions(suggestions) {
   return {
     type: "RECEIVE_SUGGESTIONS",
@@ -54,15 +50,7 @@ export function receiveSuggestions(suggestions) {
   };
 }
 
-export function suggestionsFromDB(data) {
-  return {
-    type: "RECEIVE_SUGGESTIONS",
-    suggestions: data
-  };
-}
-
 export function suggestionInputClearState() {
-  console.log("suggestion input clear action");
   return {
     type: "CLEAR_SUGGESTION_INPUT"
   };
@@ -76,7 +64,10 @@ export function suggestionInputToState(name, value) {
   };
 }
 
-// SUGGESTED PLACES (GOOGLE)
+/**
+ * SUGGESTED PLACES
+ * Google Fetch
+ */
 
 export function googleFetch(tripId) {
   return function(dispatch, getState) {
@@ -97,14 +88,12 @@ export function googleFetch(tripId) {
       .catch(console.error);
   };
 }
-
 export function storeGoogleFetch(data) {
   return {
     type: "STORE_GOOGLE",
     destinationInfo: data
   };
 }
-
 export function setSelectedPlace(place) {
   return {
     type: "STORE_PLACE",
@@ -112,7 +101,9 @@ export function setSelectedPlace(place) {
   };
 }
 
-// COMMENTS
+/**
+ * COMMENTS
+ */
 export function commentInputToState(name, value) {
   return {
     type: "SET_COMMENT_INPUT",
@@ -123,49 +114,43 @@ export function commentInputToState(name, value) {
 
 export function addCommentToDB(id, tripId) {
   return function(dispatch, getState) {
-    return (
-      fetch("/api/comment", {
-        method: "post",
-        body: JSON.stringify({
-          suggest_id: id.suggestionID,
-          cust_id: getState().user.id,
-          comment: getState().suggestionComment
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(response => response.json())
-        // TODO - Create response in server.js
-        .then(() => {
-          dispatch(fetchSuggestionsFromDB(tripId));
-          dispatch(fetchCommentsFromDB(tripId));
-        })
-    );
+    return fetch("/api/comment", {
+      method: "post",
+      body: JSON.stringify({
+        suggest_id: id.suggestionID,
+        cust_id: getState().user.id,
+        comment: getState().suggestionComment
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(() => {
+        dispatch(fetchSuggestionsFromDB(tripId));
+        dispatch(fetchCommentsFromDB(tripId));
+      });
   };
 }
 
 export function addIndivCommentToDB(suggestionId, tripId) {
   return function(dispatch, getState) {
-    return (
-      fetch("/api/comment", {
-        method: "post",
-        body: JSON.stringify({
-          suggest_id: suggestionId.id,
-          cust_id: getState().user.id,
-          comment: getState().suggestionComment
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(response => response.json())
-        // TODO - Create response in server.js
-        .then(() => {
-          dispatch(fetchSuggestionsFromDB(tripId));
-          dispatch(fetchCommentsFromDB(tripId));
-        })
-    );
+    return fetch("/api/comment", {
+      method: "post",
+      body: JSON.stringify({
+        suggest_id: suggestionId.id,
+        cust_id: getState().user.id,
+        comment: getState().suggestionComment
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(() => {
+        dispatch(fetchSuggestionsFromDB(tripId));
+        dispatch(fetchCommentsFromDB(tripId));
+      });
   };
 }
 
@@ -179,7 +164,6 @@ export function fetchCommentsFromDB(tripId) {
       .catch(console.error);
   };
 }
-
 export function receiveComments(results) {
   return {
     type: "STORE_COMMENTS",
@@ -187,8 +171,9 @@ export function receiveComments(results) {
   };
 }
 
-// LIKES
-
+/**
+ * LIKES
+ */
 export function addLike(suggestionId, tripId) {
   return function(dispatch, getState) {
     fetch(`/api/addlike`, {
@@ -249,7 +234,9 @@ export function setLikes(tripLikes) {
   };
 }
 
-// FAVOURITES
+/**
+ * FAVOURITES
+ */
 export function addFavourite(suggestionId, tripId) {
   return function(dispatch, getState) {
     fetch(`/api/add-favourite`, {
@@ -263,7 +250,6 @@ export function addFavourite(suggestionId, tripId) {
       }
     })
       .then(() => {
-        // fetchSuggestions includes favourites
         fetchSuggestionsFromDB(tripId);
       })
       .catch(console.error);
@@ -283,16 +269,16 @@ export function removeFavourite(suggestionId, tripId) {
       }
     })
       .then(() => {
-        // fetchSuggestions includes favourites
         fetchSuggestionsFromDB(tripId);
       })
       .catch(console.error);
   };
 }
 
-// ORDER BY TIME
+/**
+ * ORDER BY TIME
+ */
 export function ascendChronFetch(tripId) {
-  console.log("achronfetch");
   return function(dispatch, getState) {
     fetch(`/api/trip/${tripId}/suggestion/achron`)
       .then(response => response.json())
@@ -305,7 +291,6 @@ export function ascendChronFetch(tripId) {
 }
 
 export function descendChronFetch(tripId) {
-  console.log("dchronfetch");
   return function(dispatch, getState) {
     fetch(`/api/trip/${tripId}/suggestion/dchron`)
       .then(response => response.json())
@@ -317,9 +302,10 @@ export function descendChronFetch(tripId) {
   };
 }
 
-// ORDER BY LIKES
+/**
+ * ORDER BY LIKES
+ */
 export function ascendLikesFetch(tripId) {
-  console.log("alikefetch");
   return function(dispatch, getState) {
     fetch(`/api/trip/${tripId}/suggestion/alike`)
       .then(response => response.json())
@@ -332,7 +318,6 @@ export function ascendLikesFetch(tripId) {
 }
 
 export function descendLikesFetch(tripId) {
-  console.log("dlikefetch");
   return function(dispatch, getState) {
     fetch(`/api/trip/${tripId}/suggestion/dlike`)
       .then(response => response.json())
@@ -344,11 +329,21 @@ export function descendLikesFetch(tripId) {
   };
 }
 
-// FAVOURITES ONLY FILTER
-
-// DUPLICATION !!!!!
+/**
+ * FAVOURITES-ONLY FILTER
+ */
 export function filterOutFavsFetch(tripId) {
-  console.log("fav filter");
+  return function(dispatch, getState) {
+    fetch(`/api/trip/${tripId}/suggestion/favout`)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(receiveSuggestions(result));
+        dispatch(likeFetch(tripId));
+      })
+      .catch(function(error) {});
+  };
+}
+export function filterInFavsFetch(tripId) {
   return function(dispatch, getState) {
     fetch(`/api/trip/${tripId}/suggestion/favfilter`)
       .then(response => response.json())
@@ -360,55 +355,27 @@ export function filterOutFavsFetch(tripId) {
   };
 }
 
-// export function filterOutFavsFetch(tripId) {
-//   console.log("alikefetch");
-//   return function(dispatch, getState) {
-//     fetch(`/api/trip/${tripId}/suggestion/favin`)
-//       .then(response => response.json())
-//       .then(result => {
-//         dispatch(receiveSuggestions(result));
-//         dispatch(likeFetch(tripId));
-//       })
-//       .catch(function(error) {});
-//   };
-// }
-
-export function filterInFavsFetch(tripId) {
-  console.log("dlikefetch");
-  return function(dispatch, getState) {
-    fetch(`/api/trip/${tripId}/suggestion/favout`)
-      .then(response => response.json())
-      .then(result => {
-        dispatch(receiveSuggestions(result));
-        dispatch(likeFetch(tripId));
-      })
-      .catch(function(error) {});
-  };
-}
-
-// TOGGLE LIKES & FAVOURITES
-
+/**
+ * TOGGLE LIKES AND FAVOURITES
+ */
 export function removeClickedLike(id) {
   return {
     type: "ADD_CLICKED_LIKE",
     id
   };
 }
-
 export function addClickedLike(id) {
   return {
     type: "REMOVE_CLICKED_LIKE",
     id
   };
 }
-
 export function addClickedFav(id) {
   return {
     type: "ADD_CLICKED_FAV",
     id
   };
 }
-
 export function removeClickedFav(id) {
   return {
     type: "REMOVE_CLICKED_FAV",
@@ -416,8 +383,9 @@ export function removeClickedFav(id) {
   };
 }
 
-// TOGGLE ORDER/FILTER
-
+/**
+ * TOGGLE/ORDER FILTER
+ */
 export function addClickedTime(id) {
   return {
     type: "ADD_CLICKED_TIME",

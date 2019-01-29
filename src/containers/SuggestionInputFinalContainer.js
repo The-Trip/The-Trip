@@ -8,7 +8,6 @@ import {
 
 const mapStateToProps = state => {
   return {
-    // suggestion_id: state.suggestions,
     place: state.googlePlaceInfo.find(
       // eslint-disable-next-line
       place => place.place_id == state.selectedPlace
@@ -23,19 +22,13 @@ const mapDispatchToProps = dispatch => {
     },
 
     handleSubmit: (place, tripId, event) => {
-      console.log("hi there");
       event.preventDefault();
-      console.log({ place, tripId, event });
-
       dispatch(addSuggestionToDB(place, tripId));
-      // dispatch(addCommentToDB());
     },
 
     handleCommentSubmit: (place, tripId, event, suggestion_id) => {
       event.preventDefault();
-      // console.log({ place, tripId, event, suggestion_id });
       dispatch(addCommentToDB(place, tripId, suggestion_id));
-      // dispatch(addCommentToDB());
     }
   };
 };

@@ -60,7 +60,7 @@ class Suggestions extends React.Component {
 
           {!this.props.deDupedSuggest && (
             <section className="suggestions__filter">
-              <a
+              <button
                 onClick={event => {
                   event.preventDefault();
                   this.props.clickedTime
@@ -69,8 +69,8 @@ class Suggestions extends React.Component {
                 }}
               >
                 Time
-              </a>
-              <a
+              </button>
+              <button
                 onClick={event => {
                   event.preventDefault();
                   this.props.clickedLikes
@@ -79,8 +79,8 @@ class Suggestions extends React.Component {
                 }}
               >
                 Likes
-              </a>
-              <a
+              </button>
+              <button
                 onClick={event => {
                   event.preventDefault();
                   this.props.clickedFav
@@ -89,11 +89,10 @@ class Suggestions extends React.Component {
                 }}
               >
                 Favourites
-              </a>
+              </button>
             </section>
           )}
           {deDupedSuggest.map(suggestion => {
-            console.log(this.props.tripLikes);
             const tripLike = this.props.tripLikes
               ? this.props.tripLikes.filter(
                   like => like.suggestion_id === suggestion.id

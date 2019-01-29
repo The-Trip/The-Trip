@@ -34,7 +34,6 @@ class Comments extends React.Component {
       "tab--open": this.state.clickedstate,
       "tab--closed": !this.state.clickedstate
     });
-    console.log(this.props.tripLike);
 
     return (
       <React.Fragment>
@@ -48,7 +47,6 @@ class Comments extends React.Component {
               className="viewcomments__btn"
               value={this.props.suggestion.id}
               onClick={event => {
-                console.log(this.state.clickedstate);
                 this.state.clickedstate
                   ? this.removeClicked(event.target.value)
                   : this.addClicked(event.target.value);
