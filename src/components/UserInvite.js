@@ -12,7 +12,6 @@ function UserInvite({ setInviteCode, inviteCode, handleSubmit, handleChange }) {
 
   return (
     <React.Fragment>
-      {/* INVITE FORM */}
       <section className="invite container">
         <header className="invite__header">
           <h1 className="invite__title">Ready to Trip?</h1>

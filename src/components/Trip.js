@@ -73,17 +73,28 @@ class Trip extends React.Component {
               render={() => (
                 <section className="tripview container">
                   <header className="tripview__header">
-                    <h1 className="tripview__title" />
+                    <h1 className="tripview__title">{this.props.trip.name}</h1>
                     <h2 className="tripview__subtitle">
-                      {this.props.trip.name}
+                      {this.props.trip.origin} - {this.props.trip.destination}
                     </h2>
                   </header>
                   <p>{this.props.trip.details}</p>
                   <p>Share this link</p>
+
                   <p>
-                    {window.location.hostname +
-                      "/invite/" +
-                      this.props.trip.auth_code_suggest}
+                    <a
+                      href={
+                        window.location.protocol +
+                        "//" +
+                        window.location.host +
+                        "/invite/" +
+                        this.props.trip.auth_code_suggest
+                      }
+                    >
+                      {window.location.hostname +
+                        "/invite/" +
+                        this.props.trip.auth_code_suggest}
+                    </a>
                   </p>
                 </section>
               )}

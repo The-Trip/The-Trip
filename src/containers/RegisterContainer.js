@@ -9,8 +9,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     handleChangeRegister: event => {
-      console.log(event.target.name);
-      console.log(event.target.value);
       dispatch(registerToState(event.target.name, event.target.value));
     },
 

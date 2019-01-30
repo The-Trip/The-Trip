@@ -15,7 +15,6 @@ function Login({
 
   return (
     <React.Fragment>
-      {/* LOGIN FORM */}
       <section className="login container">
         <header className="login__header">
           <h1 className="login__title">Login</h1>
@@ -67,7 +66,6 @@ function Login({
         </form>
       </section>
 
-      {/* REGISTRATION FORM */}
       <section className="registration container">
         <header className="registration__header">
           <NavLink

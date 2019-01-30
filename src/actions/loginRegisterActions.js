@@ -1,10 +1,7 @@
 import { addNewTrip, setAddedTripId, apiCall } from "./tripCreateActions.js";
 
-// DUPLICATION !!!
-
 // REGISTER USER
 export function addUserToDB() {
-  console.log("start of addUserToDB action");
   return function(dispatch, getState) {
     return fetch("/api/customer", {
       method: "post",
@@ -15,30 +12,10 @@ export function addUserToDB() {
     })
       .then(response => response.json())
       .then(userData => {
-        console.log(userData);
-        console.log("register");
         dispatch(setRegistered(true));
       });
   };
 }
-
-// export function addUserToDB() {
-//     return function(dispatch, getState) {
-//       return fetch("/api/customer", {
-//         method: "post",
-//         body: JSON.stringify(getState().registerForm),
-//         headers: {
-//           "Content-Type": "application/json"
-//         }
-//       })
-//         .then(response => response.json())
-//         .then(userData => {
-//           console.log(userData);
-//           console.log("register");
-//           dispatch(setRegistered(true));
-//         });
-//     };
-//   }
 
 export function setRegistered(trueOrNull) {
   return {
@@ -65,8 +42,6 @@ export function clearRegistrationStates() {
 // LOGIN USER
 export function loginUser() {
   return function(dispatch, getState) {
-    console.log("login user");
-    console.log(getState().loginForm);
     return fetch("/api/login", {
       method: "post",
       body: JSON.stringify({
@@ -80,22 +55,17 @@ export function loginUser() {
       .then(response => response.json())
       .then(user => {
         if (!user) {
-          console.log(user);
-          console.log("incorrect password");
           dispatch(setLoginMessage("Incorrect username or password"));
           return;
         }
         dispatch(setUser({ id: null }));
         dispatch(setUser(user));
         if (getState().setNewUserTrip === true) {
-          console.log("add new trip should happen next");
           dispatch(addNewTrip());
         }
         if (getState().newUserInvite === true) {
-          console.log("add new invite ....164");
           dispatch(checkInviteCode());
         }
-        console.log("clear registration next");
         dispatch(clearRegistrationStates());
       })
       .catch("catch login" + console.error.QueryResultError);
@@ -137,8 +107,6 @@ export function loginToState(name, value) {
 // INVITES
 export function checkInviteCode() {
   return function(dispatch, getState) {
-    console.log("checkInvite");
-    console.log(getState().inviteCodeForm);
     return fetch("/api/invite", {
       method: "post",
       body: JSON.stringify({
@@ -149,15 +117,12 @@ export function checkInviteCode() {
       }
     })
       .then(response => {
-        console.log(response.json);
         if (response.status === 401) {
-          console.log("not logged in - check invite");
           dispatch(setNewUserInvite(true));
         }
         return response.json();
       })
       .then(tripId => {
-        console.log(tripId);
         dispatch(setAddedTripId({ id: tripId }));
       });
   };

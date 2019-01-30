@@ -14,8 +14,9 @@ function SuggestionInputFinal({ handleSubmit, place, tripId, handleChange }) {
           return <i key={tripId} className="fas fa-star" />;
         })}
       </p>
-      {/* <h3>{place.rating}</h3>
-      <h3>{place.types[0]}</h3> */}
+      <p>
+        <em>{place.types[0]}</em>
+      </p>
       <form
         className="add-suggestion__frm"
         onSubmit={event => handleSubmit(place, tripId, event)}
